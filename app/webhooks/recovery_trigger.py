@@ -166,7 +166,7 @@ class RecoveryTriggerService:
 
         # 6. Update TransactionModel lifecycle and agent_run_id
         if existing_txn:
-            existing_txn.lifecycle_status = "recovery_attempted"
+            existing_txn.lifecycle_status = "recovery_pending" if agent_result.final_status == "recovery_pending" else "recovery_attempted"
             existing_txn.agent_run_id = agent_run_id
 
         return agent_result

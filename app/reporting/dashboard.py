@@ -210,7 +210,28 @@ def load_db_data():
             })
         df_webhooks = pd.DataFrame(wh_data) if wh_data else pd.DataFrame()
 
-        return df_audit, df_runs, df_traces, df_webhooks
+        # Phase 6 Additive: Recovery Attempts & Payment Links
+        from app.db.models import RecoveryAttemptModel
+        att_query = db.query(RecoveryAttemptModel).order_by(RecoveryAttemptModel.created_at.desc()).all()
+        att_data = []
+        for a in att_query:
+            att_data.append({
+                "id": a.id,
+                "transaction_id": a.transaction_id,
+                "agent_run_id": a.agent_run_id,
+                "payment_link_id": a.payment_link_id,
+                "payment_link_url": a.payment_link_url,
+                "status": a.status,
+                "amount": a.amount,
+                "currency": a.currency,
+                "customer_contact": a.customer_contact,
+                "customer_email": a.customer_email,
+                "created_at": a.created_at,
+                "recovered_at": a.recovered_at
+            })
+        df_attempts = pd.DataFrame(att_data) if att_data else pd.DataFrame()
+
+        return df_audit, df_runs, df_traces, df_webhooks, df_attempts
     finally:
         db.close()
 
@@ -240,7 +261,7 @@ with col_b2:
             st.rerun()
 
 # Load Data from Database
-df_audit, df_runs, df_traces, df_webhooks = load_db_data()
+df_audit, df_runs, df_traces, df_webhooks, df_attempts = load_db_data()
 
 if df_audit is None or df_audit.empty:
     st.info("No transaction data found in SQLite. Initializing default 125-transaction batch run...")
@@ -248,7 +269,7 @@ if df_audit is None or df_audit.empty:
     save_synthetic_data(txns)
     batch_orchestrator.process_batch(txns)
     st.cache_data.clear()
-    df_audit, df_runs, df_traces, df_webhooks = load_db_data()
+    df_audit, df_runs, df_traces, df_webhooks, df_attempts = load_db_data()
 
 # Batch Run Selector
 available_runs = df_runs["run_id"].tolist() if df_runs is not None and not df_runs.empty else ["default"]
@@ -263,29 +284,31 @@ if df_selected.empty:
 st.markdown("<div class='main-header'>⚡ Revenue Recovery Agent</div>", unsafe_allow_html=True)
 st.markdown("<div class='sub-header'>Autonomous, Guardrailed Payment Recovery Engine for Indian Merchants | Measured ₹ Recovered with Compliant Safety Overrides</div>", unsafe_allow_html=True)
 
-# Calculate Top-level Metrics
+# Calculate Top-level Metrics (Phase 6 Revenue Accounting)
 total_txns = len(df_selected)
 total_at_risk = df_selected["amount"].sum()
 total_recovered = df_selected["recovered_amount"].sum()
+recovery_pending = df_selected[df_selected["execution_status"] == "recovery_pending"]["amount"].sum() if "execution_status" in df_selected.columns else 0.0
+pending_count = (df_selected["execution_status"] == "recovery_pending").sum() if "execution_status" in df_selected.columns else 0
 recovery_rate = (total_recovered / total_at_risk * 100) if total_at_risk > 0 else 0
 recovered_count = df_selected["recovered"].sum()
-unrecovered_count = total_txns - recovered_count
+unrecovered_count = total_txns - recovered_count - pending_count
 escalated_count = (df_selected["recommended_action"] == "escalate_human").sum()
-nudged_count = df_selected["recommended_action"].isin(["nudge_customer", "offer_alt_method", "whatsapp_nudge", "upi_switch"]).sum()
+nudged_count = df_selected["recommended_action"].isin(["nudge_customer", "offer_alt_method", "whatsapp_nudge", "upi_switch", "payment_link"]).sum()
 guardrail_overrides_count = df_selected["guardrail_overridden"].sum()
 
 # Top KPI Metric Cards
 kpi1, kpi2, kpi3, kpi4, kpi5 = st.columns(5)
 with kpi1:
-    st.metric("Total ₹ at Risk", f"₹{total_at_risk:,.2f}", f"{total_txns} txns")
+    st.metric("Revenue At Risk", f"₹{total_at_risk:,.2f}", f"{total_txns} txns")
 with kpi2:
-    st.metric("Total ₹ Recovered", f"₹{total_recovered:,.2f}", f"{recovered_count} successful")
+    st.metric("Recovery Pending", f"₹{recovery_pending:,.2f}", f"{pending_count} payment links")
 with kpi3:
-    st.metric("Recovery Rate", f"{recovery_rate:.1f}%", f"+₹{total_recovered:,.0f}")
+    st.metric("Revenue Recovered", f"₹{total_recovered:,.2f}", f"{recovered_count} verified")
 with kpi4:
-    st.metric("Guardrail Overrides", f"{guardrail_overrides_count}", "Compliant interventions")
+    st.metric("Recovery Rate", f"{recovery_rate:.1f}%", f"+₹{total_recovered:,.0f}")
 with kpi5:
-    st.metric("Escalated to Ops", f"{escalated_count}", "Risk / VIP reviews")
+    st.metric("Guardrail Overrides", f"{guardrail_overrides_count}", "Compliant interventions")
 
 st.markdown("---")
 
@@ -747,3 +770,36 @@ with tab7:
             st.info("No webhook-triggered agent runs recorded yet. Trigger a `payment.failed` event from the Razorpay dashboard or test suite.")
     else:
         st.info("No Razorpay webhook events received yet. Start `uvicorn app.main:app --port 8000` and configure your Razorpay Test Mode webhook URL.")
+
+    # Phase 6 Additive: Real Razorpay Payment Links Recovery Attempts
+    st.markdown("---")
+    st.markdown("### 🔗 Real Razorpay Payment Links (Phase 6 Test-Mode Recovery Attempts)")
+    st.markdown("""
+    Payment Links generated dynamically via Razorpay's Test Mode API.
+    **Accounting Rule:** Link created $\rightarrow$ `recovery_pending` (₹0.00 recovered).
+    Revenue is officially recovered **only** after a verified `payment.captured` or `order.paid` event.
+    """)
+
+    if df_attempts is not None and not df_attempts.empty:
+        st.dataframe(
+            df_attempts[[
+                "id", "transaction_id", "payment_link_id", "payment_link_url", "status", "amount", "currency", "created_at", "recovered_at"
+            ]].rename(
+                columns={
+                    "id": "Attempt ID",
+                    "transaction_id": "Transaction ID",
+                    "payment_link_id": "Razorpay Link ID",
+                    "payment_link_url": "Payment URL (Test Mode)",
+                    "status": "Recovery Status",
+                    "amount": "Amount (₹)",
+                    "currency": "Currency",
+                    "created_at": "Link Created At",
+                    "recovered_at": "Payment Verified At"
+                }
+            ).style.format({
+                "Amount (₹)": "₹{:,.2f}"
+            }),
+            use_container_width=True
+        )
+    else:
+        st.info("No Razorpay Payment Links created yet. When the Agent handles a failed transaction, real test-mode links (https://rzp.io/i/...) will appear here.")

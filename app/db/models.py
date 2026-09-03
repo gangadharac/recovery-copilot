@@ -131,3 +131,27 @@ class WebhookEventModel(Base):
     payload_json = Column(JSON)
     payload_hash = Column(String(64), index=True) # SHA-256 of raw body
     error_message = Column(Text, nullable=True)
+
+class RecoveryAttemptModel(Base):
+    """
+    Phase 6 Additive Table:
+    Tracks real Razorpay Test-Mode Payment Links created for transaction recovery.
+    Manages payment link lifecycle from pending -> recovered.
+    """
+    __tablename__ = "recovery_attempts"
+
+    id = Column(String(64), primary_key=True, index=True) # rec_attempt_...
+    transaction_id = Column(String(64), index=True, nullable=False)
+    agent_run_id = Column(String(64), nullable=True, index=True)
+    payment_link_id = Column(String(64), nullable=True, index=True) # plink_...
+    payment_link_url = Column(Text, nullable=True) # https://rzp.io/i/...
+    status = Column(String(32), default="pending", index=True) # created, pending, recovered, expired, failed
+    amount = Column(Float, nullable=False)
+    currency = Column(String(8), default="INR")
+    customer_id = Column(String(64), nullable=True)
+    customer_contact = Column(String(32), nullable=True)
+    customer_email = Column(String(128), nullable=True)
+    error_message = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    recovered_at = Column(DateTime, nullable=True)

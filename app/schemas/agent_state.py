@@ -11,6 +11,7 @@ class AgentToolName(str, Enum):
     UPI_SWITCH = "upi_switch"
     HUMAN_ESCALATION = "human_escalation"
     GIVE_UP = "give_up"
+    PAYMENT_LINK = "payment_link"
 
 class ToolCall(BaseModel):
     """Represents a specific tool invocation request by the agent."""

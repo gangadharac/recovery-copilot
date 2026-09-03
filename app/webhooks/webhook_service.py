@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from app.config import settings
 from app.db.database import SessionLocal, init_db
-from app.db.models import WebhookEventModel, TransactionModel, AuditLogModel
+from app.db.models import WebhookEventModel, TransactionModel, AuditLogModel, RecoveryAttemptModel
 from app.webhooks.webhook_security import verify_razorpay_signature, compute_payload_hash
 from app.webhooks.recovery_trigger import recovery_trigger_service
 
@@ -252,7 +252,7 @@ class WebhookService:
         payment_id = payment_entity.get("id")
         order_id = payment_entity.get("order_id") or order_entity.get("id")
 
-        # Correlate by payment_id or order_id
+        # Correlate by payment_id, order_id, or payment_link_id
         matched_txn = None
         if payment_id:
             matched_txn = db.query(TransactionModel).filter(
@@ -262,11 +262,32 @@ class WebhookService:
         if not matched_txn and order_id:
             matched_txn = db.query(TransactionModel).filter(TransactionModel.order_id == order_id).first()
 
+        plink_id = payment_entity.get("payment_link_id") or payment_entity.get("notes", {}).get("payment_link_id")
+        if not matched_txn and plink_id:
+            attempt = db.query(RecoveryAttemptModel).filter(RecoveryAttemptModel.payment_link_id == plink_id).first()
+            if attempt:
+                matched_txn = db.query(TransactionModel).filter(TransactionModel.transaction_id == attempt.transaction_id).first()
+
         if matched_txn:
             matched_txn.lifecycle_status = "captured" if event_type == "payment.captured" else "paid"
             logger.info(
                 f"[VERIFY] Event {event_type} successfully correlated with Transaction {matched_txn.transaction_id} (Order: {order_id})"
             )
+
+            # Phase 6: Correlate and verify in RecoveryAttemptModel
+            recovery_attempts = db.query(RecoveryAttemptModel).filter(
+                (RecoveryAttemptModel.transaction_id == matched_txn.transaction_id) |
+                (RecoveryAttemptModel.payment_link_id == plink_id)
+            ).all()
+
+            for attempt in recovery_attempts:
+                if attempt.status != "recovered":
+                    attempt.status = "recovered"
+                    attempt.recovered_at = datetime.now(timezone.utc)
+                    logger.info(
+                        f"[RECOVERY] Payment Link {attempt.payment_link_id} verified as RECOVERED "
+                        f"for transaction {matched_txn.transaction_id}."
+                    )
 
             # Correlate and verify in AuditLogModel
             audit_logs = db.query(AuditLogModel).filter(

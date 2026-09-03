@@ -11,6 +11,7 @@ class VerificationStatus(str, Enum):
     ESCALATED = "ESCALATED"
     ABANDONED = "ABANDONED"
     SCHEDULED = "SCHEDULED"
+    PENDING = "PENDING"
 
 class VerificationResult(BaseModel):
     """
@@ -33,6 +34,17 @@ class Verifier:
         current_iteration: int,
         max_iterations: int = 3
     ) -> VerificationResult:
+        # Case 0: Payment Link Created (Recovery Pending - Awaiting Customer Payment)
+        if tool_result.status == "recovery_pending":
+            plink_id = tool_result.result_data.get("payment_link_id", "link")
+            return VerificationResult(
+                status=VerificationStatus.PENDING,
+                is_terminal=True,
+                can_replan=False,
+                summary=f"Recovery payment link {plink_id} created; awaiting customer payment.",
+                recovered_amount=0.0
+            )
+
         # Case 1: Recovery Succeeded
         if tool_result.success and tool_result.recovered_amount > 0:
             return VerificationResult(

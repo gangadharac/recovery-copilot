@@ -59,7 +59,9 @@ class RecoveryAgent:
     def recover(
         self,
         txn: Transaction,
-        custom_diagnosis: Optional[DiagnosisResult] = None
+        custom_diagnosis: Optional[DiagnosisResult] = None,
+        preferred_tool: Optional[AgentToolName] = None,
+        agent_run_id: Optional[str] = None
     ) -> RecoveryAgentResult:
         """
         Executes the autonomous recovery lifecycle for a failed transaction.
@@ -89,7 +91,7 @@ class RecoveryAgent:
             current_iter = state.increment_iteration()
             
             # --- STEP A: PLAN ---
-            candidate_tool = self._plan_next_action(txn, diagnosis, state)
+            candidate_tool = self._plan_next_action(txn, diagnosis, state, preferred_tool=preferred_tool)
             state.current_planned_action = candidate_tool
 
             # --- STEP B: GUARDRAIL INTERCEPTION ---
@@ -130,7 +132,8 @@ class RecoveryAgent:
                     txn=txn,
                     diagnosis=diagnosis,
                     call_id=tool_call.call_id,
-                    reason=interception.reason if not interception.allowed else None
+                    reason=interception.reason if not interception.allowed else None,
+                    agent_run_id=agent_run_id
                 )
             except Exception as e:
                 logger.error(f"Error executing tool {executable_tool.value}: {e}", exc_info=True)
@@ -172,6 +175,12 @@ class RecoveryAgent:
                 state.final_status = "recovered"
                 state.recovered_amount = v_result.recovered_amount
                 state.final_decision = f"Revenue successfully recovered (INR {v_result.recovered_amount:,.2f}) via '{executable_tool.value}'."
+                break
+
+            elif v_result.status == VerificationStatus.PENDING:
+                state.final_status = "recovery_pending"
+                state.recovered_amount = 0.0
+                state.final_decision = "Recovery payment link created; awaiting customer payment."
                 break
 
             elif v_result.status == VerificationStatus.ESCALATED:
@@ -226,7 +235,8 @@ class RecoveryAgent:
         self,
         txn: Transaction,
         diagnosis: DiagnosisResult,
-        state: AutonomousAgentState
+        state: AutonomousAgentState,
+        preferred_tool: Optional[AgentToolName] = None
     ) -> AgentToolName:
         """
         Determines the optimal next tool, adapting strategy dynamically based on previous failures.
@@ -237,6 +247,10 @@ class RecoveryAgent:
         # Hard Rule: Risk blocked always targets human escalation
         if root_cause == RootCause.RISK_BLOCKED:
             return AgentToolName.HUMAN_ESCALATION
+
+        # Preferred tool requested (e.g. real payment_link in Phase 6)
+        if not used_tools and preferred_tool is not None:
+            return preferred_tool
 
         # --- ITERATION 1: Primary Baseline Strategy ---
         if not used_tools:
