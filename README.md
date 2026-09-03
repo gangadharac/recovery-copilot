@@ -177,4 +177,45 @@ To test real Razorpay Test Mode webhooks triggering the autonomous RecoveryAgent
 
 ---
 
+## 🔗 Phase 6 & 6.1 — Hardened Razorpay Payment Link Recovery & State Machine
+
+### Autonomous Payment Link Flow & Strict Verification
+1. **Real Payment Link Creation (`PaymentLinkTool`)**:
+   - Creates genuine Razorpay Test Mode Payment Links (`https://rzp.io/i/...`) via Razorpay REST API.
+   - Converts INR amounts to paise accurately (`₹6,299.00 -> 629900 paise`).
+   - Customer Data Integrity: Strictly zero fake/fabricated customer data (preserves `None`/NULL when unavailable from webhook).
+   - Test Mode Safety: Strictly verifies `rzp_test_...` key prefix before dispatching HTTP calls.
+   - Idempotency & Thread Safety: Enforces duplicate creation guards via `RecoveryAttemptModel` and process locking.
+   - **Accounting Rule:** Payment link creation assigns `status = "recovery_pending"` and `recovered_amount = 0.0`. Revenue is **never** counted upon link generation alone.
+
+2. **Centralized Recovery State Machine (`app/db/recovery_state.py`)**:
+   - Enforces valid transition paths:
+     ```
+     created -> pending -> paid_verification_pending -> recovered
+     ```
+   - Terminal failure states:
+     ```
+     pending -> failed | expired
+     paid_verification_pending -> verification_failed
+     ```
+
+3. **Multi-Key Correlation & Strict Payment Verification**:
+   - Supports `payment_link.paid`, `payment.captured`, and `order.paid` webhooks.
+   - Correlates events in strict priority order:
+     1. `payment_link_id` (`plink_...`)
+     2. `payment_id` (`pay_...`)
+     3. `order_id` (`order_...`)
+     4. `reference_id` (`rec_...`)
+     5. Internal transaction reference (`transaction_id`)
+   - Uncorrelated events are rejected from marking arbitrary transactions as recovered.
+   - **Amount Matching:** Exact comparison between attempt amount and event amount (in paise converted to INR). Mismatches transition the attempt to `verification_failed` and log `AMOUNT_MISMATCH`.
+   - **Currency Matching:** Currency match validation (`INR == INR`). Mismatches transition the attempt to `verification_failed` and log `CURRENCY_MISMATCH`.
+   - **Verified Recovery:** Only upon verified amount and currency match is the attempt transitioned to `recovered`, with `recovered = True` updated in SQLite audit logs and dashboard KPIs.
+
+4. **Security & Audit Logging**:
+   - Structured audit events for `PAYMENT_LINK_CREATED`, `DUPLICATE_RECOVERY_PREVENTED`, `VERIFICATION_STARTED`, `VERIFICATION_SUCCESSFUL`, `AMOUNT_MISMATCH`, `CURRENCY_MISMATCH`, and `INVALID_WEBHOOK_PAYLOAD`.
+   - Secrets, authorization headers, and customer PII are strictly sanitized and never exposed in logs or UI.
+
+---
+
 *Built for Razorpay AI Buildathon 2026 (Track 03: AI Revenue Recovery).*

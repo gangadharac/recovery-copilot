@@ -28,10 +28,10 @@ class RawGatewayResponse(BaseModel):
 
 class Transaction(BaseModel):
     transaction_id: str
-    customer_id: str
-    customer_name: str
-    customer_phone: str
-    customer_email: str
+    customer_id: Optional[str] = None
+    customer_name: Optional[str] = None
+    customer_phone: Optional[str] = None
+    customer_email: Optional[str] = None
     amount: float = Field(gt=0)
     currency: str = "INR"
     payment_method: PaymentMethod

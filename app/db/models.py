@@ -145,13 +145,22 @@ class RecoveryAttemptModel(Base):
     agent_run_id = Column(String(64), nullable=True, index=True)
     payment_link_id = Column(String(64), nullable=True, index=True) # plink_...
     payment_link_url = Column(Text, nullable=True) # https://rzp.io/i/...
-    status = Column(String(32), default="pending", index=True) # created, pending, recovered, expired, failed
+    status = Column(String(32), default="pending", index=True) # created, pending, paid_verification_pending, recovered, verification_failed, expired, failed
     amount = Column(Float, nullable=False)
     currency = Column(String(8), default="INR")
     customer_id = Column(String(64), nullable=True)
     customer_contact = Column(String(32), nullable=True)
     customer_email = Column(String(128), nullable=True)
     error_message = Column(Text, nullable=True)
+
+    # Phase 6.1 Additive Hardening Fields
+    payment_id = Column(String(64), nullable=True, index=True) # Captured Razorpay payment ID
+    order_id = Column(String(64), nullable=True, index=True)
+    reference_id = Column(String(64), nullable=True, index=True)
+    verification_source = Column(String(32), nullable=True) # payment_link.paid, payment.captured, order.paid
+    verified_amount = Column(Float, nullable=True)
+    verified_currency = Column(String(8), nullable=True)
+
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     recovered_at = Column(DateTime, nullable=True)

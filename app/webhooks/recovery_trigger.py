@@ -180,19 +180,33 @@ class RecoveryTriggerService:
     ) -> Transaction:
         """
         Maps Razorpay payment entity into the internal Transaction Pydantic schema.
+        Validates required fields and strictly prohibits fabricating fake customer or transaction data.
         """
-        payment_id = payment_entity.get("id") or f"pay_wh_{uuid.uuid4().hex[:8]}"
-        
-        # Convert amount from paise to INR
-        raw_amt = payment_entity.get("amount", 0)
-        amount_inr = float(raw_amt) / 100.0 if raw_amt else (existing_txn.amount if existing_txn else 100.0)
-        if amount_inr <= 0:
-            amount_inr = 100.0
+        payment_id = payment_entity.get("id") or (existing_txn.payment_id if existing_txn else None) or (existing_txn.transaction_id if existing_txn else None)
+        if not payment_id:
+            raise ValueError("Validation failed: Missing required payment ID in webhook entity.")
 
-        currency = payment_entity.get("currency", "INR")
-        
+        # Convert amount from paise to INR
+        raw_amt = payment_entity.get("amount")
+        if raw_amt is not None:
+            try:
+                val_amt = float(raw_amt)
+                if val_amt <= 0:
+                    raise ValueError(f"Invalid non-positive amount: {val_amt}")
+                amount_inr = round(val_amt / 100.0, 2)
+            except (ValueError, TypeError) as e:
+                raise ValueError(f"Invalid amount format: {e}")
+        elif existing_txn and existing_txn.amount:
+            amount_inr = float(existing_txn.amount)
+        else:
+            raise ValueError("Validation failed: Missing required amount in webhook entity.")
+
+        currency = payment_entity.get("currency") or (existing_txn.currency if existing_txn else None)
+        if not currency:
+            raise ValueError("Validation failed: Missing required currency in webhook entity.")
+
         # Payment Method Mapping
-        raw_method = str(payment_entity.get("method", "card")).lower()
+        raw_method = str(payment_entity.get("method", (existing_txn.payment_method if existing_txn else "card"))).lower()
         if raw_method == "upi":
             payment_method = PaymentMethod.UPI
         elif raw_method == "netbanking":
@@ -202,23 +216,21 @@ class RecoveryTriggerService:
 
         # Payment Method Details
         card_network = payment_entity.get("card", {}).get("network") if isinstance(payment_entity.get("card"), dict) else None
-        if not card_network and payment_method == PaymentMethod.CARD:
-            card_network = "Visa"
-        bank_code = payment_entity.get("bank", "HDFC")
+        bank_code = payment_entity.get("bank")
         upi_vpa = payment_entity.get("vpa")
         method_details = PaymentMethodDetails(card_network=card_network, bank_code=bank_code, upi_vpa=upi_vpa)
 
         # Error Context
-        error_code = payment_entity.get("error_code") or payment_entity.get("error_reason") or "GATEWAY_ERROR"
-        error_desc = payment_entity.get("error_description") or "Payment failed at bank switch or gateway"
-        error_source = payment_entity.get("error_source", "bank_switch")
+        error_code = payment_entity.get("error_code") or payment_entity.get("error_reason") or (existing_txn.error_code if existing_txn else "GATEWAY_ERROR")
+        error_desc = payment_entity.get("error_description") or (existing_txn.error_description if existing_txn else "Payment failed during transaction processing")
+        error_source = payment_entity.get("error_source") or (existing_txn.error_source if existing_txn else "bank_switch")
 
-        # Customer Details
+        # Customer Details (Strict Zero Fabrication: preserve None when unavailable)
         notes = payment_entity.get("notes", {}) or {}
-        cust_name = notes.get("customer_name") or (existing_txn.customer_name if existing_txn and existing_txn.customer_name else "Razorpay Customer (Demo)")
-        cust_phone = payment_entity.get("contact") or (existing_txn.customer_phone if existing_txn and existing_txn.customer_phone else "+919876543210")
-        cust_email = payment_entity.get("email") or (existing_txn.customer_email if existing_txn and existing_txn.customer_email else "customer@example.com")
-        cust_id = (existing_txn.customer_id if existing_txn and existing_txn.customer_id else f"cust_{payment_id[:10]}")
+        cust_name = notes.get("customer_name") or (existing_txn.customer_name if existing_txn else None)
+        cust_phone = payment_entity.get("contact") or (existing_txn.customer_phone if existing_txn else None)
+        cust_email = payment_entity.get("email") or (existing_txn.customer_email if existing_txn else None)
+        cust_id = payment_entity.get("customer_id") or (existing_txn.customer_id if existing_txn else None)
 
         return Transaction(
             transaction_id=payment_id,

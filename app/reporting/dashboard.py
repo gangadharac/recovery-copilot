@@ -224,6 +224,8 @@ def load_db_data():
                 "status": a.status,
                 "amount": a.amount,
                 "currency": a.currency,
+                "payment_id": getattr(a, "payment_id", None),
+                "verification_source": getattr(a, "verification_source", None),
                 "customer_contact": a.customer_contact,
                 "customer_email": a.customer_email,
                 "created_at": a.created_at,
@@ -771,30 +773,36 @@ with tab7:
     else:
         st.info("No Razorpay webhook events received yet. Start `uvicorn app.main:app --port 8000` and configure your Razorpay Test Mode webhook URL.")
 
-    # Phase 6 Additive: Real Razorpay Payment Links Recovery Attempts
+    # Phase 6 & 6.1 Additive: Real Razorpay Payment Links Recovery Attempts
     st.markdown("---")
-    st.markdown("### 🔗 Real Razorpay Payment Links (Phase 6 Test-Mode Recovery Attempts)")
+    st.markdown("### 🔗 Real Razorpay Payment Links (Phase 6.1 Hardened Test-Mode Attempts)")
     st.markdown("""
     Payment Links generated dynamically via Razorpay's Test Mode API.
     **Accounting Rule:** Link created $\rightarrow$ `recovery_pending` (₹0.00 recovered).
-    Revenue is officially recovered **only** after a verified `payment.captured` or `order.paid` event.
+    Revenue is officially recovered **only** after a verified `payment_link.paid`, `payment.captured`, or `order.paid` event.
     """)
 
     if df_attempts is not None and not df_attempts.empty:
+        # Build display columns safely
+        display_cols = [
+            "transaction_id", "payment_id", "payment_link_id", "amount", "currency",
+            "status", "verification_source", "created_at", "recovered_at", "payment_link_url"
+        ]
+        available_cols = [c for c in display_cols if c in df_attempts.columns]
+
         st.dataframe(
-            df_attempts[[
-                "id", "transaction_id", "payment_link_id", "payment_link_url", "status", "amount", "currency", "created_at", "recovered_at"
-            ]].rename(
+            df_attempts[available_cols].rename(
                 columns={
-                    "id": "Attempt ID",
                     "transaction_id": "Transaction ID",
-                    "payment_link_id": "Razorpay Link ID",
-                    "payment_link_url": "Payment URL (Test Mode)",
-                    "status": "Recovery Status",
+                    "payment_id": "Razorpay Payment ID",
+                    "payment_link_id": "Payment Link ID",
                     "amount": "Amount (₹)",
                     "currency": "Currency",
-                    "created_at": "Link Created At",
-                    "recovered_at": "Payment Verified At"
+                    "status": "Recovery Status",
+                    "verification_source": "Verification Source",
+                    "created_at": "Created At",
+                    "recovered_at": "Recovered At",
+                    "payment_link_url": "Payment URL"
                 }
             ).style.format({
                 "Amount (₹)": "₹{:,.2f}"

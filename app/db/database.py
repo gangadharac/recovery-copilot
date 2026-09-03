@@ -64,3 +64,18 @@ def init_db():
             conn.commit()
         except Exception:
             pass
+
+        # Phase 6.1 Additive columns for recovery_attempts
+        for col_def in [
+            "payment_id VARCHAR(64)",
+            "order_id VARCHAR(64)",
+            "reference_id VARCHAR(64)",
+            "verification_source VARCHAR(32)",
+            "verified_amount FLOAT",
+            "verified_currency VARCHAR(8)",
+        ]:
+            try:
+                conn.execute(text(f"ALTER TABLE recovery_attempts ADD COLUMN {col_def}"))
+                conn.commit()
+            except Exception:
+                pass
