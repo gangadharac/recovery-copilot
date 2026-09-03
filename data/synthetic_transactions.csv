@@ -1,0 +1,126 @@
+transaction_id,customer_id,customer_name,amount,currency,payment_method,error_code,error_description,error_source,retry_count,auto_charge_consent,reliability_score,timestamp
+txn_rzp_100001,cust_20001,Aarav Sharma,623.72,INR,netbanking,3DS_VERIFICATION_FAILED,Authentication cancelled by customer during bank challenge,user_error,2,True,0.9,2026-08-31T05:33:00
+txn_rzp_100002,cust_20002,Priya Patel,8736.93,INR,card,3DS_VERIFICATION_FAILED,Incorrect 3D Secure OTP entered multiple times by customer,user_error,3,False,0.89,2026-08-31T09:23:00
+txn_rzp_100003,cust_20003,Rohan Mehta,5929.52,INR,card,AUTH_FAILED,Authentication cancelled by customer during bank challenge,user_error,2,False,0.91,2026-08-31T07:33:00
+txn_rzp_100004,cust_20004,Ananya Iyer,2402.5,INR,card,LIMIT_EXCEEDED,Account balance insufficient to cover transaction amount,user_error,3,False,0.88,2026-08-31T04:05:00
+txn_rzp_100005,cust_20005,Vikram Singh,914.78,INR,upi,GATEWAY_ERROR,Temporary switch downtime at processing bank,bank_switch,0,False,0.78,2026-08-31T09:48:00
+txn_rzp_100006,cust_20006,Sneha Reddy,3912.7,INR,card,risk_blocked,Issuer risk block: Suspicious international IP pattern or stolen card match,risk_engine,1,False,0.99,2026-08-31T05:35:00
+txn_rzp_100007,cust_20007,Karan Kapoor,1105.83,INR,upi,LIMIT_EXCEEDED,Daily transaction limit exceeded on the selected debit card / account,user_error,0,True,0.82,2026-08-31T04:47:00
+txn_rzp_100008,cust_20008,Pooja Nair,679.09,INR,upi,INSUFFICIENT_BALANCE,Daily transaction limit exceeded on the selected debit card / account,user_error,1,False,0.55,2026-08-31T04:30:00
+txn_rzp_100009,cust_20009,Aditya Verma,2288.37,INR,upi,CONNECTION_DROPPED,Network packet drop occurred during secure handshake,network,1,False,0.69,2026-08-31T04:43:00
+txn_rzp_100010,cust_20010,Meera Joshi,1819.53,INR,card,card_expired,Card validity has expired (expiry date is in the past),user_error,2,True,0.98,2026-08-31T07:44:00
+txn_rzp_100011,cust_20011,Rahul Gupta,1145.28,INR,card,INSUFFICIENT_BALANCE,Account balance insufficient to cover transaction amount,user_error,3,False,0.98,2026-08-31T07:48:00
+txn_rzp_100012,cust_20012,Divya Deshmukh,6882.72,INR,netbanking,BANK_TIMEOUT,Temporary switch downtime at processing bank,bank_switch,0,False,0.88,2026-08-31T08:44:00
+txn_rzp_100013,cust_20013,Siddharth Rao,914.45,INR,card,insufficient_funds,Bank declined transaction: Insufficient available credit limit,user_error,0,True,0.9,2026-08-31T08:46:00
+txn_rzp_100014,cust_20014,Kavita Menon,9361.6,INR,upi,ISSUER_SWITCH_UNAVAILABLE,Temporary switch downtime at processing bank,bank_switch,3,False,0.99,2026-08-31T06:55:00
+txn_rzp_100015,cust_20015,Arjun Nambiar,1669.63,INR,card,EXPIRED_CARD,Payment method not valid: Card deactivated due to expiry,user_error,0,False,0.76,2026-08-31T07:44:00
+txn_rzp_100016,cust_20016,Aarav Sharma,2401.01,INR,card,otp_timeout,Incorrect 3D Secure OTP entered multiple times by customer,user_error,2,True,0.32,2026-08-31T08:58:00
+txn_rzp_100017,cust_20017,Priya Patel,5068.59,INR,upi,GATEWAY_ERROR,Temporary switch downtime at processing bank,bank_switch,2,False,0.69,2026-08-31T06:09:00
+txn_rzp_100018,cust_20018,Rohan Mehta,508.47,INR,upi,GATEWAY_ERROR,Unexpected error occurred during multi-tender settlement negotiation,gateway,0,False,1.0,2026-08-31T06:56:00
+txn_rzp_100019,cust_20019,Ananya Iyer,33680.54,INR,upi,CONNECTION_DROPPED,User browser connection reset during 3DS redirect,network,0,False,0.73,2026-08-31T06:40:00
+txn_rzp_100020,cust_20020,Vikram Singh,909.77,INR,card,INSUFFICIENT_BALANCE,Bank declined transaction: Insufficient available credit limit,user_error,3,True,0.92,2026-08-31T05:07:00
+txn_rzp_100021,cust_20021,Sneha Reddy,1430.4,INR,upi,CLIENT_DISCONNECTED,Network packet drop occurred during secure handshake,network,0,False,0.95,2026-08-31T04:28:00
+txn_rzp_100022,cust_20022,Karan Kapoor,825.42,INR,card,network_error,Mobile network connection lost while awaiting webhook confirmation,network,2,False,0.96,2026-08-31T06:58:00
+txn_rzp_100023,cust_20023,Pooja Nair,1235.16,INR,upi,network_error,User browser connection reset during 3DS redirect,network,0,False,0.76,2026-08-31T08:15:00
+txn_rzp_100024,cust_20024,Aditya Verma,8636.77,INR,card,EXPIRED_CARD,Card issuer declined: Card expired or invalid expiration month/year,user_error,0,True,0.72,2026-08-31T04:27:00
+txn_rzp_100025,cust_20025,Meera Joshi,5113.45,INR,netbanking,PAYMENT_DECLINED,Generic payment processor rejection: Code 9999,gateway,3,False,0.99,2026-08-31T09:13:00
+txn_rzp_100026,cust_20026,Rahul Gupta,1778.14,INR,upi,CONNECTION_DROPPED,Network packet drop occurred during secure handshake,network,2,False,0.88,2026-08-31T08:44:00
+txn_rzp_100027,cust_20027,Divya Deshmukh,6710.92,INR,card,card_expired,Card issuer declined: Card expired or invalid expiration month/year,user_error,2,True,0.76,2026-08-31T08:31:00
+txn_rzp_100028,cust_20028,Siddharth Rao,1431.58,INR,card,LIMIT_EXCEEDED,Bank declined transaction: Insufficient available credit limit,user_error,3,False,0.76,2026-08-31T05:38:00
+txn_rzp_100029,cust_20029,Kavita Menon,2399.79,INR,card,ISSUER_SWITCH_UNAVAILABLE,Bank network timeout occurred while communicating with issuer switch,bank_switch,1,True,0.9,2026-08-31T06:29:00
+txn_rzp_100030,cust_20030,Arjun Nambiar,9828.63,INR,card,INSUFFICIENT_BALANCE,Bank declined transaction: Insufficient available credit limit,user_error,1,True,0.92,2026-08-31T09:37:00
+txn_rzp_100031,cust_20031,Aarav Sharma,653.78,INR,netbanking,otp_timeout,Authentication cancelled by customer during bank challenge,user_error,0,True,0.87,2026-08-31T05:24:00
+txn_rzp_100032,cust_20032,Priya Patel,7087.22,INR,card,INVALID_EXPIRY_DATE,Payment method not valid: Card deactivated due to expiry,user_error,1,False,0.73,2026-08-31T08:46:00
+txn_rzp_100033,cust_20033,Rohan Mehta,401.73,INR,card,GATEWAY_ERROR,Transaction declined by downstream partner without specific error description,gateway,3,False,0.95,2026-08-31T06:37:00
+txn_rzp_100034,cust_20034,Ananya Iyer,37598.78,INR,card,otp_timeout,Customer failed to enter OTP within the 5-minute authentication window,user_error,0,False,0.73,2026-08-31T08:56:00
+txn_rzp_100035,cust_20000,Vikram Singh,1467.84,INR,upi,CONNECTION_DROPPED,Network packet drop occurred during secure handshake,network,0,False,0.86,2026-08-31T05:32:00
+txn_rzp_100036,cust_20001,Sneha Reddy,1765.22,INR,card,BANK_TIMEOUT,Temporary switch downtime at processing bank,bank_switch,0,True,0.83,2026-08-31T09:16:00
+txn_rzp_100037,cust_20002,Karan Kapoor,3859.34,INR,card,LIMIT_EXCEEDED,Daily transaction limit exceeded on the selected debit card / account,user_error,1,False,0.49,2026-08-31T06:03:00
+txn_rzp_100038,cust_20003,Pooja Nair,2459.16,INR,card,LIMIT_EXCEEDED,Bank declined transaction: Insufficient available credit limit,user_error,1,False,0.92,2026-08-31T07:43:00
+txn_rzp_100039,cust_20004,Aditya Verma,674.71,INR,netbanking,PAYMENT_DECLINED,Generic payment processor rejection: Code 9999,gateway,3,True,0.75,2026-08-31T08:21:00
+txn_rzp_100040,cust_20005,Meera Joshi,617.51,INR,upi,INSUFFICIENT_BALANCE,Account balance insufficient to cover transaction amount,user_error,1,False,0.89,2026-08-31T09:16:00
+txn_rzp_100041,cust_20006,Rahul Gupta,1122.58,INR,upi,GATEWAY_ERROR,Temporary switch downtime at processing bank,bank_switch,0,False,0.91,2026-08-31T09:30:00
+txn_rzp_100042,cust_20007,Divya Deshmukh,1396.55,INR,upi,LIMIT_EXCEEDED,Bank declined transaction: Insufficient available credit limit,user_error,0,False,0.42,2026-08-31T09:04:00
+txn_rzp_100043,cust_20008,Siddharth Rao,6564.11,INR,card,BLACKLISTED_CARD,Transaction blocked by Razorpay Shield risk engine: High velocity detected,risk_engine,3,True,0.76,2026-08-31T04:50:00
+txn_rzp_100044,cust_20009,Kavita Menon,4720.01,INR,upi,LIMIT_EXCEEDED,Daily transaction limit exceeded on the selected debit card / account,user_error,0,False,0.95,2026-08-31T09:48:00
+txn_rzp_100045,cust_20010,Arjun Nambiar,1862.05,INR,card,network_error,User browser connection reset during 3DS redirect,network,3,False,0.89,2026-08-31T07:12:00
+txn_rzp_100046,cust_20011,Aarav Sharma,2877.95,INR,netbanking,AUTH_FAILED,Customer failed to enter OTP within the 5-minute authentication window,user_error,2,False,0.98,2026-08-31T06:22:00
+txn_rzp_100047,cust_20012,Priya Patel,7614.37,INR,netbanking,3DS_VERIFICATION_FAILED,Authentication cancelled by customer during bank challenge,user_error,0,False,0.7,2026-08-31T06:49:00
+txn_rzp_100048,cust_20013,Rohan Mehta,7186.7,INR,netbanking,GATEWAY_ERROR,Temporary switch downtime at processing bank,bank_switch,1,False,0.96,2026-08-31T06:52:00
+txn_rzp_100049,cust_20014,Ananya Iyer,2571.06,INR,netbanking,GATEWAY_ERROR,Unexpected error occurred during multi-tender settlement negotiation,gateway,2,True,0.99,2026-08-31T07:43:00
+txn_rzp_100050,cust_20015,Vikram Singh,976.99,INR,card,GATEWAY_ERROR,Unexpected error occurred during multi-tender settlement negotiation,gateway,0,False,0.97,2026-08-31T05:42:00
+txn_rzp_100051,cust_20016,Sneha Reddy,2061.72,INR,upi,CONNECTION_DROPPED,User browser connection reset during 3DS redirect,network,1,True,0.96,2026-08-31T06:47:00
+txn_rzp_100052,cust_20017,Karan Kapoor,1505.33,INR,card,EXPIRED_CARD,Card issuer declined: Card expired or invalid expiration month/year,user_error,2,True,0.63,2026-08-31T04:05:00
+txn_rzp_100053,cust_20018,Pooja Nair,1710.71,INR,upi,VELOCITY_EXCEEDED,Issuer risk block: Suspicious international IP pattern or stolen card match,risk_engine,1,False,0.91,2026-08-31T07:08:00
+txn_rzp_100054,cust_20019,Aditya Verma,30798.95,INR,upi,PAYMENT_DECLINED,Transaction declined by downstream partner without specific error description,gateway,1,True,0.88,2026-08-31T05:31:00
+txn_rzp_100055,cust_20020,Meera Joshi,1944.58,INR,card,OTP_EXPIRED,Incorrect 3D Secure OTP entered multiple times by customer,user_error,0,True,0.33,2026-08-31T07:31:00
+txn_rzp_100056,cust_20021,Rahul Gupta,3130.26,INR,card,INVALID_EXPIRY_DATE,Card issuer declined: Card expired or invalid expiration month/year,user_error,1,True,0.95,2026-08-31T09:14:00
+txn_rzp_100057,cust_20022,Divya Deshmukh,2286.8,INR,upi,FRAUD_SUSPECTED,AML compliance rule triggered: Flagged for mandatory manual review,risk_engine,0,False,0.84,2026-08-31T07:02:00
+txn_rzp_100058,cust_20023,Siddharth Rao,8543.5,INR,card,otp_timeout,Incorrect 3D Secure OTP entered multiple times by customer,user_error,0,False,1.0,2026-08-31T09:10:00
+txn_rzp_100059,cust_20024,Kavita Menon,9931.59,INR,card,insufficient_funds,Daily transaction limit exceeded on the selected debit card / account,user_error,0,True,0.81,2026-08-31T06:43:00
+txn_rzp_100060,cust_20025,Arjun Nambiar,8318.74,INR,card,INSUFFICIENT_BALANCE,Daily transaction limit exceeded on the selected debit card / account,user_error,0,False,0.2,2026-08-31T08:24:00
+txn_rzp_100061,cust_20026,Aarav Sharma,740.44,INR,card,PAYMENT_DECLINED,Transaction declined by downstream partner without specific error description,gateway,0,True,0.74,2026-08-31T05:54:00
+txn_rzp_100062,cust_20027,Priya Patel,2161.8,INR,netbanking,ISSUER_SWITCH_UNAVAILABLE,Temporary switch downtime at processing bank,bank_switch,0,False,0.73,2026-08-31T05:47:00
+txn_rzp_100063,cust_20028,Rohan Mehta,32649.18,INR,card,3DS_VERIFICATION_FAILED,Customer failed to enter OTP within the 5-minute authentication window,user_error,0,True,0.99,2026-08-31T07:35:00
+txn_rzp_100064,cust_20029,Ananya Iyer,3679.52,INR,upi,GATEWAY_ERROR,Unexpected error occurred during multi-tender settlement negotiation,gateway,0,True,0.87,2026-08-31T08:35:00
+txn_rzp_100065,cust_20030,Vikram Singh,2088.26,INR,card,INVALID_EXPIRY_DATE,Payment method not valid: Card deactivated due to expiry,user_error,0,True,0.69,2026-08-31T08:39:00
+txn_rzp_100066,cust_20031,Sneha Reddy,2170.89,INR,netbanking,3DS_VERIFICATION_FAILED,Customer failed to enter OTP within the 5-minute authentication window,user_error,3,False,0.49,2026-08-31T07:20:00
+txn_rzp_100067,cust_20032,Karan Kapoor,37472.13,INR,netbanking,ISSUER_SWITCH_UNAVAILABLE,Gateway timeout: Issuer bank took more than 30s to acknowledge debit request,bank_switch,1,False,1.0,2026-08-31T07:14:00
+txn_rzp_100068,cust_20033,Pooja Nair,8382.36,INR,card,GATEWAY_ERROR,Temporary switch downtime at processing bank,bank_switch,0,True,0.81,2026-08-31T08:53:00
+txn_rzp_100069,cust_20034,Aditya Verma,14335.76,INR,card,INSUFFICIENT_BALANCE,Account balance insufficient to cover transaction amount,user_error,1,False,0.89,2026-08-31T04:34:00
+txn_rzp_100070,cust_20000,Meera Joshi,4970.16,INR,upi,FRAUD_SUSPECTED,Transaction blocked by Razorpay Shield risk engine: High velocity detected,risk_engine,0,False,0.78,2026-08-31T07:35:00
+txn_rzp_100071,cust_20001,Rahul Gupta,1124.24,INR,card,GATEWAY_ERROR,Temporary switch downtime at processing bank,bank_switch,0,True,0.99,2026-08-31T05:58:00
+txn_rzp_100072,cust_20002,Divya Deshmukh,22169.86,INR,upi,UNKNOWN_SWITCH_ERROR,Transaction declined by downstream partner without specific error description,gateway,4,False,0.81,2026-08-31T05:34:00
+txn_rzp_100073,cust_20003,Siddharth Rao,4882.45,INR,netbanking,BAD_REQUEST_ERROR,Unexpected error occurred during multi-tender settlement negotiation,gateway,0,False,0.32,2026-08-31T07:50:00
+txn_rzp_100074,cust_20004,Kavita Menon,670.23,INR,netbanking,ISSUER_SWITCH_UNAVAILABLE,Gateway timeout: Issuer bank took more than 30s to acknowledge debit request,bank_switch,0,False,0.95,2026-08-31T07:05:00
+txn_rzp_100075,cust_20005,Arjun Nambiar,654.79,INR,card,CLIENT_DISCONNECTED,Network packet drop occurred during secure handshake,network,0,False,0.63,2026-08-31T05:31:00
+txn_rzp_100076,cust_20006,Aarav Sharma,4968.56,INR,card,card_expired,Card validity has expired (expiry date is in the past),user_error,1,False,0.82,2026-08-31T06:51:00
+txn_rzp_100077,cust_20007,Priya Patel,3419.77,INR,card,INVALID_EXPIRY_DATE,Card issuer declined: Card expired or invalid expiration month/year,user_error,1,False,0.92,2026-08-31T09:54:00
+txn_rzp_100078,cust_20008,Rohan Mehta,1742.84,INR,card,EXPIRED_CARD,Card validity has expired (expiry date is in the past),user_error,0,False,1.0,2026-08-31T06:40:00
+txn_rzp_100079,cust_20009,Ananya Iyer,1508.89,INR,netbanking,GATEWAY_ERROR,Bank network timeout occurred while communicating with issuer switch,bank_switch,1,False,0.99,2026-08-31T08:27:00
+txn_rzp_100080,cust_20010,Vikram Singh,993.52,INR,upi,CONNECTION_DROPPED,User browser connection reset during 3DS redirect,network,0,False,0.87,2026-08-31T04:36:00
+txn_rzp_100081,cust_20011,Sneha Reddy,2281.07,INR,upi,UNKNOWN_SWITCH_ERROR,Generic payment processor rejection: Code 9999,gateway,1,False,0.99,2026-08-31T05:26:00
+txn_rzp_100082,cust_20012,Karan Kapoor,4785.34,INR,upi,BLACKLISTED_CARD,AML compliance rule triggered: Flagged for mandatory manual review,risk_engine,0,True,0.9,2026-08-31T04:52:00
+txn_rzp_100083,cust_20013,Pooja Nair,1709.74,INR,card,3DS_VERIFICATION_FAILED,Authentication cancelled by customer during bank challenge,user_error,0,False,0.92,2026-08-31T07:55:00
+txn_rzp_100084,cust_20014,Aditya Verma,12809.05,INR,card,AUTH_FAILED,Authentication cancelled by customer during bank challenge,user_error,4,True,0.79,2026-08-31T08:49:00
+txn_rzp_100085,cust_20015,Meera Joshi,1791.24,INR,card,INSUFFICIENT_BALANCE,Daily transaction limit exceeded on the selected debit card / account,user_error,3,True,0.94,2026-08-31T07:57:00
+txn_rzp_100086,cust_20016,Rahul Gupta,5155.8,INR,card,PAYMENT_DECLINED,Unexpected error occurred during multi-tender settlement negotiation,gateway,3,False,0.88,2026-08-31T05:54:00
+txn_rzp_100087,cust_20017,Divya Deshmukh,2399.98,INR,card,INVALID_EXPIRY_DATE,Card issuer declined: Card expired or invalid expiration month/year,user_error,2,True,0.95,2026-08-31T06:08:00
+txn_rzp_100088,cust_20018,Siddharth Rao,6432.54,INR,card,ISSUER_SWITCH_UNAVAILABLE,Temporary switch downtime at processing bank,bank_switch,0,True,0.9,2026-08-31T08:56:00
+txn_rzp_100089,cust_20019,Kavita Menon,1414.09,INR,card,LIMIT_EXCEEDED,Bank declined transaction: Insufficient available credit limit,user_error,0,True,0.9,2026-08-31T05:24:00
+txn_rzp_100090,cust_20020,Arjun Nambiar,1887.63,INR,card,insufficient_funds,Daily transaction limit exceeded on the selected debit card / account,user_error,1,False,0.86,2026-08-31T09:41:00
+txn_rzp_100091,cust_20021,Aarav Sharma,1682.42,INR,netbanking,GATEWAY_ERROR,Bank network timeout occurred while communicating with issuer switch,bank_switch,1,False,0.81,2026-08-31T06:51:00
+txn_rzp_100092,cust_20022,Priya Patel,6608.12,INR,card,GATEWAY_ERROR,Transaction declined by downstream partner without specific error description,gateway,0,False,0.79,2026-08-31T07:44:00
+txn_rzp_100093,cust_20023,Rohan Mehta,2206.62,INR,card,EXPIRED_CARD,Card validity has expired (expiry date is in the past),user_error,1,False,0.85,2026-08-31T08:23:00
+txn_rzp_100094,cust_20024,Ananya Iyer,2904.79,INR,card,insufficient_funds,Account balance insufficient to cover transaction amount,user_error,3,False,0.86,2026-08-31T06:18:00
+txn_rzp_100095,cust_20025,Vikram Singh,1341.8,INR,upi,GATEWAY_ERROR,Gateway timeout: Issuer bank took more than 30s to acknowledge debit request,bank_switch,0,False,0.49,2026-08-31T04:18:00
+txn_rzp_100096,cust_20026,Sneha Reddy,1246.24,INR,card,otp_timeout,Customer failed to enter OTP within the 5-minute authentication window,user_error,3,True,0.76,2026-08-31T09:35:00
+txn_rzp_100097,cust_20027,Karan Kapoor,472.34,INR,card,otp_timeout,Authentication cancelled by customer during bank challenge,user_error,2,False,0.73,2026-08-31T07:52:00
+txn_rzp_100098,cust_20028,Pooja Nair,6754.96,INR,netbanking,ISSUER_SWITCH_UNAVAILABLE,Temporary switch downtime at processing bank,bank_switch,0,True,0.9,2026-08-31T04:53:00
+txn_rzp_100099,cust_20029,Aditya Verma,8530.34,INR,card,AUTH_FAILED,Incorrect 3D Secure OTP entered multiple times by customer,user_error,1,False,0.84,2026-08-31T05:50:00
+txn_rzp_100100,cust_20030,Meera Joshi,1163.11,INR,netbanking,GATEWAY_ERROR,Generic payment processor rejection: Code 9999,gateway,0,False,0.69,2026-08-31T09:31:00
+txn_rzp_100101,cust_20031,Rahul Gupta,4514.4,INR,netbanking,3DS_VERIFICATION_FAILED,Authentication cancelled by customer during bank challenge,user_error,3,True,0.99,2026-08-31T06:51:00
+txn_rzp_100102,cust_20032,Divya Deshmukh,4939.05,INR,upi,UNKNOWN_SWITCH_ERROR,Transaction declined by downstream partner without specific error description,gateway,0,True,0.95,2026-08-31T05:30:00
+txn_rzp_100103,cust_20033,Siddharth Rao,1174.32,INR,card,ISSUER_SWITCH_UNAVAILABLE,Temporary switch downtime at processing bank,bank_switch,0,False,0.9,2026-08-31T05:17:00
+txn_rzp_100104,cust_20034,Kavita Menon,1838.36,INR,upi,FRAUD_SUSPECTED,Transaction blocked by Razorpay Shield risk engine: High velocity detected,risk_engine,4,True,0.83,2026-08-31T06:28:00
+txn_rzp_100105,cust_20000,Arjun Nambiar,9816.03,INR,card,ISSUER_SWITCH_UNAVAILABLE,Temporary switch downtime at processing bank,bank_switch,0,True,0.96,2026-08-31T07:23:00
+txn_rzp_100106,cust_20001,Aarav Sharma,1182.72,INR,card,VELOCITY_EXCEEDED,Transaction blocked by Razorpay Shield risk engine: High velocity detected,risk_engine,2,True,0.92,2026-08-31T06:35:00
+txn_rzp_100107,cust_20002,Priya Patel,6402.81,INR,netbanking,AUTH_FAILED,Incorrect 3D Secure OTP entered multiple times by customer,user_error,0,False,0.8,2026-08-31T07:00:00
+txn_rzp_100108,cust_20003,Rohan Mehta,343.76,INR,upi,risk_blocked,Issuer risk block: Suspicious international IP pattern or stolen card match,risk_engine,1,False,0.84,2026-08-31T06:28:00
+txn_rzp_100109,cust_20004,Ananya Iyer,9152.05,INR,upi,LIMIT_EXCEEDED,Daily transaction limit exceeded on the selected debit card / account,user_error,2,True,0.95,2026-08-31T04:27:00
+txn_rzp_100110,cust_20005,Vikram Singh,9097.06,INR,card,INVALID_EXPIRY_DATE,Card issuer declined: Card expired or invalid expiration month/year,user_error,0,False,0.96,2026-08-31T06:40:00
+txn_rzp_100111,cust_20006,Sneha Reddy,14270.9,INR,netbanking,3DS_VERIFICATION_FAILED,Incorrect 3D Secure OTP entered multiple times by customer,user_error,1,True,0.2,2026-08-31T08:17:00
+txn_rzp_100112,cust_20007,Karan Kapoor,1635.09,INR,upi,BANK_TIMEOUT,Temporary switch downtime at processing bank,bank_switch,0,False,0.93,2026-08-31T05:08:00
+txn_rzp_100113,cust_20008,Pooja Nair,9728.38,INR,card,INSUFFICIENT_BALANCE,Bank declined transaction: Insufficient available credit limit,user_error,1,False,0.83,2026-08-31T08:33:00
+txn_rzp_100114,cust_20009,Aditya Verma,1823.21,INR,upi,insufficient_funds,Bank declined transaction: Insufficient available credit limit,user_error,0,False,0.97,2026-08-31T05:32:00
+txn_rzp_100115,cust_20010,Meera Joshi,1628.63,INR,upi,LIMIT_EXCEEDED,Bank declined transaction: Insufficient available credit limit,user_error,0,True,0.74,2026-08-31T06:24:00
+txn_rzp_100116,cust_20011,Rahul Gupta,1845.17,INR,upi,VELOCITY_EXCEEDED,AML compliance rule triggered: Flagged for mandatory manual review,risk_engine,1,False,0.96,2026-08-31T07:08:00
+txn_rzp_100117,cust_20012,Divya Deshmukh,1065.99,INR,card,INVALID_EXPIRY_DATE,Payment method not valid: Card deactivated due to expiry,user_error,1,False,0.95,2026-08-31T04:13:00
+txn_rzp_100118,cust_20013,Siddharth Rao,2345.77,INR,upi,VELOCITY_EXCEEDED,AML compliance rule triggered: Flagged for mandatory manual review,risk_engine,3,False,0.77,2026-08-31T08:44:00
+txn_rzp_100119,cust_20014,Kavita Menon,353.97,INR,card,UNKNOWN_SWITCH_ERROR,Generic payment processor rejection: Code 9999,gateway,0,False,0.9,2026-08-31T06:11:00
+txn_rzp_100120,cust_20015,Arjun Nambiar,4124.23,INR,upi,FRAUD_SUSPECTED,AML compliance rule triggered: Flagged for mandatory manual review,risk_engine,0,True,0.98,2026-08-31T07:31:00
+txn_rzp_100121,cust_20016,Aarav Sharma,243.27,INR,upi,INSUFFICIENT_BALANCE,Account balance insufficient to cover transaction amount,user_error,0,True,0.86,2026-08-31T05:06:00
+txn_rzp_100122,cust_20017,Priya Patel,316.83,INR,upi,insufficient_funds,Daily transaction limit exceeded on the selected debit card / account,user_error,3,True,0.78,2026-08-31T09:23:00
+txn_rzp_100123,cust_20018,Rohan Mehta,5469.14,INR,card,UNKNOWN_SWITCH_ERROR,Generic payment processor rejection: Code 9999,gateway,1,True,0.9,2026-08-31T09:26:00
+txn_rzp_100124,cust_20019,Ananya Iyer,4532.42,INR,card,card_expired,Card validity has expired (expiry date is in the past),user_error,0,True,0.85,2026-08-31T09:43:00
+txn_rzp_100125,cust_20020,Vikram Singh,8441.38,INR,card,PAYMENT_DECLINED,Transaction declined by downstream partner without specific error description,gateway,1,False,0.84,2026-08-31T05:42:00

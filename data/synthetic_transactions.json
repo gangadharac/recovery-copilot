@@ -1,0 +1,4502 @@
+[
+  {
+    "transaction_id": "txn_rzp_100001",
+    "customer_id": "cust_20001",
+    "customer_name": "Aarav Sharma",
+    "customer_phone": "+919876543210",
+    "customer_email": "aarav.sharma@example.com",
+    "amount": 623.72,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "PNB",
+      "upi_vpa": null
+    },
+    "error_code": "3DS_VERIFICATION_FAILED",
+    "error_description": "Authentication cancelled by customer during bank challenge",
+    "error_source": "user_error",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T04:01:00",
+    "timestamp": "2026-08-31T05:33:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 10,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.9,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100002",
+    "customer_id": "cust_20002",
+    "customer_name": "Priya Patel",
+    "customer_phone": "+919876543211",
+    "customer_email": "priya.patel@example.com",
+    "amount": 8736.93,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "3DS_VERIFICATION_FAILED",
+    "error_description": "Incorrect 3D Secure OTP entered multiple times by customer",
+    "error_source": "user_error",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T09:11:00",
+    "timestamp": "2026-08-31T09:23:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 25,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.89,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100003",
+    "customer_id": "cust_20003",
+    "customer_name": "Rohan Mehta",
+    "customer_phone": "+919876543212",
+    "customer_email": "rohan.mehta@example.com",
+    "amount": 5929.52,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "credit",
+      "bank_code": "SBI",
+      "upi_vpa": null
+    },
+    "error_code": "AUTH_FAILED",
+    "error_description": "Authentication cancelled by customer during bank challenge",
+    "error_source": "user_error",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T06:27:00",
+    "timestamp": "2026-08-31T07:33:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 11,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.91,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100004",
+    "customer_id": "cust_20004",
+    "customer_name": "Ananya Iyer",
+    "customer_phone": "+919876543213",
+    "customer_email": "ananya.iyer@example.com",
+    "amount": 2402.5,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "debit",
+      "bank_code": "AXIS",
+      "upi_vpa": null
+    },
+    "error_code": "LIMIT_EXCEEDED",
+    "error_description": "Account balance insufficient to cover transaction amount",
+    "error_source": "user_error",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T03:59:00",
+    "timestamp": "2026-08-31T04:05:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 23,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.88,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100005",
+    "customer_id": "cust_20005",
+    "customer_name": "Vikram Singh",
+    "customer_phone": "+919876543214",
+    "customer_email": "vikram.singh@example.com",
+    "amount": 914.78,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "SBI",
+      "upi_vpa": "vikramsingh@oksbi"
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T09:48:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 4,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.78,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100006",
+    "customer_id": "cust_20006",
+    "customer_name": "Sneha Reddy",
+    "customer_phone": "+919876543215",
+    "customer_email": "sneha.reddy@example.com",
+    "amount": 3912.7,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "credit",
+      "bank_code": "PNB",
+      "upi_vpa": null
+    },
+    "error_code": "risk_blocked",
+    "error_description": "Issuer risk block: Suspicious international IP pattern or stolen card match",
+    "error_source": "risk_engine",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T04:17:00",
+    "timestamp": "2026-08-31T05:35:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 13,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.99,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "403",
+      "issuer_code": "RISK_BLOCK",
+      "decline_category": "risk_blocked"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100007",
+    "customer_id": "cust_20007",
+    "customer_name": "Karan Kapoor",
+    "customer_phone": "+919876543216",
+    "customer_email": "karan.kapoor@example.com",
+    "amount": 1105.83,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "HDFC",
+      "upi_vpa": "karankapoor@okhdfc"
+    },
+    "error_code": "LIMIT_EXCEEDED",
+    "error_description": "Daily transaction limit exceeded on the selected debit card / account",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T04:47:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 5,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.82,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100008",
+    "customer_id": "cust_20008",
+    "customer_name": "Pooja Nair",
+    "customer_phone": "+919876543217",
+    "customer_email": "pooja.nair@example.com",
+    "amount": 679.09,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "HDFC",
+      "upi_vpa": "poojanair@okhdfc"
+    },
+    "error_code": "INSUFFICIENT_BALANCE",
+    "error_description": "Daily transaction limit exceeded on the selected debit card / account",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T02:10:00",
+    "timestamp": "2026-08-31T04:30:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 5,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.55,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100009",
+    "customer_id": "cust_20009",
+    "customer_name": "Aditya Verma",
+    "customer_phone": "+919876543218",
+    "customer_email": "aditya.verma@example.com",
+    "amount": 2288.37,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "YES_BANK",
+      "upi_vpa": "adityaverma@okyes_bank"
+    },
+    "error_code": "CONNECTION_DROPPED",
+    "error_description": "Network packet drop occurred during secure handshake",
+    "error_source": "network",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T04:18:00",
+    "timestamp": "2026-08-31T04:43:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 7,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.69,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "499",
+      "issuer_code": "NET_ERR",
+      "decline_category": "network_glitch"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100010",
+    "customer_id": "cust_20010",
+    "customer_name": "Meera Joshi",
+    "customer_phone": "+919876543219",
+    "customer_email": "meera.joshi@example.com",
+    "amount": 1819.53,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "debit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "card_expired",
+    "error_description": "Card validity has expired (expiry date is in the past)",
+    "error_source": "user_error",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T04:54:00",
+    "timestamp": "2026-08-31T07:44:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 6,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.98,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100011",
+    "customer_id": "cust_20011",
+    "customer_name": "Rahul Gupta",
+    "customer_phone": "+919876543220",
+    "customer_email": "rahul.gupta@example.com",
+    "amount": 1145.28,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "ICICI",
+      "upi_vpa": null
+    },
+    "error_code": "INSUFFICIENT_BALANCE",
+    "error_description": "Account balance insufficient to cover transaction amount",
+    "error_source": "user_error",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T07:32:00",
+    "timestamp": "2026-08-31T07:48:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 5,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.98,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100012",
+    "customer_id": "cust_20012",
+    "customer_name": "Divya Deshmukh",
+    "customer_phone": "+919876543221",
+    "customer_email": "divya.d@example.com",
+    "amount": 6882.72,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "BANK_TIMEOUT",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T08:44:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 16,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.88,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100013",
+    "customer_id": "cust_20013",
+    "customer_name": "Siddharth Rao",
+    "customer_phone": "+919876543222",
+    "customer_email": "sid.rao@example.com",
+    "amount": 914.45,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "debit",
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "insufficient_funds",
+    "error_description": "Bank declined transaction: Insufficient available credit limit",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T08:46:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 18,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.9,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100014",
+    "customer_id": "cust_20014",
+    "customer_name": "Kavita Menon",
+    "customer_phone": "+919876543223",
+    "customer_email": "kavita.m@example.com",
+    "amount": 9361.6,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "ICICI",
+      "upi_vpa": "kavitamenon@okicici"
+    },
+    "error_code": "ISSUER_SWITCH_UNAVAILABLE",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T05:51:00",
+    "timestamp": "2026-08-31T06:55:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 14,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.99,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100015",
+    "customer_id": "cust_20015",
+    "customer_name": "Arjun Nambiar",
+    "customer_phone": "+919876543224",
+    "customer_email": "arjun.n@example.com",
+    "amount": 1669.63,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "EXPIRED_CARD",
+    "error_description": "Payment method not valid: Card deactivated due to expiry",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T07:44:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 13,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.76,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100016",
+    "customer_id": "cust_20016",
+    "customer_name": "Aarav Sharma",
+    "customer_phone": "+919876543210",
+    "customer_email": "aarav.sharma@example.com",
+    "amount": 2401.01,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "debit",
+      "bank_code": "KOTAK",
+      "upi_vpa": null
+    },
+    "error_code": "otp_timeout",
+    "error_description": "Incorrect 3D Secure OTP entered multiple times by customer",
+    "error_source": "user_error",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T06:09:00",
+    "timestamp": "2026-08-31T08:58:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 1,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.32,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100017",
+    "customer_id": "cust_20017",
+    "customer_name": "Priya Patel",
+    "customer_phone": "+919876543211",
+    "customer_email": "priya.patel@example.com",
+    "amount": 5068.59,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "ICICI",
+      "upi_vpa": "priyapatel@okicici"
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T05:52:00",
+    "timestamp": "2026-08-31T06:09:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 7,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.69,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100018",
+    "customer_id": "cust_20018",
+    "customer_name": "Rohan Mehta",
+    "customer_phone": "+919876543212",
+    "customer_email": "rohan.mehta@example.com",
+    "amount": 508.47,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "SBI",
+      "upi_vpa": "rohanmehta@oksbi"
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Unexpected error occurred during multi-tender settlement negotiation",
+    "error_source": "gateway",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T06:56:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 23,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "card",
+      "reliability_score": 1.0,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100019",
+    "customer_id": "cust_20019",
+    "customer_name": "Ananya Iyer",
+    "customer_phone": "+919876543213",
+    "customer_email": "ananya.iyer@example.com",
+    "amount": 33680.54,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "SBI",
+      "upi_vpa": "ananyaiyer@oksbi"
+    },
+    "error_code": "CONNECTION_DROPPED",
+    "error_description": "User browser connection reset during 3DS redirect",
+    "error_source": "network",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T06:40:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 11,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.73,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "499",
+      "issuer_code": "NET_ERR",
+      "decline_category": "network_glitch"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100020",
+    "customer_id": "cust_20020",
+    "customer_name": "Vikram Singh",
+    "customer_phone": "+919876543214",
+    "customer_email": "vikram.singh@example.com",
+    "amount": 909.77,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "INSUFFICIENT_BALANCE",
+    "error_description": "Bank declined transaction: Insufficient available credit limit",
+    "error_source": "user_error",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T04:48:00",
+    "timestamp": "2026-08-31T05:07:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 25,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.92,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100021",
+    "customer_id": "cust_20021",
+    "customer_name": "Sneha Reddy",
+    "customer_phone": "+919876543215",
+    "customer_email": "sneha.reddy@example.com",
+    "amount": 1430.4,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "AXIS",
+      "upi_vpa": "snehareddy@okaxis"
+    },
+    "error_code": "CLIENT_DISCONNECTED",
+    "error_description": "Network packet drop occurred during secure handshake",
+    "error_source": "network",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T04:28:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 22,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.95,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "499",
+      "issuer_code": "NET_ERR",
+      "decline_category": "network_glitch"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100022",
+    "customer_id": "cust_20022",
+    "customer_name": "Karan Kapoor",
+    "customer_phone": "+919876543216",
+    "customer_email": "karan.kapoor@example.com",
+    "amount": 825.42,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "credit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "network_error",
+    "error_description": "Mobile network connection lost while awaiting webhook confirmation",
+    "error_source": "network",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T04:05:00",
+    "timestamp": "2026-08-31T06:58:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 25,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.96,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "499",
+      "issuer_code": "NET_ERR",
+      "decline_category": "network_glitch"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100023",
+    "customer_id": "cust_20023",
+    "customer_name": "Pooja Nair",
+    "customer_phone": "+919876543217",
+    "customer_email": "pooja.nair@example.com",
+    "amount": 1235.16,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "YES_BANK",
+      "upi_vpa": "poojanair@okyes_bank"
+    },
+    "error_code": "network_error",
+    "error_description": "User browser connection reset during 3DS redirect",
+    "error_source": "network",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T08:15:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 13,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.76,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "499",
+      "issuer_code": "NET_ERR",
+      "decline_category": "network_glitch"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100024",
+    "customer_id": "cust_20024",
+    "customer_name": "Aditya Verma",
+    "customer_phone": "+919876543218",
+    "customer_email": "aditya.verma@example.com",
+    "amount": 8636.77,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "credit",
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "EXPIRED_CARD",
+    "error_description": "Card issuer declined: Card expired or invalid expiration month/year",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T04:27:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 8,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.72,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100025",
+    "customer_id": "cust_20025",
+    "customer_name": "Meera Joshi",
+    "customer_phone": "+919876543219",
+    "customer_email": "meera.joshi@example.com",
+    "amount": 5113.45,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "PAYMENT_DECLINED",
+    "error_description": "Generic payment processor rejection: Code 9999",
+    "error_source": "gateway",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T06:41:00",
+    "timestamp": "2026-08-31T09:13:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 16,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.99,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100026",
+    "customer_id": "cust_20026",
+    "customer_name": "Rahul Gupta",
+    "customer_phone": "+919876543220",
+    "customer_email": "rahul.gupta@example.com",
+    "amount": 1778.14,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "ICICI",
+      "upi_vpa": "rahulgupta@okicici"
+    },
+    "error_code": "CONNECTION_DROPPED",
+    "error_description": "Network packet drop occurred during secure handshake",
+    "error_source": "network",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T05:47:00",
+    "timestamp": "2026-08-31T08:44:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 23,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.88,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "499",
+      "issuer_code": "NET_ERR",
+      "decline_category": "network_glitch"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100027",
+    "customer_id": "cust_20027",
+    "customer_name": "Divya Deshmukh",
+    "customer_phone": "+919876543221",
+    "customer_email": "divya.d@example.com",
+    "amount": 6710.92,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "KOTAK",
+      "upi_vpa": null
+    },
+    "error_code": "card_expired",
+    "error_description": "Card issuer declined: Card expired or invalid expiration month/year",
+    "error_source": "user_error",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T06:41:00",
+    "timestamp": "2026-08-31T08:31:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 13,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.76,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100028",
+    "customer_id": "cust_20028",
+    "customer_name": "Siddharth Rao",
+    "customer_phone": "+919876543222",
+    "customer_email": "sid.rao@example.com",
+    "amount": 1431.58,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "SBI",
+      "upi_vpa": null
+    },
+    "error_code": "LIMIT_EXCEEDED",
+    "error_description": "Bank declined transaction: Insufficient available credit limit",
+    "error_source": "user_error",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T04:42:00",
+    "timestamp": "2026-08-31T05:38:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 13,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.76,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100029",
+    "customer_id": "cust_20029",
+    "customer_name": "Kavita Menon",
+    "customer_phone": "+919876543223",
+    "customer_email": "kavita.m@example.com",
+    "amount": 2399.79,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "ISSUER_SWITCH_UNAVAILABLE",
+    "error_description": "Bank network timeout occurred while communicating with issuer switch",
+    "error_source": "bank_switch",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T05:12:00",
+    "timestamp": "2026-08-31T06:29:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 27,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.9,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100030",
+    "customer_id": "cust_20030",
+    "customer_name": "Arjun Nambiar",
+    "customer_phone": "+919876543224",
+    "customer_email": "arjun.n@example.com",
+    "amount": 9828.63,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "credit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "INSUFFICIENT_BALANCE",
+    "error_description": "Bank declined transaction: Insufficient available credit limit",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T09:23:00",
+    "timestamp": "2026-08-31T09:37:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 12,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.92,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100031",
+    "customer_id": "cust_20031",
+    "customer_name": "Aarav Sharma",
+    "customer_phone": "+919876543210",
+    "customer_email": "aarav.sharma@example.com",
+    "amount": 653.78,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "KOTAK",
+      "upi_vpa": null
+    },
+    "error_code": "otp_timeout",
+    "error_description": "Authentication cancelled by customer during bank challenge",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:24:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 21,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.87,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100032",
+    "customer_id": "cust_20032",
+    "customer_name": "Priya Patel",
+    "customer_phone": "+919876543211",
+    "customer_email": "priya.patel@example.com",
+    "amount": 7087.22,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "credit",
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "INVALID_EXPIRY_DATE",
+    "error_description": "Payment method not valid: Card deactivated due to expiry",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T06:33:00",
+    "timestamp": "2026-08-31T08:46:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 11,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.73,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100033",
+    "customer_id": "cust_20033",
+    "customer_name": "Rohan Mehta",
+    "customer_phone": "+919876543212",
+    "customer_email": "rohan.mehta@example.com",
+    "amount": 401.73,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "credit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Transaction declined by downstream partner without specific error description",
+    "error_source": "gateway",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T04:05:00",
+    "timestamp": "2026-08-31T06:37:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 23,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.95,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100034",
+    "customer_id": "cust_20034",
+    "customer_name": "Ananya Iyer",
+    "customer_phone": "+919876543213",
+    "customer_email": "ananya.iyer@example.com",
+    "amount": 37598.78,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "KOTAK",
+      "upi_vpa": null
+    },
+    "error_code": "otp_timeout",
+    "error_description": "Customer failed to enter OTP within the 5-minute authentication window",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T08:56:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 11,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.73,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100035",
+    "customer_id": "cust_20000",
+    "customer_name": "Vikram Singh",
+    "customer_phone": "+919876543214",
+    "customer_email": "vikram.singh@example.com",
+    "amount": 1467.84,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "HDFC",
+      "upi_vpa": "vikramsingh@okhdfc"
+    },
+    "error_code": "CONNECTION_DROPPED",
+    "error_description": "Network packet drop occurred during secure handshake",
+    "error_source": "network",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:32:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 7,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.86,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "499",
+      "issuer_code": "NET_ERR",
+      "decline_category": "network_glitch"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100036",
+    "customer_id": "cust_20001",
+    "customer_name": "Sneha Reddy",
+    "customer_phone": "+919876543215",
+    "customer_email": "sneha.reddy@example.com",
+    "amount": 1765.22,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "BANK_TIMEOUT",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T09:16:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 15,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.83,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100037",
+    "customer_id": "cust_20002",
+    "customer_name": "Karan Kapoor",
+    "customer_phone": "+919876543216",
+    "customer_email": "karan.kapoor@example.com",
+    "amount": 3859.34,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "LIMIT_EXCEEDED",
+    "error_description": "Daily transaction limit exceeded on the selected debit card / account",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T04:29:00",
+    "timestamp": "2026-08-31T06:03:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 4,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.49,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100038",
+    "customer_id": "cust_20003",
+    "customer_name": "Pooja Nair",
+    "customer_phone": "+919876543217",
+    "customer_email": "pooja.nair@example.com",
+    "amount": 2459.16,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "AXIS",
+      "upi_vpa": null
+    },
+    "error_code": "LIMIT_EXCEEDED",
+    "error_description": "Bank declined transaction: Insufficient available credit limit",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T07:33:00",
+    "timestamp": "2026-08-31T07:43:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 13,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.92,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100039",
+    "customer_id": "cust_20004",
+    "customer_name": "Aditya Verma",
+    "customer_phone": "+919876543218",
+    "customer_email": "aditya.verma@example.com",
+    "amount": 674.71,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "PNB",
+      "upi_vpa": null
+    },
+    "error_code": "PAYMENT_DECLINED",
+    "error_description": "Generic payment processor rejection: Code 9999",
+    "error_source": "gateway",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T05:36:00",
+    "timestamp": "2026-08-31T08:21:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 12,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.75,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100040",
+    "customer_id": "cust_20005",
+    "customer_name": "Meera Joshi",
+    "customer_phone": "+919876543219",
+    "customer_email": "meera.joshi@example.com",
+    "amount": 617.51,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "YES_BANK",
+      "upi_vpa": "meerajoshi@okyes_bank"
+    },
+    "error_code": "INSUFFICIENT_BALANCE",
+    "error_description": "Account balance insufficient to cover transaction amount",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T07:37:00",
+    "timestamp": "2026-08-31T09:16:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 25,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.89,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100041",
+    "customer_id": "cust_20006",
+    "customer_name": "Rahul Gupta",
+    "customer_phone": "+919876543220",
+    "customer_email": "rahul.gupta@example.com",
+    "amount": 1122.58,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "ICICI",
+      "upi_vpa": "rahulgupta@okicici"
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T09:30:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 1,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.91,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100042",
+    "customer_id": "cust_20007",
+    "customer_name": "Divya Deshmukh",
+    "customer_phone": "+919876543221",
+    "customer_email": "divya.d@example.com",
+    "amount": 1396.55,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "KOTAK",
+      "upi_vpa": "divyadeshmukh@okkotak"
+    },
+    "error_code": "LIMIT_EXCEEDED",
+    "error_description": "Bank declined transaction: Insufficient available credit limit",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T09:04:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 3,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.42,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100043",
+    "customer_id": "cust_20008",
+    "customer_name": "Siddharth Rao",
+    "customer_phone": "+919876543222",
+    "customer_email": "sid.rao@example.com",
+    "amount": 6564.11,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "credit",
+      "bank_code": "AXIS",
+      "upi_vpa": null
+    },
+    "error_code": "BLACKLISTED_CARD",
+    "error_description": "Transaction blocked by Razorpay Shield risk engine: High velocity detected",
+    "error_source": "risk_engine",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T02:18:00",
+    "timestamp": "2026-08-31T04:50:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 13,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.76,
+      "has_disputed_charges": true
+    },
+    "raw_gateway_response": {
+      "status_code": "403",
+      "issuer_code": "RISK_BLOCK",
+      "decline_category": "risk_blocked"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100044",
+    "customer_id": "cust_20009",
+    "customer_name": "Kavita Menon",
+    "customer_phone": "+919876543223",
+    "customer_email": "kavita.m@example.com",
+    "amount": 4720.01,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "YES_BANK",
+      "upi_vpa": "kavitamenon@okyes_bank"
+    },
+    "error_code": "LIMIT_EXCEEDED",
+    "error_description": "Daily transaction limit exceeded on the selected debit card / account",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T09:48:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 21,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.95,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100045",
+    "customer_id": "cust_20010",
+    "customer_name": "Arjun Nambiar",
+    "customer_phone": "+919876543224",
+    "customer_email": "arjun.n@example.com",
+    "amount": 1862.05,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "credit",
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "network_error",
+    "error_description": "User browser connection reset during 3DS redirect",
+    "error_source": "network",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T04:38:00",
+    "timestamp": "2026-08-31T07:12:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 9,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.89,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "499",
+      "issuer_code": "NET_ERR",
+      "decline_category": "network_glitch"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100046",
+    "customer_id": "cust_20011",
+    "customer_name": "Aarav Sharma",
+    "customer_phone": "+919876543210",
+    "customer_email": "aarav.sharma@example.com",
+    "amount": 2877.95,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "KOTAK",
+      "upi_vpa": null
+    },
+    "error_code": "AUTH_FAILED",
+    "error_description": "Customer failed to enter OTP within the 5-minute authentication window",
+    "error_source": "user_error",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T06:16:00",
+    "timestamp": "2026-08-31T06:22:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 5,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.98,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100047",
+    "customer_id": "cust_20012",
+    "customer_name": "Priya Patel",
+    "customer_phone": "+919876543211",
+    "customer_email": "priya.patel@example.com",
+    "amount": 7614.37,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "SBI",
+      "upi_vpa": null
+    },
+    "error_code": "3DS_VERIFICATION_FAILED",
+    "error_description": "Authentication cancelled by customer during bank challenge",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T06:49:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 5,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.7,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100048",
+    "customer_id": "cust_20013",
+    "customer_name": "Rohan Mehta",
+    "customer_phone": "+919876543212",
+    "customer_email": "rohan.mehta@example.com",
+    "amount": 7186.7,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "SBI",
+      "upi_vpa": null
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T05:19:00",
+    "timestamp": "2026-08-31T06:52:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 25,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.96,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100049",
+    "customer_id": "cust_20014",
+    "customer_name": "Ananya Iyer",
+    "customer_phone": "+919876543213",
+    "customer_email": "ananya.iyer@example.com",
+    "amount": 2571.06,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Unexpected error occurred during multi-tender settlement negotiation",
+    "error_source": "gateway",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T06:32:00",
+    "timestamp": "2026-08-31T07:43:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 9,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.99,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100050",
+    "customer_id": "cust_20015",
+    "customer_name": "Vikram Singh",
+    "customer_phone": "+919876543214",
+    "customer_email": "vikram.singh@example.com",
+    "amount": 976.99,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "debit",
+      "bank_code": "SBI",
+      "upi_vpa": null
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Unexpected error occurred during multi-tender settlement negotiation",
+    "error_source": "gateway",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:42:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 3,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.97,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100051",
+    "customer_id": "cust_20016",
+    "customer_name": "Sneha Reddy",
+    "customer_phone": "+919876543215",
+    "customer_email": "sneha.reddy@example.com",
+    "amount": 2061.72,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "YES_BANK",
+      "upi_vpa": "snehareddy@okyes_bank"
+    },
+    "error_code": "CONNECTION_DROPPED",
+    "error_description": "User browser connection reset during 3DS redirect",
+    "error_source": "network",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T04:39:00",
+    "timestamp": "2026-08-31T06:47:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 25,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.96,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "499",
+      "issuer_code": "NET_ERR",
+      "decline_category": "network_glitch"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100052",
+    "customer_id": "cust_20017",
+    "customer_name": "Karan Kapoor",
+    "customer_phone": "+919876543216",
+    "customer_email": "karan.kapoor@example.com",
+    "amount": 1505.33,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "EXPIRED_CARD",
+    "error_description": "Card issuer declined: Card expired or invalid expiration month/year",
+    "error_source": "user_error",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T03:18:00",
+    "timestamp": "2026-08-31T04:05:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 7,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.63,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100053",
+    "customer_id": "cust_20018",
+    "customer_name": "Pooja Nair",
+    "customer_phone": "+919876543217",
+    "customer_email": "pooja.nair@example.com",
+    "amount": 1710.71,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "ICICI",
+      "upi_vpa": "poojanair@okicici"
+    },
+    "error_code": "VELOCITY_EXCEEDED",
+    "error_description": "Issuer risk block: Suspicious international IP pattern or stolen card match",
+    "error_source": "risk_engine",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T06:49:00",
+    "timestamp": "2026-08-31T07:08:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 22,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.91,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "403",
+      "issuer_code": "RISK_BLOCK",
+      "decline_category": "risk_blocked"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100054",
+    "customer_id": "cust_20019",
+    "customer_name": "Aditya Verma",
+    "customer_phone": "+919876543218",
+    "customer_email": "aditya.verma@example.com",
+    "amount": 30798.95,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "AXIS",
+      "upi_vpa": "adityaverma@okaxis"
+    },
+    "error_code": "PAYMENT_DECLINED",
+    "error_description": "Transaction declined by downstream partner without specific error description",
+    "error_source": "gateway",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T03:13:00",
+    "timestamp": "2026-08-31T05:31:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 22,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.88,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100055",
+    "customer_id": "cust_20020",
+    "customer_name": "Meera Joshi",
+    "customer_phone": "+919876543219",
+    "customer_email": "meera.joshi@example.com",
+    "amount": 1944.58,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "credit",
+      "bank_code": "KOTAK",
+      "upi_vpa": null
+    },
+    "error_code": "OTP_EXPIRED",
+    "error_description": "Incorrect 3D Secure OTP entered multiple times by customer",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T07:31:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 2,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.33,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100056",
+    "customer_id": "cust_20021",
+    "customer_name": "Rahul Gupta",
+    "customer_phone": "+919876543220",
+    "customer_email": "rahul.gupta@example.com",
+    "amount": 3130.26,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "INVALID_EXPIRY_DATE",
+    "error_description": "Card issuer declined: Card expired or invalid expiration month/year",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T08:59:00",
+    "timestamp": "2026-08-31T09:14:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 21,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.95,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100057",
+    "customer_id": "cust_20022",
+    "customer_name": "Divya Deshmukh",
+    "customer_phone": "+919876543221",
+    "customer_email": "divya.d@example.com",
+    "amount": 2286.8,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "ICICI",
+      "upi_vpa": "divyadeshmukh@okicici"
+    },
+    "error_code": "FRAUD_SUSPECTED",
+    "error_description": "AML compliance rule triggered: Flagged for mandatory manual review",
+    "error_source": "risk_engine",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T07:02:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 11,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.84,
+      "has_disputed_charges": true
+    },
+    "raw_gateway_response": {
+      "status_code": "403",
+      "issuer_code": "RISK_BLOCK",
+      "decline_category": "risk_blocked"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100058",
+    "customer_id": "cust_20023",
+    "customer_name": "Siddharth Rao",
+    "customer_phone": "+919876543222",
+    "customer_email": "sid.rao@example.com",
+    "amount": 8543.5,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "PNB",
+      "upi_vpa": null
+    },
+    "error_code": "otp_timeout",
+    "error_description": "Incorrect 3D Secure OTP entered multiple times by customer",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T09:10:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 21,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 1.0,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100059",
+    "customer_id": "cust_20024",
+    "customer_name": "Kavita Menon",
+    "customer_phone": "+919876543223",
+    "customer_email": "kavita.m@example.com",
+    "amount": 9931.59,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "credit",
+      "bank_code": "AXIS",
+      "upi_vpa": null
+    },
+    "error_code": "insufficient_funds",
+    "error_description": "Daily transaction limit exceeded on the selected debit card / account",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T06:43:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 13,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.81,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100060",
+    "customer_id": "cust_20025",
+    "customer_name": "Arjun Nambiar",
+    "customer_phone": "+919876543224",
+    "customer_email": "arjun.n@example.com",
+    "amount": 8318.74,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "debit",
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "INSUFFICIENT_BALANCE",
+    "error_description": "Daily transaction limit exceeded on the selected debit card / account",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T08:24:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 1,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.2,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100061",
+    "customer_id": "cust_20026",
+    "customer_name": "Aarav Sharma",
+    "customer_phone": "+919876543210",
+    "customer_email": "aarav.sharma@example.com",
+    "amount": 740.44,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "debit",
+      "bank_code": "ICICI",
+      "upi_vpa": null
+    },
+    "error_code": "PAYMENT_DECLINED",
+    "error_description": "Transaction declined by downstream partner without specific error description",
+    "error_source": "gateway",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:54:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 6,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.74,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100062",
+    "customer_id": "cust_20027",
+    "customer_name": "Priya Patel",
+    "customer_phone": "+919876543211",
+    "customer_email": "priya.patel@example.com",
+    "amount": 2161.8,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "PNB",
+      "upi_vpa": null
+    },
+    "error_code": "ISSUER_SWITCH_UNAVAILABLE",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:47:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 11,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.73,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100063",
+    "customer_id": "cust_20028",
+    "customer_name": "Rohan Mehta",
+    "customer_phone": "+919876543212",
+    "customer_email": "rohan.mehta@example.com",
+    "amount": 32649.18,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "debit",
+      "bank_code": "ICICI",
+      "upi_vpa": null
+    },
+    "error_code": "3DS_VERIFICATION_FAILED",
+    "error_description": "Customer failed to enter OTP within the 5-minute authentication window",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T07:35:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 8,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.99,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100064",
+    "customer_id": "cust_20029",
+    "customer_name": "Ananya Iyer",
+    "customer_phone": "+919876543213",
+    "customer_email": "ananya.iyer@example.com",
+    "amount": 3679.52,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "AXIS",
+      "upi_vpa": "ananyaiyer@okaxis"
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Unexpected error occurred during multi-tender settlement negotiation",
+    "error_source": "gateway",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T08:35:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 28,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.87,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100065",
+    "customer_id": "cust_20030",
+    "customer_name": "Vikram Singh",
+    "customer_phone": "+919876543214",
+    "customer_email": "vikram.singh@example.com",
+    "amount": 2088.26,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "credit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "INVALID_EXPIRY_DATE",
+    "error_description": "Payment method not valid: Card deactivated due to expiry",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T08:39:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 9,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.69,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100066",
+    "customer_id": "cust_20031",
+    "customer_name": "Sneha Reddy",
+    "customer_phone": "+919876543215",
+    "customer_email": "sneha.reddy@example.com",
+    "amount": 2170.89,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "3DS_VERIFICATION_FAILED",
+    "error_description": "Customer failed to enter OTP within the 5-minute authentication window",
+    "error_source": "user_error",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T07:09:00",
+    "timestamp": "2026-08-31T07:20:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 3,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.49,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100067",
+    "customer_id": "cust_20032",
+    "customer_name": "Karan Kapoor",
+    "customer_phone": "+919876543216",
+    "customer_email": "karan.kapoor@example.com",
+    "amount": 37472.13,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "ICICI",
+      "upi_vpa": null
+    },
+    "error_code": "ISSUER_SWITCH_UNAVAILABLE",
+    "error_description": "Gateway timeout: Issuer bank took more than 30s to acknowledge debit request",
+    "error_source": "bank_switch",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T07:00:00",
+    "timestamp": "2026-08-31T07:14:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 22,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "card",
+      "reliability_score": 1.0,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100068",
+    "customer_id": "cust_20033",
+    "customer_name": "Pooja Nair",
+    "customer_phone": "+919876543217",
+    "customer_email": "pooja.nair@example.com",
+    "amount": 8382.36,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "AXIS",
+      "upi_vpa": null
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T08:53:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 13,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.81,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100069",
+    "customer_id": "cust_20034",
+    "customer_name": "Aditya Verma",
+    "customer_phone": "+919876543218",
+    "customer_email": "aditya.verma@example.com",
+    "amount": 14335.76,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "PNB",
+      "upi_vpa": null
+    },
+    "error_code": "INSUFFICIENT_BALANCE",
+    "error_description": "Account balance insufficient to cover transaction amount",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T02:33:00",
+    "timestamp": "2026-08-31T04:34:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 25,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.89,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100070",
+    "customer_id": "cust_20000",
+    "customer_name": "Meera Joshi",
+    "customer_phone": "+919876543219",
+    "customer_email": "meera.joshi@example.com",
+    "amount": 4970.16,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "AXIS",
+      "upi_vpa": "meerajoshi@okaxis"
+    },
+    "error_code": "FRAUD_SUSPECTED",
+    "error_description": "Transaction blocked by Razorpay Shield risk engine: High velocity detected",
+    "error_source": "risk_engine",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T07:35:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 11,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.78,
+      "has_disputed_charges": true
+    },
+    "raw_gateway_response": {
+      "status_code": "403",
+      "issuer_code": "RISK_BLOCK",
+      "decline_category": "risk_blocked"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100071",
+    "customer_id": "cust_20001",
+    "customer_name": "Rahul Gupta",
+    "customer_phone": "+919876543220",
+    "customer_email": "rahul.gupta@example.com",
+    "amount": 1124.24,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:58:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 8,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.99,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100072",
+    "customer_id": "cust_20002",
+    "customer_name": "Divya Deshmukh",
+    "customer_phone": "+919876543221",
+    "customer_email": "divya.d@example.com",
+    "amount": 22169.86,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "SBI",
+      "upi_vpa": "divyadeshmukh@oksbi"
+    },
+    "error_code": "UNKNOWN_SWITCH_ERROR",
+    "error_description": "Transaction declined by downstream partner without specific error description",
+    "error_source": "gateway",
+    "retry_count": 4,
+    "last_retry_timestamp": "2026-08-31T05:25:00",
+    "timestamp": "2026-08-31T05:34:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 13,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.81,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100073",
+    "customer_id": "cust_20003",
+    "customer_name": "Siddharth Rao",
+    "customer_phone": "+919876543222",
+    "customer_email": "sid.rao@example.com",
+    "amount": 4882.45,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "AXIS",
+      "upi_vpa": null
+    },
+    "error_code": "BAD_REQUEST_ERROR",
+    "error_description": "Unexpected error occurred during multi-tender settlement negotiation",
+    "error_source": "gateway",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T07:50:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 1,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.32,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100074",
+    "customer_id": "cust_20004",
+    "customer_name": "Kavita Menon",
+    "customer_phone": "+919876543223",
+    "customer_email": "kavita.m@example.com",
+    "amount": 670.23,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "ISSUER_SWITCH_UNAVAILABLE",
+    "error_description": "Gateway timeout: Issuer bank took more than 30s to acknowledge debit request",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T07:05:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 20,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.95,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100075",
+    "customer_id": "cust_20005",
+    "customer_name": "Arjun Nambiar",
+    "customer_phone": "+919876543224",
+    "customer_email": "arjun.n@example.com",
+    "amount": 654.79,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "SBI",
+      "upi_vpa": null
+    },
+    "error_code": "CLIENT_DISCONNECTED",
+    "error_description": "Network packet drop occurred during secure handshake",
+    "error_source": "network",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:31:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 7,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.63,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "499",
+      "issuer_code": "NET_ERR",
+      "decline_category": "network_glitch"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100076",
+    "customer_id": "cust_20006",
+    "customer_name": "Aarav Sharma",
+    "customer_phone": "+919876543210",
+    "customer_email": "aarav.sharma@example.com",
+    "amount": 4968.56,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "debit",
+      "bank_code": "ICICI",
+      "upi_vpa": null
+    },
+    "error_code": "card_expired",
+    "error_description": "Card validity has expired (expiry date is in the past)",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T04:11:00",
+    "timestamp": "2026-08-31T06:51:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 5,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.82,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100077",
+    "customer_id": "cust_20007",
+    "customer_name": "Priya Patel",
+    "customer_phone": "+919876543211",
+    "customer_email": "priya.patel@example.com",
+    "amount": 3419.77,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "ICICI",
+      "upi_vpa": null
+    },
+    "error_code": "INVALID_EXPIRY_DATE",
+    "error_description": "Card issuer declined: Card expired or invalid expiration month/year",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T08:08:00",
+    "timestamp": "2026-08-31T09:54:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 12,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.92,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100078",
+    "customer_id": "cust_20008",
+    "customer_name": "Rohan Mehta",
+    "customer_phone": "+919876543212",
+    "customer_email": "rohan.mehta@example.com",
+    "amount": 1742.84,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "credit",
+      "bank_code": "AXIS",
+      "upi_vpa": null
+    },
+    "error_code": "EXPIRED_CARD",
+    "error_description": "Card validity has expired (expiry date is in the past)",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T06:40:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 25,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "upi",
+      "reliability_score": 1.0,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100079",
+    "customer_id": "cust_20009",
+    "customer_name": "Ananya Iyer",
+    "customer_phone": "+919876543213",
+    "customer_email": "ananya.iyer@example.com",
+    "amount": 1508.89,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "KOTAK",
+      "upi_vpa": null
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Bank network timeout occurred while communicating with issuer switch",
+    "error_source": "bank_switch",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T08:15:00",
+    "timestamp": "2026-08-31T08:27:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 11,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.99,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100080",
+    "customer_id": "cust_20010",
+    "customer_name": "Vikram Singh",
+    "customer_phone": "+919876543214",
+    "customer_email": "vikram.singh@example.com",
+    "amount": 993.52,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "KOTAK",
+      "upi_vpa": "vikramsingh@okkotak"
+    },
+    "error_code": "CONNECTION_DROPPED",
+    "error_description": "User browser connection reset during 3DS redirect",
+    "error_source": "network",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T04:36:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 14,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.87,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "499",
+      "issuer_code": "NET_ERR",
+      "decline_category": "network_glitch"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100081",
+    "customer_id": "cust_20011",
+    "customer_name": "Sneha Reddy",
+    "customer_phone": "+919876543215",
+    "customer_email": "sneha.reddy@example.com",
+    "amount": 2281.07,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "HDFC",
+      "upi_vpa": "snehareddy@okhdfc"
+    },
+    "error_code": "UNKNOWN_SWITCH_ERROR",
+    "error_description": "Generic payment processor rejection: Code 9999",
+    "error_source": "gateway",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T02:54:00",
+    "timestamp": "2026-08-31T05:26:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 11,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.99,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100082",
+    "customer_id": "cust_20012",
+    "customer_name": "Karan Kapoor",
+    "customer_phone": "+919876543216",
+    "customer_email": "karan.kapoor@example.com",
+    "amount": 4785.34,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "SBI",
+      "upi_vpa": "karankapoor@oksbi"
+    },
+    "error_code": "BLACKLISTED_CARD",
+    "error_description": "AML compliance rule triggered: Flagged for mandatory manual review",
+    "error_source": "risk_engine",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T04:52:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 28,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.9,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "403",
+      "issuer_code": "RISK_BLOCK",
+      "decline_category": "risk_blocked"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100083",
+    "customer_id": "cust_20013",
+    "customer_name": "Pooja Nair",
+    "customer_phone": "+919876543217",
+    "customer_email": "pooja.nair@example.com",
+    "amount": 1709.74,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "3DS_VERIFICATION_FAILED",
+    "error_description": "Authentication cancelled by customer during bank challenge",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T07:55:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 24,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.92,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100084",
+    "customer_id": "cust_20014",
+    "customer_name": "Aditya Verma",
+    "customer_phone": "+919876543218",
+    "customer_email": "aditya.verma@example.com",
+    "amount": 12809.05,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "credit",
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "AUTH_FAILED",
+    "error_description": "Authentication cancelled by customer during bank challenge",
+    "error_source": "user_error",
+    "retry_count": 4,
+    "last_retry_timestamp": "2026-08-31T06:08:00",
+    "timestamp": "2026-08-31T08:49:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 8,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.79,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100085",
+    "customer_id": "cust_20015",
+    "customer_name": "Meera Joshi",
+    "customer_phone": "+919876543219",
+    "customer_email": "meera.joshi@example.com",
+    "amount": 1791.24,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "PNB",
+      "upi_vpa": null
+    },
+    "error_code": "INSUFFICIENT_BALANCE",
+    "error_description": "Daily transaction limit exceeded on the selected debit card / account",
+    "error_source": "user_error",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T07:42:00",
+    "timestamp": "2026-08-31T07:57:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 16,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.94,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100086",
+    "customer_id": "cust_20016",
+    "customer_name": "Rahul Gupta",
+    "customer_phone": "+919876543220",
+    "customer_email": "rahul.gupta@example.com",
+    "amount": 5155.8,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "debit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "PAYMENT_DECLINED",
+    "error_description": "Unexpected error occurred during multi-tender settlement negotiation",
+    "error_source": "gateway",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T04:18:00",
+    "timestamp": "2026-08-31T05:54:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 8,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.88,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100087",
+    "customer_id": "cust_20017",
+    "customer_name": "Divya Deshmukh",
+    "customer_phone": "+919876543221",
+    "customer_email": "divya.d@example.com",
+    "amount": 2399.98,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "credit",
+      "bank_code": "SBI",
+      "upi_vpa": null
+    },
+    "error_code": "INVALID_EXPIRY_DATE",
+    "error_description": "Card issuer declined: Card expired or invalid expiration month/year",
+    "error_source": "user_error",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T05:54:00",
+    "timestamp": "2026-08-31T06:08:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 23,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.95,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100088",
+    "customer_id": "cust_20018",
+    "customer_name": "Siddharth Rao",
+    "customer_phone": "+919876543222",
+    "customer_email": "sid.rao@example.com",
+    "amount": 6432.54,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "debit",
+      "bank_code": "SBI",
+      "upi_vpa": null
+    },
+    "error_code": "ISSUER_SWITCH_UNAVAILABLE",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T08:56:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 10,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.9,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100089",
+    "customer_id": "cust_20019",
+    "customer_name": "Kavita Menon",
+    "customer_phone": "+919876543223",
+    "customer_email": "kavita.m@example.com",
+    "amount": 1414.09,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "credit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "LIMIT_EXCEEDED",
+    "error_description": "Bank declined transaction: Insufficient available credit limit",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:24:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 19,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.9,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100090",
+    "customer_id": "cust_20020",
+    "customer_name": "Arjun Nambiar",
+    "customer_phone": "+919876543224",
+    "customer_email": "arjun.n@example.com",
+    "amount": 1887.63,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "credit",
+      "bank_code": "PNB",
+      "upi_vpa": null
+    },
+    "error_code": "insufficient_funds",
+    "error_description": "Daily transaction limit exceeded on the selected debit card / account",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T08:48:00",
+    "timestamp": "2026-08-31T09:41:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 25,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.86,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100091",
+    "customer_id": "cust_20021",
+    "customer_name": "Aarav Sharma",
+    "customer_phone": "+919876543210",
+    "customer_email": "aarav.sharma@example.com",
+    "amount": 1682.42,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Bank network timeout occurred while communicating with issuer switch",
+    "error_source": "bank_switch",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T05:58:00",
+    "timestamp": "2026-08-31T06:51:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 17,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.81,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100092",
+    "customer_id": "cust_20022",
+    "customer_name": "Priya Patel",
+    "customer_phone": "+919876543211",
+    "customer_email": "priya.patel@example.com",
+    "amount": 6608.12,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "credit",
+      "bank_code": "KOTAK",
+      "upi_vpa": null
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Transaction declined by downstream partner without specific error description",
+    "error_source": "gateway",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T07:44:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 8,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.79,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100093",
+    "customer_id": "cust_20023",
+    "customer_name": "Rohan Mehta",
+    "customer_phone": "+919876543212",
+    "customer_email": "rohan.mehta@example.com",
+    "amount": 2206.62,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "ICICI",
+      "upi_vpa": null
+    },
+    "error_code": "EXPIRED_CARD",
+    "error_description": "Card validity has expired (expiry date is in the past)",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T05:31:00",
+    "timestamp": "2026-08-31T08:23:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 17,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.85,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100094",
+    "customer_id": "cust_20024",
+    "customer_name": "Ananya Iyer",
+    "customer_phone": "+919876543213",
+    "customer_email": "ananya.iyer@example.com",
+    "amount": 2904.79,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "ICICI",
+      "upi_vpa": null
+    },
+    "error_code": "insufficient_funds",
+    "error_description": "Account balance insufficient to cover transaction amount",
+    "error_source": "user_error",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T03:19:00",
+    "timestamp": "2026-08-31T06:18:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 25,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.86,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100095",
+    "customer_id": "cust_20025",
+    "customer_name": "Vikram Singh",
+    "customer_phone": "+919876543214",
+    "customer_email": "vikram.singh@example.com",
+    "amount": 1341.8,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "SBI",
+      "upi_vpa": "vikramsingh@oksbi"
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Gateway timeout: Issuer bank took more than 30s to acknowledge debit request",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T04:18:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 2,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.49,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100096",
+    "customer_id": "cust_20026",
+    "customer_name": "Sneha Reddy",
+    "customer_phone": "+919876543215",
+    "customer_email": "sneha.reddy@example.com",
+    "amount": 1246.24,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "AXIS",
+      "upi_vpa": null
+    },
+    "error_code": "otp_timeout",
+    "error_description": "Customer failed to enter OTP within the 5-minute authentication window",
+    "error_source": "user_error",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T06:36:00",
+    "timestamp": "2026-08-31T09:35:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 13,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.76,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100097",
+    "customer_id": "cust_20027",
+    "customer_name": "Karan Kapoor",
+    "customer_phone": "+919876543216",
+    "customer_email": "karan.kapoor@example.com",
+    "amount": 472.34,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "otp_timeout",
+    "error_description": "Authentication cancelled by customer during bank challenge",
+    "error_source": "user_error",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T07:40:00",
+    "timestamp": "2026-08-31T07:52:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 11,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.73,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100098",
+    "customer_id": "cust_20028",
+    "customer_name": "Pooja Nair",
+    "customer_phone": "+919876543217",
+    "customer_email": "pooja.nair@example.com",
+    "amount": 6754.96,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "ISSUER_SWITCH_UNAVAILABLE",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T04:53:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 28,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.9,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100099",
+    "customer_id": "cust_20029",
+    "customer_name": "Aditya Verma",
+    "customer_phone": "+919876543218",
+    "customer_email": "aditya.verma@example.com",
+    "amount": 8530.34,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "credit",
+      "bank_code": "SBI",
+      "upi_vpa": null
+    },
+    "error_code": "AUTH_FAILED",
+    "error_description": "Incorrect 3D Secure OTP entered multiple times by customer",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T05:31:00",
+    "timestamp": "2026-08-31T05:50:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 16,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.84,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100100",
+    "customer_id": "cust_20030",
+    "customer_name": "Meera Joshi",
+    "customer_phone": "+919876543219",
+    "customer_email": "meera.joshi@example.com",
+    "amount": 1163.11,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "ICICI",
+      "upi_vpa": null
+    },
+    "error_code": "GATEWAY_ERROR",
+    "error_description": "Generic payment processor rejection: Code 9999",
+    "error_source": "gateway",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T09:31:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 9,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.69,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100101",
+    "customer_id": "cust_20031",
+    "customer_name": "Rahul Gupta",
+    "customer_phone": "+919876543220",
+    "customer_email": "rahul.gupta@example.com",
+    "amount": 4514.4,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "3DS_VERIFICATION_FAILED",
+    "error_description": "Authentication cancelled by customer during bank challenge",
+    "error_source": "user_error",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T04:34:00",
+    "timestamp": "2026-08-31T06:51:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 8,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.99,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100102",
+    "customer_id": "cust_20032",
+    "customer_name": "Divya Deshmukh",
+    "customer_phone": "+919876543221",
+    "customer_email": "divya.d@example.com",
+    "amount": 4939.05,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "PNB",
+      "upi_vpa": "divyadeshmukh@okpnb"
+    },
+    "error_code": "UNKNOWN_SWITCH_ERROR",
+    "error_description": "Transaction declined by downstream partner without specific error description",
+    "error_source": "gateway",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:30:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 20,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.95,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100103",
+    "customer_id": "cust_20033",
+    "customer_name": "Siddharth Rao",
+    "customer_phone": "+919876543222",
+    "customer_email": "sid.rao@example.com",
+    "amount": 1174.32,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Visa",
+      "card_type": "credit",
+      "bank_code": "ICICI",
+      "upi_vpa": null
+    },
+    "error_code": "ISSUER_SWITCH_UNAVAILABLE",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:17:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 18,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.9,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100104",
+    "customer_id": "cust_20034",
+    "customer_name": "Kavita Menon",
+    "customer_phone": "+919876543223",
+    "customer_email": "kavita.m@example.com",
+    "amount": 1838.36,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "PNB",
+      "upi_vpa": "kavitamenon@okpnb"
+    },
+    "error_code": "FRAUD_SUSPECTED",
+    "error_description": "Transaction blocked by Razorpay Shield risk engine: High velocity detected",
+    "error_source": "risk_engine",
+    "retry_count": 4,
+    "last_retry_timestamp": "2026-08-31T04:12:00",
+    "timestamp": "2026-08-31T06:28:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 10,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.83,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "403",
+      "issuer_code": "RISK_BLOCK",
+      "decline_category": "risk_blocked"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100105",
+    "customer_id": "cust_20000",
+    "customer_name": "Arjun Nambiar",
+    "customer_phone": "+919876543224",
+    "customer_email": "arjun.n@example.com",
+    "amount": 9816.03,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "AXIS",
+      "upi_vpa": null
+    },
+    "error_code": "ISSUER_SWITCH_UNAVAILABLE",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T07:23:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 28,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.96,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100106",
+    "customer_id": "cust_20001",
+    "customer_name": "Aarav Sharma",
+    "customer_phone": "+919876543210",
+    "customer_email": "aarav.sharma@example.com",
+    "amount": 1182.72,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "PNB",
+      "upi_vpa": null
+    },
+    "error_code": "VELOCITY_EXCEEDED",
+    "error_description": "Transaction blocked by Razorpay Shield risk engine: High velocity detected",
+    "error_source": "risk_engine",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T04:26:00",
+    "timestamp": "2026-08-31T06:35:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 23,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.92,
+      "has_disputed_charges": true
+    },
+    "raw_gateway_response": {
+      "status_code": "403",
+      "issuer_code": "RISK_BLOCK",
+      "decline_category": "risk_blocked"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100107",
+    "customer_id": "cust_20002",
+    "customer_name": "Priya Patel",
+    "customer_phone": "+919876543211",
+    "customer_email": "priya.patel@example.com",
+    "amount": 6402.81,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "YES_BANK",
+      "upi_vpa": null
+    },
+    "error_code": "AUTH_FAILED",
+    "error_description": "Incorrect 3D Secure OTP entered multiple times by customer",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T07:00:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 16,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.8,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100108",
+    "customer_id": "cust_20003",
+    "customer_name": "Rohan Mehta",
+    "customer_phone": "+919876543212",
+    "customer_email": "rohan.mehta@example.com",
+    "amount": 343.76,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "HDFC",
+      "upi_vpa": "rohanmehta@okhdfc"
+    },
+    "error_code": "risk_blocked",
+    "error_description": "Issuer risk block: Suspicious international IP pattern or stolen card match",
+    "error_source": "risk_engine",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T04:27:00",
+    "timestamp": "2026-08-31T06:28:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 11,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.84,
+      "has_disputed_charges": true
+    },
+    "raw_gateway_response": {
+      "status_code": "403",
+      "issuer_code": "RISK_BLOCK",
+      "decline_category": "risk_blocked"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100109",
+    "customer_id": "cust_20004",
+    "customer_name": "Ananya Iyer",
+    "customer_phone": "+919876543213",
+    "customer_email": "ananya.iyer@example.com",
+    "amount": 9152.05,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "SBI",
+      "upi_vpa": "ananyaiyer@oksbi"
+    },
+    "error_code": "LIMIT_EXCEEDED",
+    "error_description": "Daily transaction limit exceeded on the selected debit card / account",
+    "error_source": "user_error",
+    "retry_count": 2,
+    "last_retry_timestamp": "2026-08-31T02:10:00",
+    "timestamp": "2026-08-31T04:27:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 23,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.95,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100110",
+    "customer_id": "cust_20005",
+    "customer_name": "Vikram Singh",
+    "customer_phone": "+919876543214",
+    "customer_email": "vikram.singh@example.com",
+    "amount": 9097.06,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "credit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "INVALID_EXPIRY_DATE",
+    "error_description": "Card issuer declined: Card expired or invalid expiration month/year",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T06:40:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 26,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.96,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100111",
+    "customer_id": "cust_20006",
+    "customer_name": "Sneha Reddy",
+    "customer_phone": "+919876543215",
+    "customer_email": "sneha.reddy@example.com",
+    "amount": 14270.9,
+    "currency": "INR",
+    "payment_method": "netbanking",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "AXIS",
+      "upi_vpa": null
+    },
+    "error_code": "3DS_VERIFICATION_FAILED",
+    "error_description": "Incorrect 3D Secure OTP entered multiple times by customer",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T08:05:00",
+    "timestamp": "2026-08-31T08:17:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 1,
+      "lifetime_failed_transactions": 4,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.2,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "401",
+      "issuer_code": "AUTH_FAILED",
+      "decline_category": "wrong_otp"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100112",
+    "customer_id": "cust_20007",
+    "customer_name": "Karan Kapoor",
+    "customer_phone": "+919876543216",
+    "customer_email": "karan.kapoor@example.com",
+    "amount": 1635.09,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "PNB",
+      "upi_vpa": "karankapoor@okpnb"
+    },
+    "error_code": "BANK_TIMEOUT",
+    "error_description": "Temporary switch downtime at processing bank",
+    "error_source": "bank_switch",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:08:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 26,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.93,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "504",
+      "issuer_code": "TIMED_OUT",
+      "decline_category": "bank_timeout"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100113",
+    "customer_id": "cust_20008",
+    "customer_name": "Pooja Nair",
+    "customer_phone": "+919876543217",
+    "customer_email": "pooja.nair@example.com",
+    "amount": 9728.38,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "ICICI",
+      "upi_vpa": null
+    },
+    "error_code": "INSUFFICIENT_BALANCE",
+    "error_description": "Bank declined transaction: Insufficient available credit limit",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T05:43:00",
+    "timestamp": "2026-08-31T08:33:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 10,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.83,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100114",
+    "customer_id": "cust_20009",
+    "customer_name": "Aditya Verma",
+    "customer_phone": "+919876543218",
+    "customer_email": "aditya.verma@example.com",
+    "amount": 1823.21,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "ICICI",
+      "upi_vpa": "adityaverma@okicici"
+    },
+    "error_code": "insufficient_funds",
+    "error_description": "Bank declined transaction: Insufficient available credit limit",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:32:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 3,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.97,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100115",
+    "customer_id": "cust_20010",
+    "customer_name": "Meera Joshi",
+    "customer_phone": "+919876543219",
+    "customer_email": "meera.joshi@example.com",
+    "amount": 1628.63,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "AXIS",
+      "upi_vpa": "meerajoshi@okaxis"
+    },
+    "error_code": "LIMIT_EXCEEDED",
+    "error_description": "Bank declined transaction: Insufficient available credit limit",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T06:24:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 9,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.74,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100116",
+    "customer_id": "cust_20011",
+    "customer_name": "Rahul Gupta",
+    "customer_phone": "+919876543220",
+    "customer_email": "rahul.gupta@example.com",
+    "amount": 1845.17,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "YES_BANK",
+      "upi_vpa": "rahulgupta@okyes_bank"
+    },
+    "error_code": "VELOCITY_EXCEEDED",
+    "error_description": "AML compliance rule triggered: Flagged for mandatory manual review",
+    "error_source": "risk_engine",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T05:31:00",
+    "timestamp": "2026-08-31T07:08:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 27,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.96,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "403",
+      "issuer_code": "RISK_BLOCK",
+      "decline_category": "risk_blocked"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100117",
+    "customer_id": "cust_20012",
+    "customer_name": "Divya Deshmukh",
+    "customer_phone": "+919876543221",
+    "customer_email": "divya.d@example.com",
+    "amount": 1065.99,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "credit",
+      "bank_code": "PNB",
+      "upi_vpa": null
+    },
+    "error_code": "INVALID_EXPIRY_DATE",
+    "error_description": "Payment method not valid: Card deactivated due to expiry",
+    "error_source": "user_error",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T03:25:00",
+    "timestamp": "2026-08-31T04:13:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 23,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.95,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100118",
+    "customer_id": "cust_20013",
+    "customer_name": "Siddharth Rao",
+    "customer_phone": "+919876543222",
+    "customer_email": "sid.rao@example.com",
+    "amount": 2345.77,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "YES_BANK",
+      "upi_vpa": "siddharthrao@okyes_bank"
+    },
+    "error_code": "VELOCITY_EXCEEDED",
+    "error_description": "AML compliance rule triggered: Flagged for mandatory manual review",
+    "error_source": "risk_engine",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T07:29:00",
+    "timestamp": "2026-08-31T08:44:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 7,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.77,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "403",
+      "issuer_code": "RISK_BLOCK",
+      "decline_category": "risk_blocked"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100119",
+    "customer_id": "cust_20014",
+    "customer_name": "Kavita Menon",
+    "customer_phone": "+919876543223",
+    "customer_email": "kavita.m@example.com",
+    "amount": 353.97,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "UNKNOWN_SWITCH_ERROR",
+    "error_description": "Generic payment processor rejection: Code 9999",
+    "error_source": "gateway",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T06:11:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 10,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.9,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100120",
+    "customer_id": "cust_20015",
+    "customer_name": "Arjun Nambiar",
+    "customer_phone": "+919876543224",
+    "customer_email": "arjun.n@example.com",
+    "amount": 4124.23,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "AXIS",
+      "upi_vpa": "arjunnambiar@okaxis"
+    },
+    "error_code": "FRAUD_SUSPECTED",
+    "error_description": "AML compliance rule triggered: Flagged for mandatory manual review",
+    "error_source": "risk_engine",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T07:31:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 6,
+      "lifetime_failed_transactions": 0,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.98,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "403",
+      "issuer_code": "RISK_BLOCK",
+      "decline_category": "risk_blocked"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100121",
+    "customer_id": "cust_20016",
+    "customer_name": "Aarav Sharma",
+    "customer_phone": "+919876543210",
+    "customer_email": "aarav.sharma@example.com",
+    "amount": 243.27,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "ICICI",
+      "upi_vpa": "aaravsharma@okicici"
+    },
+    "error_code": "INSUFFICIENT_BALANCE",
+    "error_description": "Account balance insufficient to cover transaction amount",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T05:06:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 13,
+      "lifetime_failed_transactions": 2,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.86,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100122",
+    "customer_id": "cust_20017",
+    "customer_name": "Priya Patel",
+    "customer_phone": "+919876543211",
+    "customer_email": "priya.patel@example.com",
+    "amount": 316.83,
+    "currency": "INR",
+    "payment_method": "upi",
+    "payment_method_details": {
+      "card_network": null,
+      "card_type": null,
+      "bank_code": "KOTAK",
+      "upi_vpa": "priyapatel@okkotak"
+    },
+    "error_code": "insufficient_funds",
+    "error_description": "Daily transaction limit exceeded on the selected debit card / account",
+    "error_source": "user_error",
+    "retry_count": 3,
+    "last_retry_timestamp": "2026-08-31T08:18:00",
+    "timestamp": "2026-08-31T09:23:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 11,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.78,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "INSUFFICIENT_FUNDS",
+      "decline_category": "insufficient_funds"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100123",
+    "customer_id": "cust_20018",
+    "customer_name": "Rohan Mehta",
+    "customer_phone": "+919876543212",
+    "customer_email": "rohan.mehta@example.com",
+    "amount": 5469.14,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "Mastercard",
+      "card_type": "debit",
+      "bank_code": "HDFC",
+      "upi_vpa": null
+    },
+    "error_code": "UNKNOWN_SWITCH_ERROR",
+    "error_description": "Generic payment processor rejection: Code 9999",
+    "error_source": "gateway",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T07:37:00",
+    "timestamp": "2026-08-31T09:26:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 10,
+      "lifetime_failed_transactions": 1,
+      "preferred_payment_method": "card",
+      "reliability_score": 0.9,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100124",
+    "customer_id": "cust_20019",
+    "customer_name": "Ananya Iyer",
+    "customer_phone": "+919876543213",
+    "customer_email": "ananya.iyer@example.com",
+    "amount": 4532.42,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "credit",
+      "bank_code": "ICICI",
+      "upi_vpa": null
+    },
+    "error_code": "card_expired",
+    "error_description": "Card validity has expired (expiry date is in the past)",
+    "error_source": "user_error",
+    "retry_count": 0,
+    "last_retry_timestamp": null,
+    "timestamp": "2026-08-31T09:43:00",
+    "auto_charge_consent": true,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 17,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "upi",
+      "reliability_score": 0.85,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "400",
+      "issuer_code": "CARD_EXPIRED",
+      "decline_category": "card_expired"
+    }
+  },
+  {
+    "transaction_id": "txn_rzp_100125",
+    "customer_id": "cust_20020",
+    "customer_name": "Vikram Singh",
+    "customer_phone": "+919876543214",
+    "customer_email": "vikram.singh@example.com",
+    "amount": 8441.38,
+    "currency": "INR",
+    "payment_method": "card",
+    "payment_method_details": {
+      "card_network": "RuPay",
+      "card_type": "debit",
+      "bank_code": "PNB",
+      "upi_vpa": null
+    },
+    "error_code": "PAYMENT_DECLINED",
+    "error_description": "Transaction declined by downstream partner without specific error description",
+    "error_source": "gateway",
+    "retry_count": 1,
+    "last_retry_timestamp": "2026-08-31T04:32:00",
+    "timestamp": "2026-08-31T05:42:00",
+    "auto_charge_consent": false,
+    "merchant_id": "merch_acme_retail_in",
+    "customer_history": {
+      "lifetime_successful_transactions": 16,
+      "lifetime_failed_transactions": 3,
+      "preferred_payment_method": "netbanking",
+      "reliability_score": 0.84,
+      "has_disputed_charges": false
+    },
+    "raw_gateway_response": {
+      "status_code": "500",
+      "issuer_code": "GENERIC_DECLINE",
+      "decline_category": "ambiguous"
+    }
+  }
+]
