@@ -5,6 +5,7 @@ insufficient funds reminders) backed by SQLite storage so that jobs survive
 server restarts, prevent duplicate timers, and verify transaction state before firing.
 """
 
+import math
 import uuid
 import asyncio
 import logging
@@ -20,6 +21,47 @@ from app.integrations.razorpay.payment_links import razorpay_payment_links
 logger = logging.getLogger("app.recovery.scheduler")
 
 
+def calculate_remaining_delay(execute_at: datetime, now_utc: Optional[datetime] = None) -> int:
+    """
+    Computes remaining seconds between current UTC time and scheduled execute_at.
+    Returns 0 if execute_at is in the past or now. Uses ceiling on positive differences
+    to avoid sub-second truncation treating future schedules as overdue.
+    """
+    now = now_utc or datetime.now(timezone.utc)
+    if execute_at.tzinfo is None:
+        execute_at = execute_at.replace(tzinfo=timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    diff = (execute_at - now).total_seconds()
+    if diff <= 0:
+        return 0
+    return int(math.ceil(diff))
+
+
+class RehydrationResult(int):
+    """
+    Summary object returned by rehydrate_and_run().
+    Behaves as an integer representing overdue_executed count (for backward-compatibility),
+    while exposing explicit future_rearmed, overdue_executed, and rearm_failed attributes.
+    """
+    overdue_executed: int
+    future_rearmed: int
+    rearm_failed: int
+
+    def __new__(cls, overdue_count: int, future_count: int, rearm_failed_count: int = 0):
+        obj = super().__new__(cls, overdue_count)
+        obj.overdue_executed = overdue_count
+        obj.future_rearmed = future_count
+        obj.rearm_failed = rearm_failed_count
+        return obj
+
+    def __repr__(self) -> str:
+        return (
+            f"RehydrationResult(overdue_executed={self.overdue_executed}, "
+            f"future_rearmed={self.future_rearmed}, rearm_failed={self.rearm_failed})"
+        )
+
+
 class RecoveryScheduler:
     """
     Persistent recovery scheduler enforcing:
@@ -27,6 +69,13 @@ class RecoveryScheduler:
     2. Duplicate schedule guard on active transaction_id jobs.
     3. Pre-execution verification: skips recovery if already recovered or cancelled.
     """
+
+    def __init__(self):
+        self._background_tasks = set()
+
+    def calculate_remaining_delay(self, execute_at: datetime, now_utc: Optional[datetime] = None) -> int:
+        """Helper proxy to calculate_remaining_delay."""
+        return calculate_remaining_delay(execute_at, now_utc)
 
     def schedule_delayed_recovery(
         self,
@@ -85,7 +134,9 @@ class RecoveryScheduler:
             # 3. If running inside an active asyncio loop, spawn asynchronous timer
             try:
                 loop = asyncio.get_running_loop()
-                loop.create_task(self._wait_and_execute(schedule_id, delay_seconds))
+                task = loop.create_task(self._wait_and_execute(schedule_id, delay_seconds))
+                self._background_tasks.add(task)
+                task.add_done_callback(self._background_tasks.discard)
             except RuntimeError:
                 # Running outside an active asyncio loop (e.g. synchronous worker/script)
                 pass
@@ -256,45 +307,66 @@ class RecoveryScheduler:
             if not session_provided:
                 session.close()
 
-    def rehydrate_and_run(self, db: Optional[Session] = None) -> int:
+    def rehydrate_and_run(self, db: Optional[Session] = None) -> RehydrationResult:
         """
         Server startup hook: Queries all pending jobs from database.
-        Executes any jobs that became overdue while server was down, and schedules future ones.
-        Returns the number of processed overdue jobs.
+        Executes any jobs that became overdue while server was down, and re-arms future ones.
+        Returns RehydrationResult containing overdue_executed and future_rearmed counts.
         """
         session_provided = db is not None
         session = db if session_provided else SessionLocal()
 
         try:
             now_utc = datetime.now(timezone.utc)
-            # Fetch all pending jobs
             pending_jobs = session.query(RecoveryScheduleModel).filter(
                 RecoveryScheduleModel.status == "pending"
             ).all()
 
             overdue_count = 0
+            future_count = 0
+            rearm_failed_count = 0
             for job in pending_jobs:
-                exec_at = job.execute_at
-                if exec_at.tzinfo is None:
-                    exec_at = exec_at.replace(tzinfo=timezone.utc)
+                remaining_seconds = calculate_remaining_delay(job.execute_at, now_utc)
 
-                if exec_at <= now_utc:
+                if remaining_seconds <= 0:
+                    # PATH A: Past due -> execute immediately
                     logger.info(f"[SCHEDULER_STARTUP] Job {job.id} for txn {job.transaction_id} is overdue. Executing now.")
                     self.execute_due_schedule(job.id, db=session)
                     overdue_count += 1
                 else:
-                    remaining_seconds = int((exec_at - now_utc).total_seconds())
-                    logger.info(
-                        f"[SCHEDULER_STARTUP] Rescheduling future job {job.id} for txn {job.transaction_id} "
-                        f"in {remaining_seconds}s."
-                    )
+                    # PATH B: Future due -> re-arm background timer for remaining seconds
                     try:
                         loop = asyncio.get_running_loop()
-                        loop.create_task(self._wait_and_execute(job.id, remaining_seconds))
-                    except RuntimeError:
-                        pass
+                        task = loop.create_task(self._wait_and_execute(job.id, remaining_seconds))
+                        self._background_tasks.add(task)
+                        task.add_done_callback(self._background_tasks.discard)
+                        future_count += 1
+                        logger.info(
+                            f"[SCHEDULER_STARTUP] Successfully re-armed future timer for job {job.id} "
+                            f"(txn {job.transaction_id}) with {remaining_seconds}s remaining."
+                        )
+                    except RuntimeError as e:
+                        rearm_failed_count += 1
+                        error_msg = f"Failed to re-arm schedule {job.id}: no running event loop ({e})"
+                        logger.error(f"[SCHEDULER_STARTUP] {error_msg}")
+                        job.status = "rearm_failed"
+                        job.error_message = error_msg
+                        job.updated_at = datetime.now(timezone.utc)
+                        session.commit()
+                    except Exception as e:
+                        rearm_failed_count += 1
+                        error_msg = f"Failed to re-arm schedule {job.id}: unexpected error ({e})"
+                        logger.error(f"[SCHEDULER_STARTUP] {error_msg}", exc_info=True)
+                        job.status = "rearm_failed"
+                        job.error_message = error_msg
+                        job.updated_at = datetime.now(timezone.utc)
+                        session.commit()
 
-            return overdue_count
+            return RehydrationResult(
+                overdue_count=overdue_count,
+                future_count=future_count,
+                rearm_failed_count=rearm_failed_count
+            )
         finally:
             if not session_provided:
                 session.close()

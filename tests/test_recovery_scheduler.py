@@ -1,5 +1,6 @@
 import uuid
 import pytest
+import asyncio
 from datetime import datetime, timezone, timedelta
 from unittest.mock import patch, MagicMock
 from sqlalchemy.orm import Session
@@ -13,6 +14,15 @@ from app.pipeline.scheduler import RecoveryScheduler
 @pytest.fixture(autouse=True)
 def setup_test_env():
     init_db()
+    db = SessionLocal()
+    db.query(RecoveryScheduleModel).delete()
+    db.commit()
+    db.close()
+    yield
+    db = SessionLocal()
+    db.query(RecoveryScheduleModel).delete()
+    db.commit()
+    db.close()
 
 
 @pytest.fixture
@@ -242,4 +252,179 @@ def test_execute_due_schedule_handles_exception_safely(scheduler):
         assert sched.status == "failed"
         assert "Fatal connection timeout" in sched.error_message
     db.close()
+
+
+def test_calculate_remaining_delay_helper(scheduler):
+    """
+    Verifies that calculate_remaining_delay computes exact seconds remaining
+    for future timestamps and clamps past timestamps to 0.
+    """
+    now = datetime(2026, 9, 4, 12, 0, 0, tzinfo=timezone.utc)
+
+    # 10 minutes in the future
+    future_at = now + timedelta(minutes=10)
+    delay = scheduler.calculate_remaining_delay(future_at, now_utc=now)
+    assert delay == 600
+
+    # 5 minutes in the past
+    past_at = now - timedelta(minutes=5)
+    delay_past = scheduler.calculate_remaining_delay(past_at, now_utc=now)
+    assert delay_past == 0
+
+
+@pytest.mark.asyncio
+async def test_rehydrate_and_run_rearms_future_schedule_in_active_event_loop(scheduler):
+    """
+    Verifies that a schedule whose execute_at is in the FUTURE at server restart:
+    1. Runs inside an active asyncio event loop.
+    2. Successfully re-arms a background timer (future_rearmed == 1, rearm_failed == 0).
+    3. Is NOT executed immediately (mock link creation not called, remains 'pending').
+    4. Computes correct remaining delay (~600s).
+    5. Confirms active background task is registered in scheduler.
+    """
+    txn_id = f"txn_future_{uuid.uuid4().hex[:6]}"
+    sched_id = f"sched_future_{uuid.uuid4().hex[:6]}"
+    # Set to 10 minutes in the future (remaining delay ~600s)
+    future_due = datetime.now(timezone.utc) + timedelta(minutes=10)
+    db: Session = SessionLocal()
+
+    future_schedule = RecoveryScheduleModel(
+        id=sched_id,
+        transaction_id=txn_id,
+        failure_reason="bank_server_down",
+        execute_at=future_due,
+        status="pending",
+        action_payload={"amount": 4500.0, "description": "Future cooldown recovery"},
+        attempts=0,
+        created_at=datetime.now(timezone.utc) - timedelta(minutes=5)
+    )
+    db.add(future_schedule)
+    db.commit()
+
+    with patch("app.integrations.razorpay.payment_links.razorpay_payment_links.create_payment_link") as mock_create:
+        rehydrate_res = scheduler.rehydrate_and_run(db=db)
+
+        # 1. Assert overdue count is 0, future_rearmed is 1, rearm_failed is 0
+        assert rehydrate_res.overdue_executed == 0
+        assert rehydrate_res.future_rearmed == 1
+        assert rehydrate_res.rearm_failed == 0
+
+        # 2. Assert no payment link was created prematurely
+        assert not mock_create.called
+
+        # 3. Assert DB record is still 'pending' with 0 attempts
+        db.refresh(future_schedule)
+        assert future_schedule.status == "pending"
+        assert future_schedule.attempts == 0
+
+        # 4. Assert remaining duration is computed correctly (~600s)
+        remaining = scheduler.calculate_remaining_delay(future_schedule.execute_at)
+        assert 570 <= remaining <= 600
+
+        # 5. Assert active background task is tracked
+        assert len(scheduler._background_tasks) >= 1
+    db.close()
+
+
+def test_rehydrate_and_run_marks_rearm_failed_when_no_event_loop(scheduler):
+    """
+    Verifies that calling rehydrate_and_run outside an active event loop:
+    1. Does NOT increment future_rearmed (reports 0).
+    2. Increments rearm_failed (reports 1).
+    3. Sets schedule.status to 'rearm_failed' with error_message detailing no event loop.
+    4. Does NOT execute the schedule or create payment link.
+    """
+    txn_id = f"txn_noloop_{uuid.uuid4().hex[:6]}"
+    sched_id = f"sched_noloop_{uuid.uuid4().hex[:6]}"
+    future_due = datetime.now(timezone.utc) + timedelta(minutes=10)
+    db: Session = SessionLocal()
+
+    future_schedule = RecoveryScheduleModel(
+        id=sched_id,
+        transaction_id=txn_id,
+        failure_reason="bank_server_down",
+        execute_at=future_due,
+        status="pending",
+        action_payload={"amount": 3500.0},
+        attempts=0,
+        created_at=datetime.now(timezone.utc)
+    )
+    db.add(future_schedule)
+    db.commit()
+
+    with patch("app.integrations.razorpay.payment_links.razorpay_payment_links.create_payment_link") as mock_create:
+        rehydrate_res = scheduler.rehydrate_and_run(db=db)
+
+        # 1. Assert future_rearmed is 0, rearm_failed is 1
+        assert rehydrate_res.future_rearmed == 0
+        assert rehydrate_res.rearm_failed == 1
+        assert rehydrate_res.overdue_executed == 0
+
+        # 2. Assert no payment link was created
+        assert not mock_create.called
+
+        # 3. Assert DB record transitions to 'rearm_failed' with descriptive error
+        db.refresh(future_schedule)
+        assert future_schedule.status == "rearm_failed"
+        assert "no running event loop" in (future_schedule.error_message or "")
+    db.close()
+
+
+@pytest.mark.asyncio
+async def test_rehydrate_and_run_timer_actually_fires_and_executes_due_schedule(scheduler):
+    """
+    Verifies the full round-trip of a re-armed timer:
+    1. Seeds a schedule due with a short delay (1 second).
+    2. Calls rehydrate_and_run() inside an active asyncio event loop.
+    3. Confirms it is NOT executed immediately (status stays 'pending', link not called).
+    4. Waits for the timer duration (await asyncio.sleep(1.2)).
+    5. Confirms execute_due_schedule was actually fired by the timer, status transitions
+       to 'completed', attempts incremented to 1, and payment link was created.
+    """
+    txn_id = f"txn_fire_{uuid.uuid4().hex[:6]}"
+    sched_id = f"sched_fire_{uuid.uuid4().hex[:6]}"
+    future_due = datetime.now(timezone.utc) + timedelta(seconds=1)
+    db: Session = SessionLocal()
+
+    future_schedule = RecoveryScheduleModel(
+        id=sched_id,
+        transaction_id=txn_id,
+        failure_reason="network_glitch",
+        execute_at=future_due,
+        status="pending",
+        action_payload={"amount": 1299.0, "description": "Short timer roundtrip test"},
+        attempts=0,
+        created_at=datetime.now(timezone.utc)
+    )
+    db.add(future_schedule)
+    db.commit()
+
+    with patch("app.integrations.razorpay.payment_links.razorpay_payment_links.create_payment_link") as mock_create:
+        mock_create.return_value = {
+            "success": True,
+            "payment_link_id": f"plink_fire_{uuid.uuid4().hex[:6]}",
+            "payment_link_url": "https://rzp.io/i/roundtrip_test"
+        }
+
+        # Step 1: Rehydrate inside active event loop
+        rehydrate_res = scheduler.rehydrate_and_run(db=db)
+        assert rehydrate_res.future_rearmed == 1
+        assert rehydrate_res.rearm_failed == 0
+
+        # Step 2: Confirm NOT executed immediately
+        assert not mock_create.called
+        db.refresh(future_schedule)
+        assert future_schedule.status == "pending"
+        assert future_schedule.attempts == 0
+
+        # Step 3: Wait for timer duration to elapse
+        await asyncio.sleep(1.2)
+
+        # Step 4: Confirm timer fired and executed due schedule in background
+        assert mock_create.called
+        db.refresh(future_schedule)
+        assert future_schedule.status == "completed"
+        assert future_schedule.attempts == 1
+    db.close()
+
 
