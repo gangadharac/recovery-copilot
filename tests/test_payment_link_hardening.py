@@ -17,15 +17,25 @@ from app.schemas.transaction import Transaction, PaymentMethod
 from app.webhooks.audit_logger import audit_logger, SecurityAuditLogger
 
 from app.config import settings
+from app.integrations.razorpay.client import RazorpayClient, razorpay_client
 
+TEST_KEY_ID = "rzp_test_secKey123456"
+TEST_KEY_SECRET = "test_secret_hardening_abc"
 TEST_SECRET = "test_webhook_secret_phase61_sec"
 
 @pytest.fixture(autouse=True)
 def setup_db(monkeypatch):
-    monkeypatch.setattr(settings, "RAZORPAY_KEY_ID", "rzp_test_secKey123456")
-    monkeypatch.setattr(settings, "RAZORPAY_KEY_SECRET", "test_secret_hardening_abc")
+    monkeypatch.setattr(settings, "RAZORPAY_KEY_ID", TEST_KEY_ID)
+    monkeypatch.setattr(settings, "RAZORPAY_KEY_SECRET", TEST_KEY_SECRET)
     monkeypatch.setattr(settings, "RAZORPAY_WEBHOOK_SECRET", TEST_SECRET)
+    monkeypatch.setattr(razorpay_client, "_key_id", TEST_KEY_ID)
+    monkeypatch.setattr(razorpay_client, "_key_secret", TEST_KEY_SECRET)
     init_db()
+
+@pytest.fixture
+def adapter():
+    test_client = RazorpayClient(key_id=TEST_KEY_ID, key_secret=TEST_KEY_SECRET)
+    return RazorpayPaymentLinkAdapter(client=test_client)
 
 @pytest.fixture
 def client():
@@ -635,8 +645,7 @@ def test_h15_currency_mismatch_fails_verification(client):
 
 
 # 16. Duplicate RecoveryAttempt prevention
-def test_h16_duplicate_recovery_attempt_prevented():
-    adapter = RazorpayPaymentLinkAdapter()
+def test_h16_duplicate_recovery_attempt_prevented(adapter):
     txn_id = f"txn_dup_prev_{uuid.uuid4().hex[:6]}"
 
     with patch("requests.post") as mock_post:
@@ -677,8 +686,7 @@ def test_h17_state_machine_transition_controls():
 
 
 # 18. Payment Link creation remains recovery_pending
-def test_h18_link_creation_remains_pending():
-    adapter = RazorpayPaymentLinkAdapter()
+def test_h18_link_creation_remains_pending(adapter):
     tool = PaymentLinkTool(adapter=adapter)
     txn = Transaction(
         transaction_id=f"txn_pend_{uuid.uuid4().hex[:6]}",
