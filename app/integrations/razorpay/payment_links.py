@@ -2,7 +2,7 @@ import uuid
 import logging
 import threading
 from datetime import datetime, timezone
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 import requests
 from sqlalchemy.orm import Session
 
@@ -44,6 +44,9 @@ class RazorpayPaymentLinkAdapter:
         customer_contact: Optional[str] = None,
         description: Optional[str] = None,
         notes: Optional[Dict[str, Any]] = None,
+        failure_reason: Optional[str] = None,
+        preferred_methods: Optional[List[str]] = None,
+        use_upi_intent: bool = False,
         db: Optional[Session] = None
     ) -> Dict[str, Any]:
         """
@@ -145,6 +148,10 @@ class RazorpayPaymentLinkAdapter:
                     "reference_id": ref_id,
                     "recovery_engine": "Revenue Recovery Agent (Phase 6 Test Mode)"
                 }
+                if failure_reason:
+                    req_notes["failure_reason"] = str(failure_reason)
+                if preferred_methods:
+                    req_notes["preferred_methods"] = ",".join(preferred_methods)
                 if notes:
                     req_notes.update(notes)
 
@@ -156,6 +163,9 @@ class RazorpayPaymentLinkAdapter:
                     "notes": req_notes
                 }
 
+                if use_upi_intent:
+                    payload["upi_link"] = True
+
                 if customer_payload:
                     payload["customer"] = customer_payload
 
@@ -166,7 +176,7 @@ class RazorpayPaymentLinkAdapter:
 
                 logger.info(
                     f"[RAZORPAY_PLINK] Creating Payment Link for txn {transaction_id}: "
-                    f"INR {val_amount:,.2f} ({amount_paise} paise)"
+                    f"INR {val_amount:,.2f} ({amount_paise} paise) | reason={failure_reason} | upi_link={use_upi_intent}"
                 )
 
                 response = requests.post(
@@ -203,6 +213,8 @@ class RazorpayPaymentLinkAdapter:
                         customer_id=req_notes.get("customer_id"),
                         customer_contact=customer_payload.get("contact"),
                         customer_email=customer_payload.get("email"),
+                        failure_reason=str(failure_reason) if failure_reason else None,
+                        preferred_methods=",".join(preferred_methods) if preferred_methods else None,
                         created_at=datetime.now(timezone.utc),
                         updated_at=datetime.now(timezone.utc)
                     )
@@ -215,7 +227,13 @@ class RazorpayPaymentLinkAdapter:
                         payment_link_id=plink_id,
                         recovery_attempt_id=attempt_id,
                         status="recovery_pending",
-                        details={"amount": val_amount, "currency": curr}
+                        details={
+                            "amount": val_amount,
+                            "currency": curr,
+                            "failure_reason": failure_reason,
+                            "preferred_methods": preferred_methods,
+                            "use_upi_intent": use_upi_intent
+                        }
                     )
 
                     return {

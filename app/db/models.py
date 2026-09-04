@@ -161,6 +161,10 @@ class RecoveryAttemptModel(Base):
     verified_amount = Column(Float, nullable=True)
     verified_currency = Column(String(8), nullable=True)
 
+    # Revenue Recovery Intelligence Fields
+    failure_reason = Column(String(64), nullable=True, index=True)
+    preferred_methods = Column(String(64), nullable=True)
+
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     recovered_at = Column(DateTime, nullable=True)

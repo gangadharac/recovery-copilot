@@ -73,6 +73,8 @@ def init_db():
             "verification_source VARCHAR(32)",
             "verified_amount FLOAT",
             "verified_currency VARCHAR(8)",
+            "failure_reason VARCHAR(64)",
+            "preferred_methods VARCHAR(64)",
         ]:
             try:
                 conn.execute(text(f"ALTER TABLE recovery_attempts ADD COLUMN {col_def}"))

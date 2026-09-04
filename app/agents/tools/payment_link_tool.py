@@ -38,10 +38,14 @@ class PaymentLinkTool(BaseTool):
         call_id = kwargs.get("call_id", f"call_plink_{uuid.uuid4().hex[:8]}")
         agent_run_id = kwargs.get("agent_run_id")
         db = kwargs.get("db")
+        failure_reason = kwargs.get("failure_reason") or (diagnosis.root_cause.value if diagnosis else None)
+        preferred_methods = kwargs.get("preferred_methods")
+        use_upi_intent = kwargs.get("use_upi_intent", False)
+        custom_desc = kwargs.get("description") or f"Revenue Recovery Payment Link for Txn {txn.transaction_id}"
 
         logger.info(
             f"[PAYMENT_LINK_TOOL] Executing PaymentLinkTool for txn: {txn.transaction_id} "
-            f"(INR {txn.amount:,.2f})"
+            f"(INR {txn.amount:,.2f}) | reason={failure_reason} | methods={preferred_methods}"
         )
 
         res = self.adapter.create_payment_link(
@@ -52,7 +56,10 @@ class PaymentLinkTool(BaseTool):
             customer_name=txn.customer_name,
             customer_email=txn.customer_email,
             customer_contact=txn.customer_phone,
-            description=f"Revenue Recovery Payment Link for Txn {txn.transaction_id}",
+            description=custom_desc,
+            failure_reason=failure_reason,
+            preferred_methods=preferred_methods,
+            use_upi_intent=use_upi_intent,
             db=db
         )
 
@@ -76,6 +83,9 @@ class PaymentLinkTool(BaseTool):
                     "is_idempotent_reuse": is_reused,
                     "amount": txn.amount,
                     "currency": txn.currency,
+                    "failure_reason": failure_reason,
+                    "preferred_methods": preferred_methods,
+                    "use_upi_intent": use_upi_intent,
                     "execution_notes": notes
                 },
                 error_reason=None,
