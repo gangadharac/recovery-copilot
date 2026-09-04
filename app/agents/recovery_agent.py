@@ -61,7 +61,8 @@ class RecoveryAgent:
         txn: Transaction,
         custom_diagnosis: Optional[DiagnosisResult] = None,
         preferred_tool: Optional[AgentToolName] = None,
-        agent_run_id: Optional[str] = None
+        agent_run_id: Optional[str] = None,
+        **kwargs: Any
     ) -> RecoveryAgentResult:
         """
         Executes the autonomous recovery lifecycle for a failed transaction.
@@ -133,7 +134,8 @@ class RecoveryAgent:
                     diagnosis=diagnosis,
                     call_id=tool_call.call_id,
                     reason=interception.reason if not interception.allowed else None,
-                    agent_run_id=agent_run_id
+                    agent_run_id=agent_run_id,
+                    **kwargs
                 )
             except Exception as e:
                 logger.error(f"Error executing tool {executable_tool.value}: {e}", exc_info=True)
@@ -266,8 +268,8 @@ class RecoveryAgent:
         # --- ITERATION > 1: Adaptive Re-Planning (Never repeat a failed tool) ---
         last_tool = used_tools[-1]
 
-        if last_tool == AgentToolName.SWITCH_ROUTING:
-            # If gateway switch failed, adapt to interactive WhatsApp customer nudge
+        if last_tool in [AgentToolName.SWITCH_ROUTING, AgentToolName.PAYMENT_LINK]:
+            # If gateway switch or payment link creation failed, adapt to interactive WhatsApp customer nudge
             if AgentToolName.WHATSAPP_NUDGE not in used_tools:
                 return AgentToolName.WHATSAPP_NUDGE
             else:

@@ -11,9 +11,24 @@ from app.schemas.transaction import (
     PaymentMethodDetails,
     CustomerHistory
 )
+from app.schemas.diagnosis import DiagnosisResult, RootCause, DiagnosisSource
+from app.schemas.agent_state import AgentToolName
 from app.agents.recovery_agent import recovery_agent, RecoveryAgentResult
+from app.agents.failure_classifier import classify_failure, FailureReason
+from app.agents.recovery_strategy_engine import get_recovery_plan, RecoveryPlan
+from app.pipeline.scheduler import recovery_scheduler
 
 logger = logging.getLogger(__name__)
+
+FAILURE_REASON_TO_ROOT_CAUSE = {
+    FailureReason.OTP_FAILURE: RootCause.WRONG_OTP,
+    FailureReason.BANK_SERVER_DOWN: RootCause.BANK_TIMEOUT,
+    FailureReason.INSUFFICIENT_FUNDS: RootCause.INSUFFICIENT_FUNDS,
+    FailureReason.CARD_EXPIRED: RootCause.CARD_EXPIRED,
+    FailureReason.RISK_BLOCKED: RootCause.RISK_BLOCKED,
+    FailureReason.NETWORK_GLITCH: RootCause.NETWORK_GLITCH,
+    FailureReason.UNKNOWN: RootCause.UNKNOWN,
+}
 
 class RecoveryTriggerService:
     """
@@ -23,8 +38,12 @@ class RecoveryTriggerService:
     Responsibilities:
     - Pre-checks transaction lifecycle (prevents duplicate recovery on resolved payments).
     - Safely maps Razorpay webhook payload into the existing Transaction schema.
-    - Triggers the existing autonomous RecoveryAgent loop (simulated execution).
-    - Persists Agent traces (one per iteration) and Audit Log summary into SQLite.
+    - Classifies payment failure root cause with deterministic Failure Classifier.
+    - Selects bounded strategy with reason-tailored copy and method hints.
+    - Enforces strict safety isolation: quarantines risk blocks with 0 retries.
+    - Manages persistent delayed cooldown schedules via RecoveryScheduler.
+    - Dispatches smart payment links for immediate recovery.
+    - Triggers autonomous RecoveryAgent loop and persists traces & audit trail.
     """
 
     def trigger_recovery_from_webhook(
@@ -61,9 +80,80 @@ class RecoveryTriggerService:
         agent_run_id = f"agent_wh_{payment_id}_{uuid.uuid4().hex[:6]}"
         logger.info(f"[RECOVERY] Starting RecoveryAgent for payment_id: {payment_id} | Run ID: {agent_run_id}")
 
-        # 3. Invoke existing autonomous RecoveryAgent
+        # 3. Revenue Recovery Intelligence: Classify failure & Determine Strategy
+        failure_reason = classify_failure(payment_entity)
+        plan = get_recovery_plan(failure_reason)
+
+        logger.info(
+            f"[RECOVERY_INTELLIGENCE] Txn {txn_schema.transaction_id}: "
+            f"Diagnosed={failure_reason.value} | Strategy={plan.action_type} | "
+            f"Delay={plan.retry_delay_seconds}s | ManualReview={plan.requires_manual_review}"
+        )
+
+        custom_diagnosis = DiagnosisResult(
+            transaction_id=txn_schema.transaction_id,
+            root_cause=FAILURE_REASON_TO_ROOT_CAUSE.get(failure_reason, RootCause.UNKNOWN),
+            confidence=0.98,
+            reasoning=(
+                f"Revenue Recovery Intelligence: Diagnosed '{failure_reason.value}'. "
+                f"Strategy: {plan.action_type} (cooldown: {plan.retry_delay_seconds}s). "
+                f"Reason copy: '{plan.customer_message}'."
+            ),
+            source=DiagnosisSource.RULES,
+            diagnostic_factors=[failure_reason.value, f"action:{plan.action_type}", f"delay:{plan.retry_delay_seconds}"]
+        )
+
+        preferred_tool: Optional[AgentToolName] = None
+
+        if plan.requires_manual_review:
+            # Case A: Risk Blocked -> Strictly quarantine to human escalation (0 retries)
+            logger.warning(
+                f"[RECOVERY_INTELLIGENCE] Risk policy violation for {txn_schema.transaction_id}. "
+                "Quarantining transaction for manual human ops review."
+            )
+            preferred_tool = AgentToolName.HUMAN_ESCALATION
+
+        elif plan.retry_delay_seconds > 0:
+            # Case B: Cooldown Window Required -> Queue persistent schedule via RecoveryScheduler
+            action_payload = {
+                "amount": txn_schema.amount,
+                "currency": txn_schema.currency,
+                "customer_name": txn_schema.customer_name,
+                "customer_email": txn_schema.customer_email,
+                "customer_contact": txn_schema.customer_phone,
+                "description": plan.customer_message,
+                "failure_reason": failure_reason.value,
+                "suggested_methods": plan.suggested_methods,
+                "use_upi_intent": plan.use_upi_intent,
+                "order_id": order_id,
+                "agent_run_id": agent_run_id
+            }
+            recovery_scheduler.schedule_delayed_recovery(
+                transaction_id=txn_schema.transaction_id,
+                failure_reason=failure_reason.value,
+                delay_seconds=plan.retry_delay_seconds,
+                action_payload=action_payload,
+                db=db
+            )
+            preferred_tool = None
+
+        else:
+            # Case C: Immediate Recovery (e.g. otp_failure, card_expired, unknown)
+            preferred_tool = AgentToolName.PAYMENT_LINK
+
+        # 4. Invoke autonomous RecoveryAgent
         try:
-            agent_result: RecoveryAgentResult = recovery_agent.recover(txn_schema)
+            agent_result: RecoveryAgentResult = recovery_agent.recover(
+                txn=txn_schema,
+                custom_diagnosis=custom_diagnosis,
+                preferred_tool=preferred_tool,
+                agent_run_id=agent_run_id,
+                description=plan.customer_message,
+                failure_reason=failure_reason.value,
+                preferred_methods=plan.suggested_methods,
+                use_upi_intent=plan.use_upi_intent,
+                db=db
+            )
             logger.info(
                 f"[AGENT] Run ID: {agent_run_id} | "
                 f"Root cause: {agent_result.diagnosis.root_cause.value if agent_result.diagnosis else 'unknown'} | "
@@ -154,7 +244,7 @@ class RecoveryTriggerService:
             recovered_amount=agent_result.recovered_amount,
             gateway_switch_used=switch_used,
             nudge_channel="whatsapp" if nudge_msg else None,
-            nudge_message=nudge_msg,
+            nudge_message=nudge_msg or plan.customer_message,
             unresolved_reason=agent_result.unresolved_reason,
             execution_notes=f"Razorpay Webhook Autonomous Recovery completed in {agent_result.iterations_used} iterations.",
             audit_summary=agent_result.concise_decision_summary,
@@ -166,7 +256,7 @@ class RecoveryTriggerService:
 
         # 6. Update TransactionModel lifecycle and agent_run_id
         if existing_txn:
-            existing_txn.lifecycle_status = "recovery_pending" if agent_result.final_status == "recovery_pending" else "recovery_attempted"
+            existing_txn.lifecycle_status = "recovery_attempted"
             existing_txn.agent_run_id = agent_run_id
 
         return agent_result

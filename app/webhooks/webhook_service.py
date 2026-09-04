@@ -471,6 +471,13 @@ class WebhookService:
                 audit.recovered_amount = matched_txn.amount
                 audit.execution_notes = f"{audit.execution_notes or ''} | [RECOVERY VERIFIED via {event_type} webhook]".strip(" |")
 
+            # Cancel any pending scheduled retries for this recovered transaction
+            try:
+                from app.pipeline.scheduler import recovery_scheduler
+                recovery_scheduler.cancel_schedule(matched_txn.transaction_id, db=db)
+            except Exception as sched_cancel_err:
+                logger.warning(f"[SCHEDULER] Could not cancel schedule for txn {matched_txn.transaction_id}: {sched_cancel_err}")
+
             audit_logger.log_event(
                 event_name="VERIFICATION_SUCCESSFUL",
                 transaction_id=matched_txn.transaction_id,
@@ -576,6 +583,13 @@ class WebhookService:
             audit.recovered = True
             audit.recovered_amount = attempt.amount
             audit.execution_notes = f"{audit.execution_notes or ''} | [RECOVERY VERIFIED via {event_type} webhook]".strip(" |")
+
+        # Cancel any pending scheduled retries for this recovered transaction
+        try:
+            from app.pipeline.scheduler import recovery_scheduler
+            recovery_scheduler.cancel_schedule(attempt.transaction_id, db=db)
+        except Exception as sched_cancel_err:
+            logger.warning(f"[SCHEDULER] Could not cancel schedule for txn {attempt.transaction_id}: {sched_cancel_err}")
 
         audit_logger.log_event(
             event_name="VERIFICATION_SUCCESSFUL",
