@@ -1,4 +1,4 @@
-﻿"""
+"""
 Recovery Strategy Engine:
 Declarative strategy brain mapping diagnosed failure reasons to bounded,
 actionable recovery plans with reason-tailored messaging, method preferences,
@@ -87,12 +87,12 @@ RECOVERY_STRATEGIES: Dict[FailureReason, RecoveryPlan] = {
     ),
     FailureReason.UNKNOWN: RecoveryPlan(
         failure_reason=FailureReason.UNKNOWN,
-        action_type="payment_link",
+        action_type="quarantine",
         retry_delay_seconds=0,
-        suggested_methods=["upi", "card"],
-        customer_message="Your payment was interrupted. Complete your order securely using the link below.",
-        requires_manual_review=False,
-        max_attempts=1,
+        suggested_methods=[],
+        customer_message="Payment failure reason could not be verified. Quarantined for manual review.",
+        requires_manual_review=True,
+        max_attempts=0,
         use_upi_intent=False
     )
 }

@@ -1,4 +1,4 @@
-﻿import pytest
+import pytest
 from app.agents.failure_classifier import FailureReason
 from app.agents.recovery_strategy_engine import RECOVERY_STRATEGIES, get_recovery_plan, RecoveryPlan
 
@@ -64,3 +64,6 @@ def test_unknown_fallback():
     plan = get_recovery_plan("non_existent_reason")
     assert plan.failure_reason == FailureReason.UNKNOWN
     assert plan.retry_delay_seconds == 0
+    assert plan.requires_manual_review is True
+    assert plan.action_type == "quarantine"
+    assert plan.max_attempts == 0

@@ -389,3 +389,129 @@ def test_payment_captured_cancels_pending_retry_schedule(client):
         assert sched_after.status == "cancelled"
     finally:
         db.close()
+
+
+# 7. NETWORK GLITCH: Schedules a 30s short cooldown retry (transient buffer)
+def test_network_glitch_schedules_short_cooldown_retry(client):
+    payment_id = f"pay_glitch_{uuid.uuid4().hex[:6]}"
+    event_id = f"evt_glitch_{uuid.uuid4().hex[:6]}"
+    payload = {
+        "event": "payment.failed",
+        "event_id": event_id,
+        "payload": {
+            "payment": {
+                "entity": {
+                    "id": payment_id,
+                    "amount": 150000,  # INR 1,500
+                    "currency": "INR",
+                    "status": "failed",
+                    "method": "card",
+                    "error_code": "BAD_REQUEST_ERROR",
+                    "error_description": "Connection dropped during checkout socket handshake",
+                    "error_reason": "network_error"
+                }
+            }
+        }
+    }
+
+    with patch("requests.post") as mock_post:
+        res = make_signed_request(client, payload)
+        assert res.status_code == 200
+        data = res.json()
+        assert data["agent_triggered"] is True
+
+        # Confirm NO immediate payment link was created via HTTP POST
+        assert not mock_post.called
+
+        db: Session = SessionLocal()
+        try:
+            sched = db.query(RecoveryScheduleModel).filter(
+                RecoveryScheduleModel.transaction_id == payment_id
+            ).first()
+
+            assert sched is not None
+            assert sched.failure_reason == "network_glitch"
+            assert sched.status in ["pending", "executing"]
+            # Cooldown is 30 seconds: verify scheduled time is in the future (~30s from created_at)
+            delay_seconds = (sched.execute_at - sched.created_at).total_seconds()
+            assert 20 <= delay_seconds <= 35
+            assert "transient connection hiccup" in sched.action_payload["description"].lower()
+            assert sched.action_payload["amount"] == 1500.0
+
+            # Verify audit trail
+            audit = db.query(AuditLogModel).filter(
+                AuditLogModel.transaction_id == payment_id
+            ).first()
+            assert audit is not None
+            assert audit.root_cause == "network_glitch"
+        finally:
+            db.close()
+
+
+# 8. UNKNOWN FAILURE REASON: Quarantined to Human Ops like Risk Blocked (0 retries, no schedule, no payment link)
+def test_unknown_failure_reason_is_quarantined_like_risk(client):
+    payment_id = f"pay_unk_{uuid.uuid4().hex[:6]}"
+    event_id = f"evt_unk_{uuid.uuid4().hex[:6]}"
+    payload = {
+        "event": "payment.failed",
+        "event_id": event_id,
+        "payload": {
+            "payment": {
+                "entity": {
+                    "id": payment_id,
+                    "amount": 899900,  # INR 8,999
+                    "currency": "INR",
+                    "status": "failed",
+                    "method": "card",
+                    "error_code": "CUSTOM_GATEWAY_ANOMALY",
+                    "error_description": "Unclassifiable esoteric anomaly code 0xDEADBEEF",
+                    "error_reason": "unrecognized_failure_code"
+                }
+            }
+        }
+    }
+
+    with patch("requests.post") as mock_post:
+        res = make_signed_request(client, payload)
+        assert res.status_code == 200
+        data = res.json()
+        assert data["agent_triggered"] is True
+        assert data["agent_status"] == "escalated"
+
+        # Ensure NO payment link was created via HTTP POST
+        assert not mock_post.called
+
+        db: Session = SessionLocal()
+        try:
+            # Confirm NO schedule was created
+            schedules = db.query(RecoveryScheduleModel).filter(
+                RecoveryScheduleModel.transaction_id == payment_id
+            ).all()
+            assert len(schedules) == 0
+
+            # Confirm NO recovery attempt link was created
+            attempts = db.query(RecoveryAttemptModel).filter(
+                RecoveryAttemptModel.transaction_id == payment_id
+            ).all()
+            assert len(attempts) == 0
+
+            # Confirm Audit log records quarantine to human operations
+            audit = db.query(AuditLogModel).filter(
+                AuditLogModel.transaction_id == payment_id
+            ).first()
+            assert audit is not None
+            assert audit.root_cause == "unknown"
+            assert audit.recommended_action == "human_escalation"
+            assert audit.execution_status == "escalated"
+            assert audit.recovered is False
+
+            # Confirm Agent Trace records human_escalation tool execution
+            trace = db.query(AgentTraceModel).filter(
+                AgentTraceModel.transaction_id == payment_id
+            ).first()
+            assert trace is not None
+            assert trace.action_tool == "human_escalation"
+            assert trace.tool_result_status == "escalated_to_ops"
+            assert trace.verification_status in ["ESCALATED", "escalated"]
+        finally:
+            db.close()
