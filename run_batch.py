@@ -123,7 +123,7 @@ def print_agent_trace_sample(agent_results, count=3):
             print(f"      Feedback: {step.reflection_summary}")
 
 def main():
-    parser = argparse.ArgumentParser(description="Recovery Copilot - AI Revenue Recovery Agent")
+    parser = argparse.ArgumentParser(description="Revenue_Recovery_Agent - AI Revenue Recovery Agent")
     parser.add_argument("--agent", "-a", action="store_true", help="Run in Autonomous Agent Mode with Multi-Step Re-Planning")
     args = parser.parse_args()
 

@@ -38,37 +38,177 @@ init_db()
 
 # Page Configuration
 st.set_page_config(
-    page_title="Revenue Recovery Agent | Razorpay AI Revenue Recovery",
+    page_title="Revenue_Recovery_Agent | Razorpay AI Revenue Recovery",
     page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for polished Razorpay-style UI
+# Custom CSS for polished, luxury Razorpay-style UI
 st.markdown("""
 <style>
-    .main-header {
-        font-size: 2.2rem;
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    html, body, [class*="css"], [class*="st-"] {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+        background: linear-gradient(135deg, #07172b 0%, #0c2340 45%, #1d4ed8 100%);
+        border-radius: 16px;
+        padding: 26px 32px;
+        color: #ffffff;
+        box-shadow: 0 12px 32px -4px rgba(12, 35, 64, 0.22);
+        margin-bottom: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        position: relative;
+        overflow: hidden;
+    }
+    .hero-banner::after {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 240px;
+        height: 240px;
+        background: radial-gradient(circle, rgba(51, 149, 255, 0.28) 0%, rgba(51, 149, 255, 0) 70%);
+        pointer-events: none;
+    }
+    .hero-badge {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        color: #93c5fd;
+        font-size: 0.72rem;
         font-weight: 700;
-        color: #0c2340;
-        margin-bottom: 0.2rem;
+        letter-spacing: 0.08em;
+        padding: 4px 12px;
+        border-radius: 20px;
+        display: inline-block;
+        margin-bottom: 10px;
+        text-transform: uppercase;
     }
-    .sub-header {
-        font-size: 1.05rem;
-        color: #506690;
-        margin-bottom: 1.5rem;
+    .hero-title {
+        font-size: 2.35rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin: 0 0 6px 0;
+        color: #ffffff;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
-    .metric-card {
-        background-color: #f8fafc;
+    .hero-subtitle {
+        font-size: 1.02rem;
+        color: #cbd5e1;
+        margin: 0 0 18px 0;
+        max-width: 900px;
+        line-height: 1.55;
+    }
+    .hero-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .hero-pill {
+        background: rgba(15, 23, 42, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        color: #f1f5f9;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .hero-pill-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #22c55e;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #22c55e;
+    }
+
+    /* KPI Cards */
+    .kpi-card-box {
+        background: #ffffff;
         border: 1px solid #e2e8f0;
-        border-radius: 10px;
-        padding: 1.2rem;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        border-radius: 14px;
+        padding: 16px 18px;
+        box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+        transition: all 0.25s ease;
+        position: relative;
+        overflow: hidden;
+        height: 100%;
     }
+    .kpi-card-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.1);
+        border-color: #cbd5e1;
+    }
+    .kpi-card-blue { border-top: 4px solid #2563eb; }
+    .kpi-card-amber { border-top: 4px solid #f59e0b; }
+    .kpi-card-green { border-top: 4px solid #10b981; }
+    .kpi-card-purple { border-top: 4px solid #8b5cf6; }
+    .kpi-card-red { border-top: 4px solid #ef4444; }
+
+    .kpi-card-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #64748b;
+        margin-bottom: 4px;
+    }
+    .kpi-card-value {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.2;
+        margin-bottom: 6px;
+    }
+    .kpi-card-sub {
+        font-size: 0.78rem;
+        font-weight: 600;
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 6px;
+    }
+    .kpi-sub-slate { background: #f1f5f9; color: #475569; }
+    .kpi-sub-blue { background: #eff6ff; color: #1d4ed8; }
+    .kpi-sub-green { background: #ecfdf5; color: #047857; }
+    .kpi-sub-amber { background: #fffbeb; color: #b45309; }
+    .kpi-sub-purple { background: #f5f3ff; color: #6d28d9; }
+
+    /* Modern Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 6px;
+        background-color: #f1f5f9;
+        padding: 6px;
+        border-radius: 12px;
+        margin-bottom: 16px;
+    }
+    .stTabs [data-baseweb="tab"] {
+        height: 42px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.90rem;
+        padding: 0 16px;
+        color: #475569;
+        border: none;
+        background-color: transparent;
+        transition: all 0.2s ease;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: #ffffff !important;
+        color: #0c2340 !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+    }
+
+    /* Step Cards & Badges */
     .guardrail-badge-pass {
         background-color: #dcfce7;
         color: #15803d;
-        padding: 4px 8px;
+        padding: 4px 10px;
         border-radius: 6px;
         font-size: 0.85rem;
         font-weight: 600;
@@ -76,38 +216,43 @@ st.markdown("""
     .guardrail-badge-override {
         background-color: #fee2e2;
         color: #b91c1c;
-        padding: 4px 8px;
+        padding: 4px 10px;
         border-radius: 6px;
         font-size: 0.85rem;
         font-weight: 600;
     }
     .nudge-box {
-        background-color: #e0f2fe;
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
         border-left: 4px solid #0284c7;
-        padding: 12px;
-        border-radius: 4px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 16px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        box-shadow: 0 2px 6px rgba(2, 132, 199, 0.06);
     }
     .step-card {
         background-color: #f8fafc;
         border-left: 4px solid #3b82f6;
-        border-radius: 6px;
-        padding: 12px 16px;
+        border-radius: 8px;
+        padding: 14px 18px;
         margin-bottom: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
     .step-card-success {
         background-color: #f0fdf4;
         border-left: 4px solid #22c55e;
-        border-radius: 6px;
-        padding: 12px 16px;
+        border-radius: 8px;
+        padding: 14px 18px;
         margin-bottom: 12px;
+        box-shadow: 0 2px 6px rgba(34, 197, 94, 0.05);
     }
     .step-card-fail {
         background-color: #fef2f2;
         border-left: 4px solid #ef4444;
-        border-radius: 6px;
-        padding: 12px 16px;
+        border-radius: 8px;
+        padding: 14px 18px;
         margin-bottom: 12px;
+        box-shadow: 0 2px 6px rgba(239, 68, 68, 0.05);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -247,8 +392,16 @@ def load_db_data():
 
 # Sidebar Controls
 st.sidebar.image("https://razorpay.com/assets/razorpay-glyph.svg", width=50)
-st.sidebar.title("Revenue Recovery Agent")
-st.sidebar.caption("Razorpay AI Buildathon | Track 03: AI Revenue Recovery")
+st.sidebar.title("⚡ Revenue_Recovery_Agent")
+st.sidebar.caption("Razorpay AI Buildathon • Track 03: AI Revenue Recovery")
+st.sidebar.markdown("""
+<div style='background: rgba(30, 41, 59, 0.05); padding: 10px 12px; border-radius: 8px; font-size: 0.82rem; margin-bottom: 12px;'>
+    🟢 <b>Webhook Gateway:</b> Port 8000<br>
+    🛡️ <b>Guardrails:</b> 4 Active<br>
+    ⏰ <b>Scheduler:</b> Rehydrated<br>
+    🤖 <b>Engine:</b> Autonomous
+</div>
+""", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
 st.sidebar.subheader("🕹️ Batch Processing")
@@ -290,9 +443,20 @@ df_selected = df_audit[df_audit["batch_run_id"] == selected_run_id] if "batch_ru
 if df_selected.empty:
     df_selected = df_audit
 
-# Header Section
-st.markdown("<div class='main-header'>⚡ Revenue Recovery Agent</div>", unsafe_allow_html=True)
-st.markdown("<div class='sub-header'>Autonomous, Guardrailed Payment Recovery Engine for Indian Merchants | Measured ₹ Recovered with Compliant Safety Overrides</div>", unsafe_allow_html=True)
+# Hero Header Section
+st.markdown("""
+<div class='hero-banner'>
+    <span class='hero-badge'>RAZORPAY AI BUILDATHON 2026 • TRACK 03</span>
+    <h1 class='hero-title'>⚡ Revenue_Recovery_Agent</h1>
+    <p class='hero-subtitle'>Autonomous, Reason-Aware Payment Failure Recovery Engine for Razorpay Merchants with Hard-Coded Compliance Guardrails & Persistent Rehydration</p>
+    <div class='hero-pills'>
+        <div class='hero-pill'><span class='hero-pill-dot'></span> Webhook Listener: <b>Active (HMAC-SHA256)</b></div>
+        <div class='hero-pill'>🛡️ <b>4 Python Guardrails</b> Enforced</div>
+        <div class='hero-pill'>⏰ Dual-Branch Scheduler: <b>Rehydrated</b></div>
+        <div class='hero-pill'>💳 Razorpay Test Mode: <b>Connected</b></div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 # Calculate Top-level Metrics (Phase 6 Revenue Accounting)
 total_txns = len(df_selected)
@@ -307,20 +471,50 @@ escalated_count = (df_selected["recommended_action"] == "escalate_human").sum()
 nudged_count = df_selected["recommended_action"].isin(["nudge_customer", "offer_alt_method", "whatsapp_nudge", "upi_switch", "payment_link"]).sum()
 guardrail_overrides_count = df_selected["guardrail_overridden"].sum()
 
-# Top KPI Metric Cards
+# Top KPI Metric Cards (Custom luxury styling)
 kpi1, kpi2, kpi3, kpi4, kpi5 = st.columns(5)
 with kpi1:
-    st.metric("Revenue At Risk", f"₹{total_at_risk:,.2f}", f"{total_txns} txns")
+    st.markdown(f"""
+    <div class='kpi-card-box kpi-card-red'>
+        <div class='kpi-card-label'>Revenue At Risk</div>
+        <div class='kpi-card-value'>₹{total_at_risk:,.2f}</div>
+        <span class='kpi-card-sub kpi-sub-slate'>{total_txns} total failed txns</span>
+    </div>
+    """, unsafe_allow_html=True)
 with kpi2:
-    st.metric("Recovery Pending", f"₹{recovery_pending:,.2f}", f"{pending_count} payment links")
+    st.markdown(f"""
+    <div class='kpi-card-box kpi-card-amber'>
+        <div class='kpi-card-label'>Recovery Pending</div>
+        <div class='kpi-card-value'>₹{recovery_pending:,.2f}</div>
+        <span class='kpi-card-sub kpi-sub-amber'>{pending_count} payment links active</span>
+    </div>
+    """, unsafe_allow_html=True)
 with kpi3:
-    st.metric("Revenue Recovered", f"₹{total_recovered:,.2f}", f"{recovered_count} verified")
+    st.markdown(f"""
+    <div class='kpi-card-box kpi-card-green'>
+        <div class='kpi-card-label'>Revenue Recovered</div>
+        <div class='kpi-card-value'>₹{total_recovered:,.2f}</div>
+        <span class='kpi-card-sub kpi-sub-green'>{recovered_count} verified captured</span>
+    </div>
+    """, unsafe_allow_html=True)
 with kpi4:
-    st.metric("Recovery Rate", f"{recovery_rate:.1f}%", f"+₹{total_recovered:,.0f}")
+    st.markdown(f"""
+    <div class='kpi-card-box kpi-card-blue'>
+        <div class='kpi-card-label'>Recovery Rate</div>
+        <div class='kpi-card-value'>{recovery_rate:.1f}%</div>
+        <span class='kpi-card-sub kpi-sub-blue'>+₹{total_recovered:,.0f} recovered</span>
+    </div>
+    """, unsafe_allow_html=True)
 with kpi5:
-    st.metric("Guardrail Overrides", f"{guardrail_overrides_count}", "Compliant interventions")
+    st.markdown(f"""
+    <div class='kpi-card-box kpi-card-purple'>
+        <div class='kpi-card-label'>Guardrail Overrides</div>
+        <div class='kpi-card-value'>{guardrail_overrides_count}</div>
+        <span class='kpi-card-sub kpi-sub-purple'>100% compliant safety</span>
+    </div>
+    """, unsafe_allow_html=True)
 
-st.markdown("---")
+st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
 
 # Main Tabs
 tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
@@ -588,6 +782,63 @@ with tab5:
     st.subheader("⚡ Live Single-Transaction Recovery Sandbox")
     st.markdown("Simulate any arbitrary failed transaction scenario live and watch the autonomous agent execute in real-time.")
 
+    st.markdown("##### ⚡ Quick Scenario Presets (1-Click Fill)")
+    p1, p2, p3, p4, p5 = st.columns(5)
+    with p1:
+        if st.button("📱 1. OTP Timeout", use_container_width=True, help="Simulate user OTP dropoff / expiration"):
+            st.session_state["sim_error"] = "otp_timeout"
+            st.session_state["sim_error_desc"] = "OTP entered was incorrect or expired"
+            st.session_state["sim_amount"] = 1500.0
+            st.session_state["sim_method_idx"] = 0
+            st.rerun()
+    with p2:
+        if st.button("🏦 2. Bank Down", use_container_width=True, help="Simulate bank gateway downtime"):
+            st.session_state["sim_error"] = "GATEWAY_ERROR"
+            st.session_state["sim_error_desc"] = "Bank server down or unresponsive gateway timeout"
+            st.session_state["sim_amount"] = 3500.0
+            st.session_state["sim_method_idx"] = 2
+            st.rerun()
+    with p3:
+        if st.button("🛡️ 3. Stolen Card", use_container_width=True, help="Simulate risk engine fraud block"):
+            st.session_state["sim_error"] = "risk_blocked"
+            st.session_state["sim_error_desc"] = "Transaction blocked by risk evaluation rules"
+            st.session_state["sim_amount"] = 14500.0
+            st.session_state["sim_method_idx"] = 0
+            st.rerun()
+    with p4:
+        if st.button("💸 4. Low Balance", use_container_width=True, help="Simulate insufficient funds / limit"):
+            st.session_state["sim_error"] = "insufficient_funds"
+            st.session_state["sim_error_desc"] = "Insufficient balance in account or card limit exceeded"
+            st.session_state["sim_amount"] = 5000.0
+            st.session_state["sim_method_idx"] = 1
+            st.rerun()
+    with p5:
+        if st.button("🌐 5. Network Glitch", use_container_width=True, help="Simulate network socket timeout"):
+            st.session_state["sim_error"] = "network_error"
+            st.session_state["sim_error_desc"] = "Network socket timeout or connection reset"
+            st.session_state["sim_amount"] = 2200.0
+            st.session_state["sim_method_idx"] = 1
+            st.rerun()
+
+    st.markdown("<div style='margin-bottom: 12px;'></div>", unsafe_allow_html=True)
+
+    error_list = [
+        "GATEWAY_ERROR",
+        "insufficient_funds",
+        "otp_timeout",
+        "card_expired",
+        "risk_blocked",
+        "network_error",
+        "UNKNOWN_SWITCH_ERROR"
+    ]
+    cur_error = st.session_state.get("sim_error", "GATEWAY_ERROR")
+    cur_err_idx = error_list.index(cur_error) if cur_error in error_list else 0
+
+    method_list = [PaymentMethod.CARD, PaymentMethod.UPI, PaymentMethod.NETBANKING]
+    cur_method_idx = st.session_state.get("sim_method_idx", 0)
+    if cur_method_idx >= len(method_list):
+        cur_method_idx = 0
+
     sim_mode = st.radio(
         "Select Engine Mode:",
         ["Autonomous Recovery Agent (Multi-Step Re-Plan)", "Original Pipeline (Single-Pass)"],
@@ -597,22 +848,23 @@ with tab5:
     sim_col1, sim_col2 = st.columns(2)
     with sim_col1:
         sim_name = st.text_input("Customer Name", "Arnav Malhotra")
-        sim_amount = st.number_input("Transaction Amount (INR)", min_value=100.0, max_value=200000.0, value=3499.0, step=100.0)
-        sim_method = st.selectbox("Payment Method", [PaymentMethod.CARD, PaymentMethod.UPI, PaymentMethod.NETBANKING])
-        sim_error = st.selectbox("Simulated Error Code", [
-            "GATEWAY_ERROR",
-            "insufficient_funds",
-            "otp_timeout",
-            "card_expired",
-            "risk_blocked",
-            "network_error",
-            "UNKNOWN_SWITCH_ERROR"
-        ])
+        sim_amount = st.number_input(
+            "Transaction Amount (INR)",
+            min_value=100.0,
+            max_value=200000.0,
+            value=float(st.session_state.get("sim_amount", 3499.0)),
+            step=100.0
+        )
+        sim_method = st.selectbox("Payment Method", method_list, index=cur_method_idx)
+        sim_error = st.selectbox("Simulated Error Code", error_list, index=cur_err_idx)
     with sim_col2:
         sim_retries = st.slider("Past Retry Count", 0, 4, 0)
         sim_consent = st.checkbox("Customer Auto-Charge Consent Enabled", value=False)
         sim_reliability = st.slider("Customer Reliability Score", 0.1, 1.0, 0.90)
-        sim_error_desc = st.text_input("Error Description", "Bank switch timed out while negotiating payment session")
+        sim_error_desc = st.text_input(
+            "Error Description",
+            st.session_state.get("sim_error_desc", "Bank switch timed out while negotiating payment session")
+        )
 
     if st.button("🚀 Run Live Recovery Simulation", type="primary"):
         sim_txn = Transaction(

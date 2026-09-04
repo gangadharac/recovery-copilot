@@ -15,7 +15,7 @@ async def lifespan(app: FastAPI):
 init_db()
 
 app = FastAPI(
-    title="Revenue Recovery Agent",
+    title="Revenue_Recovery_Agent",
     description="Event-Driven Razorpay Test Mode Webhook Ingestion & Autonomous Revenue Recovery Agent",
     version="1.0.0",
     lifespan=lifespan
@@ -28,7 +28,7 @@ app.include_router(razorpay_webhook_router)
 def root_health():
     return {
         "status": "ok",
-        "service": "Revenue Recovery Agent",
+        "service": "Revenue_Recovery_Agent",
         "version": "1.0.0"
     }
 
