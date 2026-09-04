@@ -15,6 +15,7 @@ from app.db.models import RecoveryAttemptModel, AuditLogModel, RecoveryScheduleM
 from app.reporting.metrics import (
     compute_recovery_rate_by_failure_category,
     compute_audit_log_recovery_by_root_cause,
+    compute_escalation_guardrail_metrics,
     load_recovery_schedules
 )
 from app.reporting.dashboard import load_db_data
@@ -213,5 +214,93 @@ def test_load_recovery_schedules_returns_durably_stored_jobs():
         row = matched.iloc[0]
         assert row["failure_reason"] == "bank_server_down"
         assert row["status"] == "pending"
+    finally:
+        db.close()
+
+
+def test_compute_escalation_guardrail_metrics_with_seeded_data():
+    """Verify compute_escalation_guardrail_metrics queries AuditLogModel for real quarantined counts & amounts."""
+    db: Session = SessionLocal()
+    try:
+        test_batch_id = f"test_run_esc_{uuid.uuid4().hex[:8]}"
+
+        # Seed 2 RISK_BLOCKED audit records: each INR 18,500
+        audit_risk1 = AuditLogModel(
+            audit_id=f"audit_risk1_{uuid.uuid4().hex[:8]}",
+            batch_run_id=test_batch_id,
+            transaction_id=f"txn_risk_01_{uuid.uuid4().hex[:6]}",
+            amount=18500.0,
+            root_cause="risk_blocked",
+            recommended_action="human_escalation",
+            execution_status="escalated",
+            recovered=False,
+            recovered_amount=0.0
+        )
+        audit_risk2 = AuditLogModel(
+            audit_id=f"audit_risk2_{uuid.uuid4().hex[:8]}",
+            batch_run_id=test_batch_id,
+            transaction_id=f"txn_risk_02_{uuid.uuid4().hex[:6]}",
+            amount=18500.0,
+            root_cause="risk_blocked",
+            recommended_action="human_escalation",
+            execution_status="escalated",
+            recovered=False,
+            recovered_amount=0.0
+        )
+
+        # Seed 1 UNKNOWN audit record: INR 8,999
+        audit_unk = AuditLogModel(
+            audit_id=f"audit_unk_{uuid.uuid4().hex[:8]}",
+            batch_run_id=test_batch_id,
+            transaction_id=f"txn_unk_01_{uuid.uuid4().hex[:6]}",
+            amount=8999.0,
+            root_cause="unknown",
+            recommended_action="human_escalation",
+            execution_status="escalated",
+            recovered=False,
+            recovered_amount=0.0
+        )
+
+        # Seed 1 non-escalated audit record (OTP Failure, payment link): INR 2,499
+        audit_otp = AuditLogModel(
+            audit_id=f"audit_otp_{uuid.uuid4().hex[:8]}",
+            batch_run_id=test_batch_id,
+            transaction_id=f"txn_otp_01_{uuid.uuid4().hex[:6]}",
+            amount=2499.0,
+            root_cause="wrong_otp",
+            recommended_action="payment_link",
+            execution_status="recovery_pending",
+            recovered=False,
+            recovered_amount=0.0
+        )
+
+        db.add_all([audit_risk1, audit_risk2, audit_unk, audit_otp])
+        db.commit()
+
+        # Run query scoped to seeded batch
+        metrics = compute_escalation_guardrail_metrics(db=db, batch_run_id=test_batch_id)
+
+        # Confirm exact non-zero counts
+        assert metrics["total_escalated_count"] == 3
+        assert metrics["total_amount_quarantined"] == 45999.0  # 18500 + 18500 + 8999
+
+        # Confirm breakdown by cause
+        assert "risk_blocked" in metrics["breakdown_by_cause"]
+        assert metrics["breakdown_by_cause"]["risk_blocked"]["count"] == 2
+        assert metrics["breakdown_by_cause"]["risk_blocked"]["amount"] == 37000.0
+
+        assert "unknown" in metrics["breakdown_by_cause"]
+        assert metrics["breakdown_by_cause"]["unknown"]["count"] == 1
+        assert metrics["breakdown_by_cause"]["unknown"]["amount"] == 8999.0
+
+        # Confirm wrong_otp was NOT counted as an escalation / quarantine
+        assert "wrong_otp" not in metrics["breakdown_by_cause"]
+
+        # Confirm DataFrame format
+        df = metrics["df"]
+        assert not df.empty
+        assert "root_cause" in df.columns
+        assert "escalated_count" in df.columns
+        assert "amount_quarantined" in df.columns
     finally:
         db.close()

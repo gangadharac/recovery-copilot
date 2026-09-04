@@ -256,3 +256,81 @@ def load_recovery_schedules(db: Optional[Session] = None) -> pd.DataFrame:
     finally:
         if close_session:
             db.close()
+
+
+def compute_escalation_guardrail_metrics(
+    db: Optional[Session] = None,
+    batch_run_id: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    Directly queries AuditLogModel in SQLite for transactions escalated to human operations
+    (quarantined by guardrails, e.g. RISK_BLOCKED or UNKNOWN).
+
+    SQL / SQLAlchemy Logic:
+    - Filters AuditLogModel where recommended_action = 'human_escalation'
+    - Groups by root_cause
+    - total_escalated_count: COUNT(audit_id)
+    - total_amount_quarantined: SUM(amount)
+    
+    Returns structured real metrics:
+    - total_escalated_count: total count of escalated records
+    - total_amount_quarantined: sum of amounts for all escalated records
+    - breakdown: list of dicts grouped by root_cause with exact counts and amounts
+    - breakdown_by_cause: dict mapping root_cause -> {count, amount}
+    - df: pandas DataFrame of the breakdown
+    """
+    close_session = False
+    if db is None:
+        db = SessionLocal()
+        close_session = True
+
+    try:
+        query = db.query(
+            AuditLogModel.root_cause,
+            func.count(AuditLogModel.audit_id).label("escalated_count"),
+            func.sum(AuditLogModel.amount).label("amount_quarantined")
+        ).filter(
+            AuditLogModel.recommended_action == "human_escalation"
+        )
+
+        if batch_run_id:
+            query = query.filter(AuditLogModel.batch_run_id == batch_run_id)
+
+        results = query.group_by(
+            AuditLogModel.root_cause
+        ).all()
+
+        total_count = 0
+        total_amount = 0.0
+        breakdown = []
+        breakdown_by_cause = {}
+
+        for r in results:
+            cause = str(r.root_cause) if r.root_cause else "unspecified"
+            cnt = int(r.escalated_count or 0)
+            amt = float(r.amount_quarantined or 0.0)
+            total_count += cnt
+            total_amount += amt
+            item = {
+                "root_cause": cause,
+                "escalated_count": cnt,
+                "amount_quarantined": round(amt, 2),
+                "guardrail_action": "Quarantined for Human Ops (0% Retry Policy)"
+            }
+            breakdown.append(item)
+            breakdown_by_cause[cause] = {"count": cnt, "amount": round(amt, 2)}
+
+        df_breakdown = pd.DataFrame(breakdown) if breakdown else pd.DataFrame(columns=[
+            "root_cause", "escalated_count", "amount_quarantined", "guardrail_action"
+        ])
+
+        return {
+            "total_escalated_count": total_count,
+            "total_amount_quarantined": round(total_amount, 2),
+            "breakdown": breakdown,
+            "breakdown_by_cause": breakdown_by_cause,
+            "df": df_breakdown
+        }
+    finally:
+        if close_session:
+            db.close()

@@ -29,6 +29,7 @@ from app.agents.recovery_agent import recovery_agent
 from app.reporting.metrics import (
     compute_recovery_rate_by_failure_category,
     compute_audit_log_recovery_by_root_cause,
+    compute_escalation_guardrail_metrics,
     load_recovery_schedules
 )
 
@@ -426,6 +427,40 @@ with tab1:
             )
             fig_live_rec.update_layout(height=280, showlegend=False, margin=dict(l=20, r=20, t=35, b=20))
             st.plotly_chart(fig_live_rec, use_container_width=True)
+
+    # ----------------- ESCALATIONS & GUARDRAIL ACTIONS (AUDITLOGMODEL) -----------------
+    st.markdown("---")
+    st.markdown("### 🛡️ Escalations & Guardrail Actions (AuditLogModel)")
+    st.caption("Transactions quarantined by safety policy and deliberately blocked from automated retries. Real metrics queried directly from `AuditLogModel`.")
+
+    esc_metrics = compute_escalation_guardrail_metrics()
+    esc_col1, esc_col2, esc_col3, esc_col4 = st.columns(4)
+    with esc_col1:
+        st.metric("Total Quarantined", f"{esc_metrics['total_escalated_count']} txns", "100% Policy Blocked")
+    with esc_col2:
+        st.metric("Capital Quarantined", f"₹{esc_metrics['total_amount_quarantined']:,.2f}", "Protected from Chasing")
+    with esc_col3:
+        risk_data = esc_metrics["breakdown_by_cause"].get("risk_blocked", {"count": 0, "amount": 0.0})
+        st.metric("Risk Blocked (Fraud/Shield)", f"{risk_data['count']} txns", f"₹{risk_data['amount']:,.2f}")
+    with esc_col4:
+        unk_data = esc_metrics["breakdown_by_cause"].get("unknown", {"count": 0, "amount": 0.0})
+        st.metric("Unknown Failure Reason", f"{unk_data['count']} txns", f"₹{unk_data['amount']:,.2f}")
+
+    if not esc_metrics["df"].empty:
+        st.dataframe(
+            esc_metrics["df"].rename(
+                columns={
+                    "root_cause": "Quarantined Category",
+                    "escalated_count": "Quarantined Transactions",
+                    "amount_quarantined": "Quarantined Capital (₹)",
+                    "guardrail_action": "Enforced Safety Guardrail"
+                }
+            ).style.format({
+                "Quarantined Capital (₹)": "₹{:,.2f}"
+            }),
+            use_container_width=True
+        )
+
 
 # ----------------- TAB 2: GUARDRAILS & COMPLIANCE -----------------
 with tab2:
@@ -890,6 +925,39 @@ with tab7:
                 "Amount at Risk (₹)": "₹{:,.2f}",
                 "Amount Recovered (₹)": "₹{:,.2f}",
                 "Recovery Rate (%)": "{:.1f}%"
+            }),
+            use_container_width=True
+        )
+
+    # Escalations & Guardrail Actions (AuditLogModel)
+    st.markdown("---")
+    st.markdown("### 🛡️ Escalations & Guardrail Actions (AuditLogModel)")
+    st.caption("Transactions quarantined by safety policy and deliberately blocked from automated retries. Real metrics queried directly from `AuditLogModel`.")
+
+    esc_metrics_tab7 = compute_escalation_guardrail_metrics()
+    esc_t7_c1, esc_t7_c2, esc_t7_c3, esc_t7_c4 = st.columns(4)
+    with esc_t7_c1:
+        st.metric("Total Quarantined", f"{esc_metrics_tab7['total_escalated_count']} txns", "100% Policy Blocked")
+    with esc_t7_c2:
+        st.metric("Capital Quarantined", f"₹{esc_metrics_tab7['total_amount_quarantined']:,.2f}", "Protected from Chasing")
+    with esc_t7_c3:
+        risk_data_t7 = esc_metrics_tab7["breakdown_by_cause"].get("risk_blocked", {"count": 0, "amount": 0.0})
+        st.metric("Risk Blocked (Fraud/Shield)", f"{risk_data_t7['count']} txns", f"₹{risk_data_t7['amount']:,.2f}")
+    with esc_t7_c4:
+        unk_data_t7 = esc_metrics_tab7["breakdown_by_cause"].get("unknown", {"count": 0, "amount": 0.0})
+        st.metric("Unknown Failure Reason", f"{unk_data_t7['count']} txns", f"₹{unk_data_t7['amount']:,.2f}")
+
+    if not esc_metrics_tab7["df"].empty:
+        st.dataframe(
+            esc_metrics_tab7["df"].rename(
+                columns={
+                    "root_cause": "Quarantined Category",
+                    "escalated_count": "Quarantined Transactions",
+                    "amount_quarantined": "Quarantined Capital (₹)",
+                    "guardrail_action": "Enforced Safety Guardrail"
+                }
+            ).style.format({
+                "Quarantined Capital (₹)": "₹{:,.2f}"
             }),
             use_container_width=True
         )
