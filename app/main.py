@@ -14,6 +14,11 @@ app = FastAPI(
 # Include Webhook Router
 app.include_router(razorpay_webhook_router)
 
+@app.on_event("startup")
+def startup_rehydrate_schedules():
+    from app.pipeline.scheduler import recovery_scheduler
+    recovery_scheduler.rehydrate_and_run()
+
 @app.get("/health", tags=["System"])
 def root_health():
     return {

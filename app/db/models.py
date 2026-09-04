@@ -168,3 +168,22 @@ class RecoveryAttemptModel(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     recovered_at = Column(DateTime, nullable=True)
+
+class RecoveryScheduleModel(Base):
+    """
+    Revenue Recovery Intelligence Table:
+    Persists delayed recovery jobs (e.g. bank downtime cooldowns, insufficient funds reminders)
+    guaranteeing jobs survive server restarts and enforcing duplicate scheduling guards.
+    """
+    __tablename__ = "recovery_schedules"
+
+    id = Column(String(64), primary_key=True, index=True) # sched_...
+    transaction_id = Column(String(64), index=True, nullable=False)
+    failure_reason = Column(String(64), nullable=False)
+    execute_at = Column(DateTime, nullable=False, index=True) # UTC timestamp when job is due
+    status = Column(String(32), default="pending", index=True) # pending, executing, completed, cancelled, failed
+    action_payload = Column(JSON) # {amount, currency, customer_contact, customer_email, customer_name, suggested_methods, description, use_upi_intent}
+    attempts = Column(Integer, default=0)
+    error_message = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
