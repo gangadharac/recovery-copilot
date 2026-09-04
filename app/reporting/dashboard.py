@@ -26,6 +26,11 @@ from app.agents.diagnosis_agent import diagnosis_agent
 from app.agents.strategy_agent import strategy_agent
 from app.executor.recovery_executor import recovery_executor
 from app.agents.recovery_agent import recovery_agent
+from app.reporting.metrics import (
+    compute_recovery_rate_by_failure_category,
+    compute_audit_log_recovery_by_root_cause,
+    load_recovery_schedules
+)
 
 # Initialize database schema and migrations
 init_db()
@@ -229,7 +234,9 @@ def load_db_data():
                 "customer_contact": a.customer_contact,
                 "customer_email": a.customer_email,
                 "created_at": a.created_at,
-                "recovered_at": a.recovered_at
+                "recovered_at": a.recovered_at,
+                "failure_reason": getattr(a, "failure_reason", None),
+                "preferred_methods": getattr(a, "preferred_methods", None)
             })
         df_attempts = pd.DataFrame(att_data) if att_data else pd.DataFrame()
 
@@ -360,7 +367,7 @@ with tab1:
         fig_act.update_layout(height=360, margin=dict(l=20, r=20, t=30, b=20))
         st.plotly_chart(fig_act, use_container_width=True)
 
-    st.markdown("### 📋 Measured Recovery Rates by Category")
+    st.markdown("### 📋 Measured Recovery Rates by Category (Batch Transactions)")
     st.dataframe(
         rc_summary[["root_cause", "count", "at_risk", "recovered", "recovery_rate_pct"]].rename(
             columns={
@@ -377,6 +384,48 @@ with tab1:
         }),
         use_container_width=True
     )
+
+    st.markdown("---")
+    st.markdown("### ⚡ Live Recovery Rate by Failure Category (Real Webhook & Payment Link Attempts)")
+    st.caption("Computed live in real-time directly from `RecoveryAttemptModel` in SQLite. Real, un-stubbed recovery analytics with strict risk quarantine visibility.")
+
+    df_cat_recovery = compute_recovery_rate_by_failure_category()
+    if df_cat_recovery is not None and not df_cat_recovery.empty:
+        col_c1, col_c2 = st.columns([3, 2])
+        with col_c1:
+            st.dataframe(
+                df_cat_recovery[[
+                    "failure_reason", "total_attempts", "successful_recoveries", "pending_recoveries",
+                    "total_amount_at_risk", "total_amount_recovered", "recovery_rate_pct", "guardrail_status"
+                ]].rename(
+                    columns={
+                        "failure_reason": "Failure Reason",
+                        "total_attempts": "Total Link Attempts",
+                        "successful_recoveries": "Successful Recoveries",
+                        "pending_recoveries": "Pending Verification",
+                        "total_amount_at_risk": "Capital Attempted (₹)",
+                        "total_amount_recovered": "Capital Recovered (₹)",
+                        "recovery_rate_pct": "Recovery Rate (%)",
+                        "guardrail_status": "Guardrail Policy"
+                    }
+                ).style.format({
+                    "Capital Attempted (₹)": "₹{:,.2f}",
+                    "Capital Recovered (₹)": "₹{:,.2f}",
+                    "Recovery Rate (%)": "{:.1f}%"
+                }),
+                use_container_width=True
+            )
+        with col_c2:
+            fig_live_rec = px.bar(
+                df_cat_recovery,
+                x="failure_reason",
+                y="recovery_rate_pct",
+                color="failure_reason",
+                labels={"failure_reason": "Category", "recovery_rate_pct": "Recovery Rate (%)"},
+                title="Live Conversion Rate (%) by Failure Reason"
+            )
+            fig_live_rec.update_layout(height=280, showlegend=False, margin=dict(l=20, r=20, t=35, b=20))
+            st.plotly_chart(fig_live_rec, use_container_width=True)
 
 # ----------------- TAB 2: GUARDRAILS & COMPLIANCE -----------------
 with tab2:
@@ -785,7 +834,7 @@ with tab7:
     if df_attempts is not None and not df_attempts.empty:
         # Build display columns safely
         display_cols = [
-            "transaction_id", "payment_id", "payment_link_id", "amount", "currency",
+            "transaction_id", "failure_reason", "preferred_methods", "payment_id", "payment_link_id", "amount", "currency",
             "status", "verification_source", "created_at", "recovered_at", "payment_link_url"
         ]
         available_cols = [c for c in display_cols if c in df_attempts.columns]
@@ -794,6 +843,8 @@ with tab7:
             df_attempts[available_cols].rename(
                 columns={
                     "transaction_id": "Transaction ID",
+                    "failure_reason": "Failure Reason",
+                    "preferred_methods": "Preferred Rails",
                     "payment_id": "Razorpay Payment ID",
                     "payment_link_id": "Payment Link ID",
                     "amount": "Amount (₹)",
@@ -811,3 +862,57 @@ with tab7:
         )
     else:
         st.info("No Razorpay Payment Links created yet. When the Agent handles a failed transaction, real test-mode links (https://rzp.io/i/...) will appear here.")
+
+    # Category-Level Recovery Intelligence Section
+    st.markdown("---")
+    st.markdown("### ⚡ Recovery Rate by Failure Category (Real Payment Link Analytics)")
+    st.caption("Live metrics aggregated directly from `RecoveryAttemptModel` in SQLite. Guaranteed un-stubbed data.")
+
+    df_cat_live = compute_recovery_rate_by_failure_category()
+    if df_cat_live is not None and not df_cat_live.empty:
+        st.dataframe(
+            df_cat_live[[
+                "failure_reason", "total_attempts", "successful_recoveries", "pending_recoveries", "failed_recoveries",
+                "total_amount_at_risk", "total_amount_recovered", "recovery_rate_pct", "guardrail_status"
+            ]].rename(
+                columns={
+                    "failure_reason": "Failure Reason",
+                    "total_attempts": "Total Attempts",
+                    "successful_recoveries": "Recovered",
+                    "pending_recoveries": "Pending",
+                    "failed_recoveries": "Failed",
+                    "total_amount_at_risk": "Amount at Risk (₹)",
+                    "total_amount_recovered": "Amount Recovered (₹)",
+                    "recovery_rate_pct": "Recovery Rate (%)",
+                    "guardrail_status": "Guardrail Policy"
+                }
+            ).style.format({
+                "Amount at Risk (₹)": "₹{:,.2f}",
+                "Amount Recovered (₹)": "₹{:,.2f}",
+                "Recovery Rate (%)": "{:.1f}%"
+            }),
+            use_container_width=True
+        )
+
+    # Persistent Recovery Cooldown Schedules
+    st.markdown("---")
+    st.markdown("### ⏰ Persistent Recovery Cooldown Schedules (`RecoveryScheduleModel`)")
+    st.caption("Background cooldown jobs stored durably in SQLite. Survived across server restarts and guarded against duplicate scheduling.")
+
+    df_scheds = load_recovery_schedules()
+    if df_scheds is not None and not df_scheds.empty:
+        st.dataframe(
+            df_scheds[["id", "transaction_id", "failure_reason", "status", "execute_at", "created_at"]].rename(
+                columns={
+                    "id": "Schedule ID",
+                    "transaction_id": "Transaction ID",
+                    "failure_reason": "Failure Category",
+                    "status": "Schedule Status",
+                    "execute_at": "Scheduled Execution (UTC)",
+                    "created_at": "Queued At"
+                }
+            ),
+            use_container_width=True
+        )
+    else:
+        st.info("No recovery schedules currently queued. Cooldown events (e.g. `bank_server_down` 15-min or `insufficient_funds` 2-hr retry) will appear here.")
