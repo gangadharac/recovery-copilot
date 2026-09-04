@@ -1,4 +1,4 @@
-﻿import uuid
+import uuid
 import pytest
 from datetime import datetime, timezone, timedelta
 from unittest.mock import patch, MagicMock
@@ -169,3 +169,77 @@ def test_cancel_schedule(scheduler):
     ).first()
     assert cancelled_job.status == "cancelled"
     db.close()
+
+
+def test_rehydrate_and_run_executes_past_overdue_job(scheduler):
+    """
+    Verifies that jobs scheduled in the past execute immediately upon server restart
+    rather than waiting for a fresh sleep timer or being lost.
+    """
+    txn_id = f"txn_overdue_{uuid.uuid4().hex[:6]}"
+    sched_id = f"sched_past_{uuid.uuid4().hex[:6]}"
+    past_due = datetime.now(timezone.utc) - timedelta(minutes=15)
+    db: Session = SessionLocal()
+
+    # Pre-seed a schedule directly in the database with a past execute_at timestamp
+    past_schedule = RecoveryScheduleModel(
+        id=sched_id,
+        transaction_id=txn_id,
+        failure_reason="bank_server_down",
+        execute_at=past_due,
+        status="pending",
+        action_payload={"amount": 2999.0, "description": "Overdue recovery test"},
+        attempts=0,
+        created_at=past_due - timedelta(minutes=15)
+    )
+    db.add(past_schedule)
+    db.commit()
+
+    with patch("app.integrations.razorpay.payment_links.razorpay_payment_links.create_payment_link") as mock_create:
+        mock_create.return_value = {
+            "success": True,
+            "payment_link_id": f"plink_overdue_{uuid.uuid4().hex[:6]}",
+            "payment_link_url": "https://rzp.io/i/overdue"
+        }
+
+        # Simulate server reboot rehydration
+        overdue_count = scheduler.rehydrate_and_run(db=db)
+        assert overdue_count >= 1
+
+        db.refresh(past_schedule)
+        assert past_schedule.status == "completed"
+        assert past_schedule.attempts >= 1
+        assert mock_create.called
+    db.close()
+
+
+def test_execute_due_schedule_handles_exception_safely(scheduler):
+    """
+    Verifies that if the Razorpay API or payment link creation raises an unhandled exception,
+    the schedule status is set to 'failed', error details are persisted, and the exception
+    does not propagate or crash background tasks.
+    """
+    txn_id = f"txn_fail_exc_{uuid.uuid4().hex[:6]}"
+    db: Session = SessionLocal()
+
+    sched = scheduler.schedule_delayed_recovery(
+        transaction_id=txn_id,
+        failure_reason="network_glitch",
+        delay_seconds=0,
+        action_payload={"amount": 999.0},
+        db=db
+    )
+
+    with patch("app.integrations.razorpay.payment_links.razorpay_payment_links.create_payment_link") as mock_create:
+        mock_create.side_effect = RuntimeError("Fatal connection timeout to api.razorpay.com:443")
+
+        res = scheduler.execute_due_schedule(sched.id, db=db)
+        assert res["success"] is False
+        assert res["status"] == "failed"
+        assert "Fatal connection timeout" in res["error_message"]
+
+        db.refresh(sched)
+        assert sched.status == "failed"
+        assert "Fatal connection timeout" in sched.error_message
+    db.close()
+

@@ -1,23 +1,28 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from app.webhooks.razorpay_webhook import router as razorpay_webhook_router
 from app.db.database import init_db
 
-# Initialize database schema on startup
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: Initialize database schema and rehydrate any pending recovery schedules
+    init_db()
+    from app.pipeline.scheduler import recovery_scheduler
+    recovery_scheduler.rehydrate_and_run()
+    yield
+
+# Top-level DB initialization to guarantee tables ready on import
 init_db()
 
 app = FastAPI(
     title="Revenue Recovery Agent",
     description="Event-Driven Razorpay Test Mode Webhook Ingestion & Autonomous Revenue Recovery Agent",
-    version="1.0.0"
+    version="1.0.0",
+    lifespan=lifespan
 )
 
 # Include Webhook Router
 app.include_router(razorpay_webhook_router)
-
-@app.on_event("startup")
-def startup_rehydrate_schedules():
-    from app.pipeline.scheduler import recovery_scheduler
-    recovery_scheduler.rehydrate_and_run()
 
 @app.get("/health", tags=["System"])
 def root_health():

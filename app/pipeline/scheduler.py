@@ -1,4 +1,4 @@
-﻿"""
+"""
 Persistent Recovery Scheduler:
 Manages delayed and scheduled recovery jobs (e.g. bank switch cooldowns,
 insufficient funds reminders) backed by SQLite storage so that jobs survive
@@ -97,9 +97,16 @@ class RecoveryScheduler:
 
     async def _wait_and_execute(self, schedule_id: str, delay_seconds: int) -> Dict[str, Any]:
         """Asynchronously waits for the delay duration and executes the due schedule."""
-        if delay_seconds > 0:
-            await asyncio.sleep(delay_seconds)
-        return self.execute_due_schedule(schedule_id)
+        try:
+            if delay_seconds > 0:
+                await asyncio.sleep(delay_seconds)
+            return self.execute_due_schedule(schedule_id)
+        except Exception as e:
+            logger.error(
+                f"[SCHEDULER_ASYNC] Unhandled exception in background timer for {schedule_id}: {e}",
+                exc_info=True
+            )
+            return {"success": False, "status": "failed", "error_message": str(e)}
 
     def execute_due_schedule(self, schedule_id: str, db: Optional[Session] = None) -> Dict[str, Any]:
         """
@@ -108,6 +115,7 @@ class RecoveryScheduler:
         1. Job status is checked and locked.
         2. Transaction is checked to verify it wasn't already recovered in the interim.
         3. Creates the tailored recovery payment link and marks job completed.
+        4. Any exception marks status as 'failed', logs details, and prevents silent failure.
         """
         session_provided = db is not None
         session = db if session_provided else SessionLocal()
@@ -155,28 +163,42 @@ class RecoveryScheduler:
             schedule.updated_at = datetime.now(timezone.utc)
             session.commit()
 
-            # 3. Execute recovery via Payment Link Adapter
+            # 3. Execute recovery via Payment Link Adapter with explicit exception safety
             payload = schedule.action_payload or {}
             amount_inr = payload.get("amount") or 0.0
             description = payload.get("description") or f"Delayed Recovery for {schedule.transaction_id}"
             preferred_methods = payload.get("preferred_methods") or []
             use_upi_intent = payload.get("use_upi_intent", False)
 
-            res = razorpay_payment_links.create_payment_link(
-                amount_inr=amount_inr,
-                transaction_id=schedule.transaction_id,
-                currency=payload.get("currency", "INR"),
-                customer_name=payload.get("customer_name"),
-                customer_email=payload.get("customer_email"),
-                customer_contact=payload.get("customer_contact"),
-                description=description,
-                failure_reason=schedule.failure_reason,
-                preferred_methods=preferred_methods,
-                use_upi_intent=use_upi_intent,
-                db=session
-            )
+            try:
+                res = razorpay_payment_links.create_payment_link(
+                    amount_inr=amount_inr,
+                    transaction_id=schedule.transaction_id,
+                    currency=payload.get("currency", "INR"),
+                    customer_name=payload.get("customer_name"),
+                    customer_email=payload.get("customer_email"),
+                    customer_contact=payload.get("customer_contact"),
+                    description=description,
+                    failure_reason=schedule.failure_reason,
+                    preferred_methods=preferred_methods,
+                    use_upi_intent=use_upi_intent,
+                    db=session
+                )
+            except Exception as exc:
+                err_msg = f"Unexpected exception during scheduled link creation for {schedule.transaction_id}: {str(exc)}"
+                logger.error(f"[SCHEDULER] {err_msg}", exc_info=True)
+                schedule.status = "failed"
+                schedule.error_message = err_msg
+                schedule.updated_at = datetime.now(timezone.utc)
+                session.commit()
+                return {
+                    "success": False,
+                    "status": "failed",
+                    "error_message": err_msg,
+                    "transaction_id": schedule.transaction_id
+                }
 
-            # 4. Mark completed or failed
+            # 4. Mark completed or failed based on adapter outcome
             if res.get("success"):
                 schedule.status = "completed"
                 schedule.updated_at = datetime.now(timezone.utc)
