@@ -14,7 +14,7 @@ class LLMClient:
     def __init__(self):
         self.api_key = settings.ANTHROPIC_API_KEY.strip() if settings.ANTHROPIC_API_KEY else ""
         self.client = None
-        if self.api_key:
+        if settings.is_anthropic_configured:
             try:
                 import anthropic
                 self.client = anthropic.Anthropic(api_key=self.api_key)
@@ -68,7 +68,6 @@ Respond ONLY with valid JSON in this exact structure:
                 response = self.client.messages.create(
                     model=settings.CLAUDE_MODEL,
                     max_tokens=400,
-                    temperature=0.1,
                     messages=[{"role": "user", "content": prompt}]
                 )
                 text = response.content[0].text.strip()
@@ -119,7 +118,6 @@ Return ONLY the message text.
                 response = self.client.messages.create(
                     model=settings.CLAUDE_MODEL,
                     max_tokens=200,
-                    temperature=0.4,
                     messages=[{"role": "user", "content": prompt}]
                 )
                 return response.content[0].text.strip()

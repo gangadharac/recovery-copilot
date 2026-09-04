@@ -34,6 +34,16 @@ ENV/
 .env
 !.env.example
 
+# Local runtime data
+data/*.db
+data/*.db-*
+
+# Local archives and temporary files
+archives/
+*.zip
+*.tmp
+*.bak
+
 # Pytest / Test Cache
 .pytest_cache/
 .coverage

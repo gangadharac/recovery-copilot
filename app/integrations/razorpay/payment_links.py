@@ -56,7 +56,10 @@ class RazorpayPaymentLinkAdapter:
             return {
                 "success": False,
                 "status": "failed",
-                "error_message": "Razorpay API credentials (KEY_ID / KEY_SECRET) not configured."
+                "error_message": (
+                    "Razorpay API credentials (KEY_ID / KEY_SECRET) not configured. "
+                    "ANTHROPIC_API_KEY is optional and is not required for purchases."
+                )
             }
 
         try:

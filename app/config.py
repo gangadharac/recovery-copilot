@@ -23,6 +23,15 @@ class Settings(BaseSettings):
     RAZORPAY_WEBHOOK_SECRET: str = os.getenv("RAZORPAY_WEBHOOK_SECRET", "")
 
     @property
+    def is_anthropic_configured(self) -> bool:
+        """Returns True when a usable Anthropic API key is configured."""
+        return bool(
+            self.ANTHROPIC_API_KEY
+            and self.ANTHROPIC_API_KEY.strip()
+            and self.ANTHROPIC_API_KEY.strip() != "your_anthropic_api_key_here"
+        )
+
+    @property
     def is_razorpay_configured(self) -> bool:
         """Returns True if Razorpay API Key ID and Secret are provided."""
         return bool(self.RAZORPAY_KEY_ID and self.RAZORPAY_KEY_SECRET)
